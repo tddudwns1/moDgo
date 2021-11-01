@@ -20,3 +20,4 @@
 ## 🧩 기획 & 설계
 - ⚙[기능 명세서](https://www.notion.so/modigo/cd5fb686d627409586d186b60443f61e)
 - 🖥[페이지 기획서](https://www.notion.so/modigo/922240b0880c48f58c27aaefe88524f2)
+- 🧬[DB 명세서](https://www.notion.so/modigo/DB-b8e98523c8694a5aa135811d0cf5d80b)
