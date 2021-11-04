@@ -1,23 +1,12 @@
-import logo from './logo.svg';
+import GoogleLogin from 'react-google-login';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GoogleLogin
+        clientId={'813123317206-o4mo2eas1kbve8e0914g5uev9ru27he9.apps.googleusercontent.com'}>
+        구글로 로그인</GoogleLogin>
     </div>
   );
 }
