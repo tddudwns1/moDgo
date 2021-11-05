@@ -48,14 +48,12 @@ const Login = ({ ...props }) => {
     console.log("Login Failed: ", response);
   };
 
-  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+  // console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
   return (
     <>
       <GoogleLogin
-        clientId={
-          "813123317206-o4mo2eas1kbve8e0914g5uev9ru27he9.apps.googleusercontent.com"
-        }
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (
           <GoogleLoginButton
             onClick={renderProps.onClick}
