@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-211.7628.21">
-    <data-source name="modgo@modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com" uuid="7ce6e3a0-83cb-432a-a47d-32a33e833237">
+    <data-source name="modgo" uuid="85b849a7-423a-45c9-9c8c-7b5696cca7cc">
       <database-info product="MySQL" version="8.0.23" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MYSQL" exact-version="8.0.23" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -13,7 +13,6 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="mysql" />
             <name qname="modgo" />
           </node>
         </introspection-scope>

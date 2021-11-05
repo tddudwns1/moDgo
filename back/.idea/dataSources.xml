@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="modgo@modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com" uuid="7ce6e3a0-83cb-432a-a47d-32a33e833237">
+    <data-source source="LOCAL" name="modgo" uuid="85b849a7-423a-45c9-9c8c-7b5696cca7cc">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com:3306/modgo</jdbc-url>
+      <jdbc-url>jdbc:mysql://modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

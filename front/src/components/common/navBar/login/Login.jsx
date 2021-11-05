@@ -9,13 +9,15 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
+  const url = "http://localhost:8080";
+
   const onSuccess = async (response) => {
     const {
       profileObj: { googleId, email, name, imageUrl },
     } = response;
 
     try {
-      const res = await axios.get(`/users/${googleId}`);
+      const res = await axios.get(url + `/users/${googleId}`);
 
       if (res.status === 204) {
         const user = {
@@ -25,9 +27,9 @@ const Login = ({ ...props }) => {
           imgUrl: imageUrl,
         };
 
-        await axios.post("/users", user);
+        await axios.post(url + "/users", user);
 
-        await axios.get(`users/${user.id}`);
+        await axios.get(url + `users/${user.id}`);
 
         localStorage.setItem("user_id", user.id);
         localStorage.setItem("user_image", user.imgUrl);

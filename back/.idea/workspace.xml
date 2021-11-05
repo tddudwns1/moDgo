@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="" />
+    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7ce6e3a0-83cb-432a-a47d-32a33e833237/storage_v2/_src_/schema/mysql.osA4Bg.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7ce6e3a0-83cb-432a-a47d-32a33e833237/storage_v2/_src_/schema/mysql.osA4Bg.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,8 +40,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -87,6 +91,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MoDgoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="moDgo.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.moDgo.MoDgoApplication" />
@@ -112,6 +127,7 @@
       <workItem from="1635908122686" duration="207000" />
       <workItem from="1636031642969" duration="1519000" />
       <workItem from="1636093172756" duration="7353000" />
+      <workItem from="1636119142091" duration="3559000" />
     </task>
     <servers />
   </component>

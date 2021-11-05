@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://modgo.cdh4acucb1ka.ap-northeast-2.rds.amazonaws.com:3306/modgo
+    url: jdbc:mysql://modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com:3306/modgo
     username: admin
     password: modigo12
 
