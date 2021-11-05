@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://modgo.cdh4acucb1ka.ap-northeast-2.rds.amazonaws.com:3306/modgo
+    username: admin
+    password: modigo12
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: create #create #none #update #validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
