@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import styled from "styled-components";
+import { customMedia } from "../../../../GlobalStyles";
 
 import google from "../../../../images/icons/google.png";
 
@@ -95,4 +96,12 @@ const GoogleLoginButton = styled.button`
   text-align: center;
   cursor: pointer;
   position: relative;
+  ${customMedia.lessThan("mobile")`
+    font-size: 14px;
+    width: 220px;
+  `}
+  ${customMedia.between("mobile", "tablet")`
+    font-size: 16px;
+    width: 240px;
+  `}
 `;
