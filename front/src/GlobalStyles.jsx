@@ -1,3 +1,4 @@
+
 import { createGlobalStyle } from "styled-components";
 import { generateMedia } from "styled-media-query";
 
@@ -6,6 +7,7 @@ export const customMedia = generateMedia({
   tablet: "769px",
   largeMobile: "486px",
   mobile: "376px",
+
 });
 
 const GlobalStyles = createGlobalStyle`

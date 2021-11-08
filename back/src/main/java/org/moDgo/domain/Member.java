@@ -68,16 +68,5 @@ public class Member {
         this.evaluationStatus = evaluationStatus;
     }
 
-    public void addGoodManner() {
-        this.good_manner++;
-    }
-
-    public void addBadManner() {
-        this.bad_manner++;
-    }
-
-    public void addNormalManner() {
-        this.normal_manner++;
-    }
 
 }
