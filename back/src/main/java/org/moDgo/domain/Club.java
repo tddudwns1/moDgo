@@ -80,4 +80,25 @@ public class Club {
         this.likes = likes;
     }
 
+    public void updateClub(String title,String contents, String imgUrl,
+                           LocalDate startDate, LocalDate endDate, Long remainDays,
+                           int requiredPerson, int likes, ClubStatus clubStatus,
+                           String tags) {
+        this.title = title;
+        this.contents = contents;
+        this.imgUrl = imgUrl;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.remainDays = remainDays;
+        this.requiredPerson = requiredPerson;
+        this.likes = likes;
+        this.clubStatus = clubStatus;
+        this.tags = tags;
+
+    }
+
+    public void changeStatus(ClubStatus clubStatus) {
+        this.clubStatus = clubStatus;
+    }
+
 }
