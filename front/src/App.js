@@ -1,14 +1,5 @@
-//import Login from './components/common/navBar/login/Login';
-//import './App.css';
-//import React from "react";
 
-//function App() {
-//  return (
-//    <div className="App">
-//      <Login />
-//    </div>
-//  );
-//}
+
 
 
 import React from "react";
