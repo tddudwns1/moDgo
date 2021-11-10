@@ -16,9 +16,10 @@ import java.util.List;
 @Table(name = "clubs")
 @ToString(exclude = {"members"})
 @Entity
-public class Club {
+public class Club extends BaseTime{
     @Id
     @Column(name = "club_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -27,6 +28,9 @@ public class Club {
 
     @OneToMany(mappedBy = "club")
     List<Member> members = new ArrayList<>();
+
+    @OneToMany(mappedBy = "club")
+    List<Comment> comments = new ArrayList<>();
 
     @Column(nullable = false)
     private String title ;
@@ -47,7 +51,7 @@ public class Club {
     private LocalDate endDate;
 
     @Column(nullable = false)
-    private Long remainDays = ChronoUnit.DAYS.between(startDate, LocalDate.now());
+    private Long remainDays;
 
     @Column(nullable = false)
     private int requiredPerson;
@@ -81,7 +85,7 @@ public class Club {
     }
 
     public void updateClub(String title,String contents, String imgUrl,
-                           LocalDate startDate, LocalDate endDate, Long remainDays,
+                           LocalDate startDate, LocalDate endDate,
                            int requiredPerson, int likes, ClubStatus clubStatus,
                            String tags) {
         this.title = title;
@@ -89,7 +93,6 @@ public class Club {
         this.imgUrl = imgUrl;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.remainDays = remainDays;
         this.requiredPerson = requiredPerson;
         this.likes = likes;
         this.clubStatus = clubStatus;

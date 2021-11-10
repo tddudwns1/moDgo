@@ -3,11 +3,9 @@ package org.moDgo.controller.club;
 import lombok.RequiredArgsConstructor;
 import org.moDgo.domain.Club;
 import org.moDgo.service.ClubService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -16,11 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClubController {
     private final ClubService clubService;
 
-//    @PostMapping
-//    public ResponseEntity<ClubCreateRequestDto> createClub(
-//            ClubCreateRequestDto clubCreateRequestDto,
-//            @RequestParam(value = "img", required = false) MultipartFile file
-//    ) {
-//        return "";
-//    }
+    @PostMapping
+    public ResponseEntity<ClubCreateRequestDto> createClub(
+            @RequestBody ClubCreateRequestDto clubCreateRequestDto) {
+        System.out.println("========================================");
+        System.out.println("clubCreateRequestDto.getUserId() = " + clubCreateRequestDto.getUserId());
+        System.out.println("clubCreateRequestDto.getRequiredPerson() = " + clubCreateRequestDto.getRequiredPerson());
+        Club club = clubService.createClub(clubCreateRequestDto);
+        return new ResponseEntity("모임 등록 완료. clubId : " + club.getId() + "", HttpStatus.OK);
+    }
 }
