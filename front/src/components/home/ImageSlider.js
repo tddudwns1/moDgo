@@ -28,19 +28,19 @@ export default class ImageSlider extends Component {
             <Wrapper>
                 <StyledSlider {...settings}>
                     
-                      <Image onClick={()=>window.open('[https://www.netflix.com/kr/]','_blank')} src={banner1}></Image>
+                      <Image onClick={()=>window.open('https://www.netflix.com/kr/','_blank')} src={banner1}></Image>
                       
 
                     
-                      <Image onClick={()=>window.open('[https://www.wavve.com/]','_blank')} src={banner2}></Image>   
+                      <Image onClick={()=>window.open('https://www.wavve.com/','_blank')} src={banner2}></Image>   
                     
 
                     
-                     <Image onClick={()=>window.open('[https://watcha.com/]','_blank')} src={banner3}></Image>
+                     <Image onClick={()=>window.open('https://watcha.com/','_blank')} src={banner3}></Image>
                     
 
                     
-                      <Image onClick={()=>window.open('[https://www.preview.disneyplus.com/ko-kr]','_blank')} src={banner4}></Image>
+                      <Image onClick={()=>window.open('https://www.preview.disneyplus.com/ko-kr','_blank')} src={banner4}></Image>
                     
                 </StyledSlider>
             </Wrapper>
