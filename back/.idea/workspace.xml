@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/common/error/ClubDuplicatedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/common/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/common/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/ClubStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/ClubStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/service/ClubService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/service/ClubService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +42,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -56,6 +61,22 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="JPA Inspector" value="true" />
+        <entry key="JPA Palette" value="true" />
+        <entry key="JPA Structure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="JPA Inspector" value="true" />
+        <entry key="JPA Palette" value="true" />
+        <entry key="JPA Structure" value="true" />
+      </map>
+    </option>
   </component>
   <component name="ProjectId" id="20IWY9I8tNXx4WgK4qAC5PJ6nIL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -110,7 +131,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="" name="Default Changelist" comment="" />
       <created>1635732628775</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -130,7 +150,9 @@
       <workItem from="1636370201723" duration="8821000" />
       <workItem from="1636437967281" duration="5606000" />
       <workItem from="1636509835097" duration="350000" />
-      <workItem from="1636510235185" duration="5360000" />
+      <workItem from="1636510235185" duration="5659000" />
+      <workItem from="1636519149504" duration="2220000" />
+      <workItem from="1636521879498" duration="2781000" />
     </task>
     <servers />
   </component>

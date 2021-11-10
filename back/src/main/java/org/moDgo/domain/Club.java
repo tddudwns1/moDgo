@@ -7,14 +7,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "clubs")
-@ToString(exclude = {"members"})
+@ToString(exclude = {"members","comments"})
 @Entity
 public class Club extends BaseTime{
     @Id
@@ -62,11 +61,15 @@ public class Club extends BaseTime{
     @Column(nullable = false)
     private ClubStatus clubStatus;//    RECRUIT,ACTIVE,EXPIRED
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ClubKind clubKind;
+
     @Builder // pk, list 제외 모든 속성
     public Club(User user, String title, String contents,
                 String imgUrl, LocalDate startDate, LocalDate endDate,
                 Long remainDays, int requiredPerson, int likes,
-                ClubStatus clubStatus, String tags) {
+                ClubStatus clubStatus, String tags, ClubKind clubKind) {
         this.user = user;
         this.title = title;
         this.contents = contents;
@@ -78,6 +81,7 @@ public class Club extends BaseTime{
         this.likes = likes;
         this.clubStatus = clubStatus;
         this.tags = tags;
+        this.clubKind = clubKind;
     }
 
     public void changeLikes(int likes) {
@@ -100,6 +104,9 @@ public class Club extends BaseTime{
 
     }
 
+    public void changeClubKind(ClubKind clubKind) {
+        this.clubKind = clubKind;
+    }
     public void changeStatus(ClubStatus clubStatus) {
         this.clubStatus = clubStatus;
     }

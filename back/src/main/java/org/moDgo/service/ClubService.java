@@ -2,9 +2,12 @@ package org.moDgo.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.moDgo.common.error.ClubDuplicatedException;
+import org.moDgo.common.error.ClubNotFoundException;
 import org.moDgo.common.error.UserNotFoundException;
 import org.moDgo.controller.club.ClubCreateRequestDto;
 import org.moDgo.domain.Club;
+import org.moDgo.domain.ClubKind;
 import org.moDgo.domain.ClubStatus;
 import org.moDgo.domain.User;
 import org.moDgo.repository.ClubRepository;
@@ -16,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +32,15 @@ public class ClubService {
 
     @Transactional
     public Club createClub(ClubCreateRequestDto requestDto) {
-        /*
-        * 넷플 => 넷플 두개 못 만들게 예외 처리 필요
-        * */
         Club club = requestDto.toEntity();
+        setClubKind(club);
+        List<Club> allClubByUserId = findAllClubByUserId(requestDto.getUserId());//이전까지 해당 사용자가 만든 모든 모임 List
+        //동일한 OTT 서비스 모임 두개를 못 만들게 하는 예외 처리
+        for (Club finds : allClubByUserId) {
+            if (finds.getClubKind().equals(club.getClubKind())) {
+                throw new ClubDuplicatedException();
+            }
+        }
         String stringStartDate = requestDto.getStartDate();
         String stringEndDate = requestDto.getEndDate();
         LocalDate startDate = LocalDate.parse(stringStartDate, DateTimeFormatter.ISO_LOCAL_DATE);
@@ -39,11 +49,26 @@ public class ClubService {
         return clubRepository.save(newClub);
     }
 
+    // Tags 에서 플랫폼 태그는 무조건 하나만 선택하도록 Front 단에서 예외 처리
+    // 현재 만드려는 모임이 어떤 종류의 OTT 서비스를 공유 하기 위한 모임인지 설정
+    public void setClubKind(Club club) {
+        String tags = club.getTags();
+        List<String> tagList = Arrays.asList(tags.split(","));
+        if (tagList.contains("Netflix")) {
+            club.changeClubKind(ClubKind.NETFLIX);
+        } else if (tagList.contains("Watcha")) {
+            club.changeClubKind(ClubKind.WATCHA);
+        } else if (tagList.contains("Wave")) {
+            club.changeClubKind(ClubKind.WAVE);
+        } else if (tagList.contains("Desney")) {
+            club.changeClubKind(ClubKind.DESNEY);
+        }
+    }
+
     public Club convertToNewClub(final Club club, final String userId,
                                  LocalDate startDate, LocalDate endDate) {
         final User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
-        System.out.println("club.getRequiredPerson() = " + club.getRequiredPerson());
         return Club.builder()
                 .user(user)
                 .title(club.getTitle())
@@ -56,7 +81,29 @@ public class ClubService {
                 .likes(0)
                 .remainDays(ChronoUnit.DAYS.between(LocalDate.now(), endDate))
                 .clubStatus(ClubStatus.ACTIVE)
+                .clubKind(club.getClubKind())
                 .build();
+    }
+
+
+    //현재일 기준 만료 => EXPIRED 로 변경
+    private void changeClubStatus(Club club) {
+        if (LocalDate.now().isAfter(club.getEndDate())) {
+            club.changeStatus(ClubStatus.EXPIRED);
+        }
+    }
+
+    //clud_id로 클럽 한개 찾기
+    public Club findClubById(Long clubId) {
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        changeClubStatus(club);
+        return club;
+    }
+
+    //user_id로 해당 사용자가 만든 모든 클럽 찾기
+    public List<Club> findAllClubByUserId(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        return clubRepository.findAllByUser(user);
     }
 
 }
