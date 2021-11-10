@@ -1,6 +1,5 @@
 package org.moDgo.controller.club;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ClubPageResponseDto {
+public class ClubDetailPageResponseDto {
     private Long totalCount;
-    private List<ClubResponseDto> clubList;
+    private List<ClubDetailResponseDto> clubList;
 
-    public ClubPageResponseDto(Long totalCount, List<ClubResponseDto> clubList) {
+    public ClubDetailPageResponseDto(Long totalCount, List<ClubDetailResponseDto> clubList) {
         this.totalCount = totalCount;
         this.clubList = clubList;
     }

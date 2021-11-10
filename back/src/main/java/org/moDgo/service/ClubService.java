@@ -12,6 +12,9 @@ import org.moDgo.domain.ClubStatus;
 import org.moDgo.domain.User;
 import org.moDgo.repository.ClubRepository;
 import org.moDgo.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -112,10 +115,16 @@ public class ClubService {
         return club;
     }
 
-    //user_id로 해당 사용자가 만든 모든 클럽 찾기
-    public List<Club> findAllClubByUserId(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    public List<Club> findAllClubByUserId(String userID) {
+        User user = userRepository.findById(userID).orElseThrow(UserNotFoundException::new);
         return clubRepository.findAllByUser(user);
+    }
+
+    //user_id로 해당 사용자가 만든 모든 클럽 찾기
+    public Page<Club> findAllClubByUserId(String userId, int page) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by(Sort.Direction.DESC, "id"));
+        return clubRepository.findAllByUser(user,pageRequest);
     }
 
 }
