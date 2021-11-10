@@ -7,18 +7,18 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "clubs")
-@ToString(exclude = {"members"})
+@ToString(exclude = {"members","comments"})
 @Entity
-public class Club {
+public class Club extends BaseTime{
     @Id
     @Column(name = "club_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -27,6 +27,9 @@ public class Club {
 
     @OneToMany(mappedBy = "club")
     List<Member> members = new ArrayList<>();
+
+    @OneToMany(mappedBy = "club")
+    List<Comment> comments = new ArrayList<>();
 
     @Column(nullable = false)
     private String title ;
@@ -47,10 +50,13 @@ public class Club {
     private LocalDate endDate;
 
     @Column(nullable = false)
-    private Long remainDays = ChronoUnit.DAYS.between(startDate, LocalDate.now());
+    private Long remainDays;
 
     @Column(nullable = false)
     private int requiredPerson;
+
+    @Column(nullable = false)
+    private int currentPerson; //현재 인원
 
     private int likes;
 
@@ -58,11 +64,16 @@ public class Club {
     @Column(nullable = false)
     private ClubStatus clubStatus;//    RECRUIT,ACTIVE,EXPIRED
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ClubKind clubKind;
+
     @Builder // pk, list 제외 모든 속성
     public Club(User user, String title, String contents,
                 String imgUrl, LocalDate startDate, LocalDate endDate,
                 Long remainDays, int requiredPerson, int likes,
-                ClubStatus clubStatus, String tags) {
+                ClubStatus clubStatus, String tags, ClubKind clubKind,
+                int currentPerson) {
         this.user = user;
         this.title = title;
         this.contents = contents;
@@ -74,14 +85,13 @@ public class Club {
         this.likes = likes;
         this.clubStatus = clubStatus;
         this.tags = tags;
+        this.clubKind = clubKind;
+        this.currentPerson = currentPerson;
     }
 
-    public void changeLikes(int likes) {
-        this.likes = likes;
-    }
 
     public void updateClub(String title,String contents, String imgUrl,
-                           LocalDate startDate, LocalDate endDate, Long remainDays,
+                           LocalDate startDate, LocalDate endDate,
                            int requiredPerson, int likes, ClubStatus clubStatus,
                            String tags) {
         this.title = title;
@@ -89,7 +99,6 @@ public class Club {
         this.imgUrl = imgUrl;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.remainDays = remainDays;
         this.requiredPerson = requiredPerson;
         this.likes = likes;
         this.clubStatus = clubStatus;
@@ -97,6 +106,17 @@ public class Club {
 
     }
 
+    public void changeLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void changeCurrentPerson(int currentPerson) {
+        this.currentPerson = currentPerson;
+    }
+
+    public void changeClubKind(ClubKind clubKind) {
+        this.clubKind = clubKind;
+    }
     public void changeStatus(ClubStatus clubStatus) {
         this.clubStatus = clubStatus;
     }
