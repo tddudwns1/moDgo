@@ -1,6 +1,8 @@
 package org.moDgo.domain;
 
 public enum ClubStatus {
-    // 2021 11 10 RECRUIT 제외 => 프로튼 단에서 충분히 예외 처리 가능
-    ACTIVE,EXPIRED
+    // EXPIRED => 무조건 현재 날짜 기준 마감일이 지난 상태(모집 정원과 상관없음)
+    // ACTIVE => 마감일은 지나지 않고, 정원 모집 중
+    // RECRUITED => 마감일은 지나지 않고, 정원 모집 완료
+    ACTIVE,EXPIRED,RECRUITED
 }

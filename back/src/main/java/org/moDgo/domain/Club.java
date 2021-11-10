@@ -55,6 +55,9 @@ public class Club extends BaseTime{
     @Column(nullable = false)
     private int requiredPerson;
 
+    @Column(nullable = false)
+    private int currentPerson; //현재 인원
+
     private int likes;
 
     @Enumerated(EnumType.STRING)
@@ -69,7 +72,8 @@ public class Club extends BaseTime{
     public Club(User user, String title, String contents,
                 String imgUrl, LocalDate startDate, LocalDate endDate,
                 Long remainDays, int requiredPerson, int likes,
-                ClubStatus clubStatus, String tags, ClubKind clubKind) {
+                ClubStatus clubStatus, String tags, ClubKind clubKind,
+                int currentPerson) {
         this.user = user;
         this.title = title;
         this.contents = contents;
@@ -82,11 +86,9 @@ public class Club extends BaseTime{
         this.clubStatus = clubStatus;
         this.tags = tags;
         this.clubKind = clubKind;
+        this.currentPerson = currentPerson;
     }
 
-    public void changeLikes(int likes) {
-        this.likes = likes;
-    }
 
     public void updateClub(String title,String contents, String imgUrl,
                            LocalDate startDate, LocalDate endDate,
@@ -102,6 +104,14 @@ public class Club extends BaseTime{
         this.clubStatus = clubStatus;
         this.tags = tags;
 
+    }
+
+    public void changeLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void changeCurrentPerson(int currentPerson) {
+        this.currentPerson = currentPerson;
     }
 
     public void changeClubKind(ClubKind clubKind) {

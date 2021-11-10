@@ -14,7 +14,6 @@ import org.moDgo.repository.ClubRepository;
 import org.moDgo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,6 +81,7 @@ public class ClubService {
                 .remainDays(ChronoUnit.DAYS.between(LocalDate.now(), endDate))
                 .clubStatus(ClubStatus.ACTIVE)
                 .clubKind(club.getClubKind())
+                .currentPerson(1) // Club 생성 당시 현재인원  = 모임장 1명
                 .build();
     }
 
@@ -89,7 +89,19 @@ public class ClubService {
     //현재일 기준 만료 => EXPIRED 로 변경
     private void changeClubStatus(Club club) {
         if (LocalDate.now().isAfter(club.getEndDate())) {
-            club.changeStatus(ClubStatus.EXPIRED);
+            club.changeStatus(ClubStatus.EXPIRED);//모집여부 상관없이 기한 지남
+        }else if(club.getCurrentPerson() == club.getRequiredPerson()){
+            club.changeStatus(ClubStatus.RECRUITED);//모집완료
+        } else if (club.getCurrentPerson() < club.getRequiredPerson()) {
+            club.changeStatus(ClubStatus.ACTIVE);//기한 내 모집중
+        }
+    }
+
+    //모든 클럽에 대해서 만료 처리 메서드
+    private void changeAllClubStatus() {
+        List<Club> all = clubRepository.findAll();
+        for (Club club : all) {
+            changeClubStatus(club);
         }
     }
 
