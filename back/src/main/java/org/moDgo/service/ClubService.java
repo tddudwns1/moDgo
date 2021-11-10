@@ -12,9 +12,11 @@ import org.moDgo.domain.ClubStatus;
 import org.moDgo.domain.User;
 import org.moDgo.repository.ClubRepository;
 import org.moDgo.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,6 +84,7 @@ public class ClubService {
                 .remainDays(ChronoUnit.DAYS.between(LocalDate.now(), endDate))
                 .clubStatus(ClubStatus.ACTIVE)
                 .clubKind(club.getClubKind())
+                .currentPerson(1) // Club 생성 당시 현재인원  = 모임장 1명
                 .build();
     }
 
@@ -89,7 +92,19 @@ public class ClubService {
     //현재일 기준 만료 => EXPIRED 로 변경
     private void changeClubStatus(Club club) {
         if (LocalDate.now().isAfter(club.getEndDate())) {
-            club.changeStatus(ClubStatus.EXPIRED);
+            club.changeStatus(ClubStatus.EXPIRED);//모집여부 상관없이 기한 지남
+        }else if(club.getCurrentPerson() == club.getRequiredPerson()){
+            club.changeStatus(ClubStatus.RECRUITED);//모집완료
+        } else if (club.getCurrentPerson() < club.getRequiredPerson()) {
+            club.changeStatus(ClubStatus.ACTIVE);//기한 내 모집중
+        }
+    }
+
+    //모든 클럽에 대해서 만료 처리 메서드
+    private void changeAllClubStatus() {
+        List<Club> all = clubRepository.findAll();
+        for (Club club : all) {
+            changeClubStatus(club);
         }
     }
 
@@ -100,10 +115,16 @@ public class ClubService {
         return club;
     }
 
-    //user_id로 해당 사용자가 만든 모든 클럽 찾기
-    public List<Club> findAllClubByUserId(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    public List<Club> findAllClubByUserId(String userID) {
+        User user = userRepository.findById(userID).orElseThrow(UserNotFoundException::new);
         return clubRepository.findAllByUser(user);
+    }
+
+    //user_id로 해당 사용자가 만든 모든 클럽 찾기
+    public Page<Club> findAllClubByUserId(String userId, int page) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by(Sort.Direction.DESC, "id"));
+        return clubRepository.findAllByUser(user,pageRequest);
     }
 
 }
