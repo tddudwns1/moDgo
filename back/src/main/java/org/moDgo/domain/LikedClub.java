@@ -1,16 +1,19 @@
 package org.moDgo.domain;
 
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @Getter
-@Table(name = "likedclubs")
+@NoArgsConstructor
+@ToString
+@Table(name ="likedclubs")
 public class LikedClub {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

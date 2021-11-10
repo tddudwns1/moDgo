@@ -9,19 +9,21 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "comments")
-@NoArgsConstructor
 @ToString
-public class Comment extends BaseTime{
+@NoArgsConstructor
+@Table(name = "comments")
+public class Comment extends BaseTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -39,5 +41,11 @@ public class Comment extends BaseTime{
         this.contents = newComment;
     }
 
+
+    public Comment(Long id, Club club, String contents) {
+        this.id = id;
+        this.club = club;
+        this.contents = contents;
+    }
 
 }
