@@ -1,5 +1,6 @@
 package org.moDgo.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -27,10 +28,11 @@ public class Comment extends BaseTime{
     @Column(length = 500, nullable = false)
     private String contents;
 
-    public Comment(Long id, Club club, String contents) {
-        this.id = id;
+    @Builder
+    public Comment(Club club, String contents, User user) {
         this.club = club;
         this.contents = contents;
+        this.user = user;
     }
 
     public void changeComment(String newComment) {
