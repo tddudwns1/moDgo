@@ -115,16 +115,31 @@ public class ClubService {
         return club;
     }
 
+    //user_id로 해당 사용자가 만든 모든 클럽 찾기
     public List<Club> findAllClubByUserId(String userID) {
         User user = userRepository.findById(userID).orElseThrow(UserNotFoundException::new);
         return clubRepository.findAllByUser(user);
     }
 
-    //user_id로 해당 사용자가 만든 모든 클럽 찾기
+    //user_id로 해당 사용자가 만든 모든 클럽 찾기 - Paging 사용을 위한 오버 로딩
     public Page<Club> findAllClubByUserId(String userId, int page) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by(Sort.Direction.DESC, "id"));
         return clubRepository.findAllByUser(user,pageRequest);
     }
 
+    //모임 조회 -> tags or status
+    public List<Club> findAllClubs(String tags,String clubStatus) {
+        //Club 만료 여부 갱신
+        changeAllClubStatus();
+
+        List<Club> clubs = clubRepository.findAll();
+
+        //모집 중 필터링
+        if (!clubStatus.isEmpty()) {
+            clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.EXPIRED));
+            clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.RECRUITED));
+        }
+
+    }
 }

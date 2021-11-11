@@ -27,13 +27,14 @@ public class ClubController {
     }
 
     //모임 리스트 조회
-//    @GetMapping
-//    public ResponseEntity<ClubPageResponseDto> getClubs(
-//            @RequestParam(value="tags") String tags,
-//            @RequestParam(value = "clubStatus") String clubStatus,
-//            @PageableDefault(size = 6) Pageable pageable
-//    ) {
-//    }
+    @GetMapping
+    public ResponseEntity<ClubPageResponseDto> getClubs(
+            @RequestParam(value="tags") String tags,
+            @RequestParam(value = "clubStatus") String clubStatus,
+            @PageableDefault(size = 6) Pageable pageable
+    ) {
+
+    }
 
     //모임 상세조회
     @GetMapping("/{clubId}")
