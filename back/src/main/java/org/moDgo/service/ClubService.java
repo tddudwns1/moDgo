@@ -10,8 +10,7 @@ import org.moDgo.domain.Club;
 import org.moDgo.domain.ClubKind;
 import org.moDgo.domain.ClubStatus;
 import org.moDgo.domain.User;
-import org.moDgo.repository.ClubRepository;
-import org.moDgo.repository.UserRepository;
+import org.moDgo.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,8 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +28,9 @@ import java.util.List;
 public class ClubService {
     private final ClubRepository clubRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
+    private final LikedClubRepository likedClubRepository;
 
 
     @Transactional
@@ -135,11 +136,32 @@ public class ClubService {
 
         List<Club> clubs = clubRepository.findAll();
 
-        //모집 중 필터링
+        //모집 중 필터링 => ClubStatus == Active or Null
         if (!clubStatus.isEmpty()) {
             clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.EXPIRED));
             clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.RECRUITED));
         }
 
+        Set<Club> clubSortedByTags = new HashSet<>();
+        String[] tagList = tags.split(",");
+        for (Club club : clubs) {
+            List<String> originTagList = Arrays.asList(club.getTags().split(","));
+            for (String tag : tagList) {
+                if (originTagList.contains(tag)) {
+                    clubSortedByTags.add(club);
+                }
+            }
+        }
+        return new ArrayList<>(clubSortedByTags);
     }
+
+    @Transactional
+    public void deleteClub(Long clubId) {
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        clubRepository.delete(club);
+        commentRepository.deleteAllByClub(club);
+        memberRepository.deleteAllByClub(club);
+        likedClubRepository.deleteByClub(club);
+    }
+
 }
