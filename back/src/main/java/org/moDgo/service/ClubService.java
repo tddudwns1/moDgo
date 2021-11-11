@@ -137,11 +137,11 @@ public class ClubService {
         List<Club> clubs = clubRepository.findAll();
 
         //모집 중 필터링 => ClubStatus == Active or Null
-        if (!clubStatus.isEmpty()) {
-            clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.EXPIRED));
-            clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.RECRUITED));
+        if (clubStatus.isEmpty() && tags.isEmpty()) {
+            return clubs;
         }
-
+        clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.EXPIRED));
+        clubs.removeIf(club -> club.getClubStatus().equals(ClubStatus.RECRUITED));
         Set<Club> clubSortedByTags = new HashSet<>();
         String[] tagList = tags.split(",");
         for (Club club : clubs) {
