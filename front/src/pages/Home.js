@@ -1,13 +1,13 @@
 import React from 'react';
 import NavBar from '../components/common/navBar/NavBar.js';
-// import Main from '../components/home/Main';
+import Main from '../components/home/Main';
 import Footer from '../components/common/Footer';
 
 function Home() {
     return (
         <>
             <NavBar />
-            {/* <Main /> */}
+             <Main /> 
             <Footer />
         </>
     );

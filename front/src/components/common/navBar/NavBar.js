@@ -56,7 +56,7 @@ function NavBar() {
     <>
       {!isLoggedIn ? (
         <Nav>
-          <Link to="/">
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <NavLogo>
               <LogoIcon>
                 <img src={logo} alt="Logo" />
@@ -65,13 +65,15 @@ function NavBar() {
             </NavLogo>
           </Link>
           <NavMenu>
-            <NavLink to="/board">
+            <NavLink  to="/board" style={{ textDecoration: 'none' }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
             <NavIcon>
               <NavProfile onClick={showModal}>
+                
                 <img src={profile} alt="Profile icon" />
-              </NavProfile>
+                
+                </NavProfile>
               <StyledModal visible={isModalVisible} onCancel={handleCancel}>
                 <Title>
                   지금 바로,
@@ -80,6 +82,7 @@ function NavBar() {
                 </Title>
                 <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
               </StyledModal>
+             
             </NavIcon>
           </NavMenu>
         </Nav>
