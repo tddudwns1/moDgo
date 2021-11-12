@@ -10,7 +10,7 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "http://localhost:8080";
+  const url = "https://true.loca.lt";
 
   const onSuccess = async (response) => {
     const {
@@ -18,7 +18,7 @@ const Login = ({ ...props }) => {
     } = response;
 
     try {
-      const res = await axios.get(url+ `/users/${googleId}`);
+      const res = await axios.get(url + `/users/${googleId}`);
 
       if (res.status === 204) {
         const user = {
@@ -28,9 +28,9 @@ const Login = ({ ...props }) => {
           imgUrl: imageUrl,
         };
 
-        await axios.post( url+"/users", user);
+        await axios.post(url + "/users", user);
 
-        await axios.get(url+`users/${user.id}`);
+        await axios.get(url + `users/${user.id}`);
 
         localStorage.setItem("user_id", user.id);
         localStorage.setItem("user_image", user.imgUrl);
