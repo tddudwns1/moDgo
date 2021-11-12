@@ -16,6 +16,14 @@
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/LikedClub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/LikedClub.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/repository/LikedClubRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/repository/LikedClubRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/common/navBar/NavBar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/home/Main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/pages/Home.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../front/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +149,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b5864e1b-0d8f-41f5-8903-544ad62df2ea" name="Changes" comment="" />
       <created>1635732628775</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -164,7 +171,8 @@
       <workItem from="1636510235185" duration="5659000" />
       <workItem from="1636519149504" duration="2220000" />
       <workItem from="1636521879498" duration="16053000" />
-      <workItem from="1636596796942" duration="10500000" />
+      <workItem from="1636596796942" duration="15909000" />
+      <workItem from="1636698920621" duration="4098000" />
     </task>
     <servers />
   </component>
