@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="Comment Controller, Service 추가">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/domain/LikedClub.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/domain/LikedClub.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/LikedClub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/LikedClub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/repository/LikedClubRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/repository/LikedClubRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../front/node_modules/.cache/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/common/navBar/NavBar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/home/Main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/pages/Home.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../front/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="Comment Controller, Service 추가" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
