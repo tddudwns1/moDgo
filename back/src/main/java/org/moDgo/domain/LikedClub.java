@@ -20,11 +20,11 @@ public class LikedClub {
     private Long id;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @JoinColumn(name = "club_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Club club;
 
     @Builder
@@ -32,4 +32,6 @@ public class LikedClub {
         this.user = user;
         this.club = club;
     }
+
+
 }
