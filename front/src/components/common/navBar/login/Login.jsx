@@ -10,7 +10,7 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "http://localhost:8080";
+  const url = "https://true.loca.lt";
 
   const onSuccess = async (response) => {
     const {
