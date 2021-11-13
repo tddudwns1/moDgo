@@ -106,6 +106,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.moDgo.repository" />
       <recent name="org.moDgo.common.error" />
       <recent name="org.moDgo.controller.club" />
     </key>
@@ -172,6 +173,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Comment Controller, Service 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment Controller, Service 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
