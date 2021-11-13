@@ -18,7 +18,7 @@ function NavBar() {
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
 
-  useEffect(() => {
+  useEffect (() => {
     if (userId) {
       setLoggedIn(true);
       setUserImage(userImg);
@@ -26,12 +26,12 @@ function NavBar() {
   }, [userId, userImg]);
 
   const showModal = () => {
-    setIsModalVisible(true);
-  }
+   setIsModalVisible(true); 
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("user_id");
@@ -39,7 +39,7 @@ function NavBar() {
     setLoggedIn(false);
     setUserImage(null);
     window.location.reload();
-  }
+  };
 
   const dropdownMenu = (
     <StyledDropdownMenu>
@@ -64,25 +64,26 @@ function NavBar() {
               <LogoTitle>moDgo</LogoTitle>
             </NavLogo>
           </Link>
+
           <NavMenu>
             <NavLink  to="/board" style={{ textDecoration: 'none' }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
+
             <NavIcon>
               <NavProfile onClick={showModal}>
-                
-                <img src={profile} alt="Profile icon" />
-                
-                </NavProfile>
-              <StyledModal visible={isModalVisible} onCancel={handleCancel}>
-                <Title>
-                  지금 바로,
-                  <br />
-                  <strong>moDgo</strong>에서 모여보세요!
+                <img src={profile} alt="Profile icon" />               
+              </NavProfile>
+              <SModal visible={isModalVisible} onCancel={handleCancel}>
+                 <Title>
+                   지금바로
+                   <br />
+                   <strong>moDgo</strong>에서 모여보세요!
                 </Title>
-                <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
-              </StyledModal>
-             
+                 <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+              
+              </SModal>
+              
             </NavIcon>
           </NavMenu>
         </Nav>
@@ -109,13 +110,14 @@ function NavBar() {
               <NavRegister onClick={showModal}>
                 <img src={add} alt="Add icon" />
               </NavRegister>
-              <StyledModal visible={isModalVisible} onCancel={handleCancel}>
+              <SModal visible={isModalVisible} onCancel={handleCancel}>
                 {/* <RegisterForm onCancel={handleCancel} /> */}
-              </StyledModal>
+              </SModal>
             </NavIcon>
           </NavMenu>
         </Nav>
-      )}
+      )
+    }
     </>
   );
 }
@@ -315,7 +317,7 @@ const StyledDropdownMenu = styled(Menu)`
 	}
 `;
 
-const StyledModal = styled(Modal)`
+const SModal = styled(Modal)`
 	display: flex;
 	justify-content: center;
 	.ant-modal-content {
