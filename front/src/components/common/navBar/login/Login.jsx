@@ -10,7 +10,7 @@ import { customMedia } from "../../../../GlobalStyles";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "https://true.loca.lt";
+  const url = "https://modgo.loca.lt";
 
   const onSuccess = async (response) => {
     const {

@@ -11,7 +11,7 @@ const SearchBar = (props) => {
   return (
     <SearchBarContainer>
       <StyledSearchBar
-        allowClear
+        // allowClear
         enterButton
         size="large"
         placeholder="모임 검색"

@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
 
 const Footer = () => {
-    return (
-        <StyledFooter>
-            <Copyright>Copyright &copy; 2021 moDgo</Copyright>
-            <Text>본 사이트는 소프트웨어공학 과목 용도로 제작된 사이트입니다.</Text>
-        </StyledFooter>
-    );
+  return (
+    <StyledFooter>
+      <Copyright>Copyright &copy; 2021 moDgo</Copyright>
+      <Text>소프트웨어공학 프로젝트로 제작된 사이트입니다.</Text>
+    </StyledFooter>
+  );
 };
 
 export default Footer;
