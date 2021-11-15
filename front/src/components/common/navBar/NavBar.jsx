@@ -75,9 +75,6 @@ const NavBar = () => {
         <Nav>
           <Link to="/" style={{ textDecoration: "none" }}>
             <NavLogo>
-              <LogoIcon>
-                <img src={logo} alt="Logo" />
-              </LogoIcon>
               <LogoTitle>moDgo</LogoTitle>
             </NavLogo>
           </Link>
