@@ -93,9 +93,9 @@ const NavBar = () => {
               <NavText>모임 찾기</NavText>
             </NavLink>
 
-            <NavLink>
-              <NavText onClick={showModal}>모임생성</NavText>
-            </NavLink>
+            <NavRegister onClick={showModal}>
+              <NavText>모임 생성</NavText>
+            </NavRegister>
             <StyledModal visible={isModalVisible} onCancel={handleCancel}>
               <RegisterForm onCancel={handleCancel} />
             </StyledModal>
@@ -272,25 +272,10 @@ const Title = styled.div`
 `;
 
 const NavRegister = styled.div`
-  width: 48px;
-  height: 48px;
   cursor: pointer;
-  img {
-    width: 100%;
-    height: 100%;
+  &:hover {
+    color: #029400;
   }
-  ${customMedia.lessThan("mobile")`
-    width: 28px;
-    height: 28px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 30px;
-    height: 30px;
-  `}
-	${customMedia.between("largeMobile", "tablet")`
-    width: 32px;
-    height: 32px;
-  `}
 `;
 
 const StyledDropdownMenu = styled(Menu)`
