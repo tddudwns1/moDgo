@@ -5,7 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { customMedia } from "../../../../GlobalStyles";
 
-import google from "../../../../images/icons/google.png";
+// import google from "../../../../images/icons/google.png";
 
 const Login = ({ ...props }) => {
   const history = useHistory();
@@ -62,9 +62,6 @@ const Login = ({ ...props }) => {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            <GoogleIcon>
-              <img src={google} alt="Google icon" />
-            </GoogleIcon>
             구글로 로그인
           </GoogleLoginButton>
         )}
@@ -78,18 +75,13 @@ const Login = ({ ...props }) => {
 
 export default Login;
 
-const GoogleIcon = styled.span`
-  position: absolute;
-  left: 14px;
-`;
-
 const GoogleLoginButton = styled.button`
-  width: 300px;
+  width: auto;
   height: 50px;
   font-size: 18px;
   font-weight: bold;
-  color: #ffffff;
-  background-color: #db4437;
+  color: #000000;
+  background-color: #e4fae4;
   border: none;
   border-radius: 5px;
   outline: none;

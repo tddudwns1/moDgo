@@ -7,158 +7,144 @@ import { customMedia } from "../../GlobalStyles";
 
 import ImageSlider from "./ImageSlider";
 import MainClubCard from "./MainClubCard";
-import Button from "../common/Button";
-import Spin from "../common/Spin";
+import Button from "../common/Button.jsx";
+import Spin from "../common/Spin.jsx";
 
 const Main = () => {
-	const [sortByCreatedAtClubs, setSortByCreatedAtClubs] = useState([]);
-	const [sortByLikesClubs, setsortByLikesClubs] = useState([]);
-	const [likedClubs, setLikedClubs] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const userId = localStorage.getItem("user_id");
+  const [sortByCreatedAtClubs, setSortByCreatedAtClubs] = useState([]);
+  const [sortByLikesClubs, setsortByLikesClubs] = useState([]);
+  const [likedClubs, setLikedClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem("user_id");
 
-	useEffect(() => {
-		fetchData();
-		setLoading(false);
-	}, [userId]);
+  useEffect(() => {
+    // fetchData();
+    setLoading(false);
+  }, [userId]);
 
-	const fetchData = async () => {
-		try {
-			const createdAtRes = await axios.get("/clubs", {
-				params: {
-					sortBy: "createdAt",
-					tags: "",
-					clubStatus: "ACTIVE",
-					keyword: "",
-					page: 1,
-				},
-			});
-			setSortByCreatedAtClubs(createdAtRes.data.clubList);
+  const fetchData = async () => {
+    try {
+      const createdAtRes = await axios.get("/clubs", {
+        params: {
+          sortBy: "createdAt",
+          tags: "",
+          clubStatus: "ACTIVE",
+          keyword: "",
+          page: 1,
+        },
+      });
+      setSortByCreatedAtClubs(createdAtRes.data.clubList);
 
-			const likesRes = await axios.get("/clubs", {
-				params: {
-					sortBy: "likes",
-					tags: "",
-					clubStatus: "ACTIVE",
-					keyword: "",
-					page: 1,
-				},
-			});
-			setsortByLikesClubs(likesRes.data.clubList);
+      const likesRes = await axios.get("/clubs", {
+        params: {
+          sortBy: "likes",
+          tags: "",
+          clubStatus: "ACTIVE",
+          keyword: "",
+          page: 1,
+        },
+      });
+      setsortByLikesClubs(likesRes.data.clubList);
 
-			if (userId) {
-				const likedClubRes = await axios.get("/likedClubs/ids", {
-					params: {
-						userId: userId,
-					},
-				});
-				setLikedClubs(likedClubRes.data.likedClubIdList);
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	};
+      if (userId) {
+        const likedClubRes = await axios.get("/likedClubs/ids", {
+          params: {
+            userId: userId,
+          },
+        });
+        setLikedClubs(likedClubRes.data.likedClubIdList);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const handleLikedClubs = (clubId) => {
-		let index = likedClubs.indexOf(clubId);
+  const handleLikedClubs = (clubId) => {
+    let index = likedClubs.indexOf(clubId);
 
-		try {
-			if (likedClubs.includes(clubId)) {
-				likedClubs.splice(index, 1);
-				setLikedClubs([...likedClubs]);
-				handleLikeDelete(clubId);
-			} else {
-				setLikedClubs([...likedClubs, clubId]);
-				handleLikePost(clubId);
-			}
-		} catch (err) {
-			console.log(err);
-		} finally {
-			fetchData();
-		}
-	};
+    try {
+      if (likedClubs.includes(clubId)) {
+        likedClubs.splice(index, 1);
+        setLikedClubs([...likedClubs]);
+        handleLikeDelete(clubId);
+      } else {
+        setLikedClubs([...likedClubs, clubId]);
+        handleLikePost(clubId);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchData();
+    }
+  };
 
-	const handleLikePost = async (clubId) => {
-		try {
-			await axios.post("/likedClubs", {
-				clubId: Number(clubId),
-				userId: userId,
-			});
-		} catch (err) {
-			message.error("이미 좋아요한 모임입니다.");
-		} finally {
-			fetchData();
-		}
-	};
+  const handleLikePost = async (clubId) => {
+    try {
+      await axios.post("/likedClubs", {
+        clubId: Number(clubId),
+        userId: userId,
+      });
+    } catch (err) {
+      message.error("이미 좋아요한 모임입니다.");
+    } finally {
+      fetchData();
+    }
+  };
 
-	const handleLikeDelete = async (clubId) => {
-		try {
-			axios.delete("/likedClubs", {
-				params: { userId: userId, clubId: Number(clubId) },
-			});
-		} catch (err) {
-			console.log(err);
-		} finally {
-			fetchData();
-		}
-	};
+  const handleLikeDelete = async (clubId) => {
+    try {
+      axios.delete("/likedClubs", {
+        params: { userId: userId, clubId: Number(clubId) },
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchData();
+    }
+  };
 
-	return (
-		<Wrapper>
-			{loading ? (
-				<SpinContainer>
-					<Spin />
-				</SpinContainer>
-			) : (
-				<>
-					<ImageSlider />
-					<Title>지금 가장 인기있는 모임</Title>
-					<CardRow>
-						{sortByLikesClubs
-							.filter((club, i) => i < 4)
-							.map((club) => (
-								<MainClubCard
-									key={club.id}
-									userId={userId}
-									club={club}
-									handleLikedClubs={handleLikedClubs}
-									likedClubs={likedClubs}
-								></MainClubCard>
-							))}
-					</CardRow>
-					<Title>따끈따끈한 신규 모임</Title>
-					<CardRow>
-						{sortByCreatedAtClubs
-							.filter((club, i) => i < 4)
-							.map((club) => (
-								<MainClubCard
-									key={club.id}
-									userId={userId}
-									club={club}
-									handleLikedClubs={handleLikedClubs}
-									likedClubs={likedClubs}
-								></MainClubCard>
-							))}
-					</CardRow>
-					<ButtonRow>
-						<Link to="/board">
-							<MainButton>모임 더보기</MainButton>
-						</Link>
-					</ButtonRow>
-				</>
-			)}
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      {loading ? (
+        <SpinContainer>
+          <Spin />
+        </SpinContainer>
+      ) : (
+        <>
+          <ImageSlider />
+          <Title>마감 임박 순</Title>
+          <CardRow>
+            {sortByLikesClubs
+              .filter((club, i) => i < 8)
+              .map((club) => (
+                <MainClubCard
+                  key={club.id}
+                  userId={userId}
+                  club={club}
+                  handleLikedClubs={handleLikedClubs}
+                  likedClubs={likedClubs}
+                ></MainClubCard>
+              ))}
+          </CardRow>
+          <ButtonRow>
+            <Link to="/board">
+              <MainButton>모임 더보기</MainButton>
+            </Link>
+          </ButtonRow>
+        </>
+      )}
+    </Wrapper>
+  );
 };
 
 export default Main;
 
 const Wrapper = styled.section`
-	width: 1200px;
+  width: 1200px;
   margin: 0 auto;
   padding-bottom: 60px;
   flex: 1;
-  
+
   ${customMedia.lessThan("mobile")`
     width: 295px;
   `}
@@ -174,8 +160,8 @@ const Wrapper = styled.section`
 `;
 
 const Title = styled.div`
-	font-weight: bold;
-	font-size: 24px;
+  font-weight: bold;
+  font-size: 24px;
   margin: 60px 0 40px 0;
   ${customMedia.lessThan("mobile")`
     font-size: 18px;
@@ -193,10 +179,10 @@ const Title = styled.div`
 `;
 
 const CardRow = styled.div`
-	width: 100%;
-	display: flex;
+  width: 100%;
+  display: flex;
   gap: 24px;
-  
+
   ${customMedia.lessThan("mobile")`
     flex-wrap: wrap;
   `}
@@ -215,20 +201,20 @@ const CardRow = styled.div`
 `;
 
 const ButtonRow = styled.div`
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const MainButton = styled(Button)`
-	text-align: center;
-	margin: 80px 0;
-	border-radius: 30px;
-	color: #ff6701;
-	background-color: #ffffff;
-	border: 1px solid #ff6701;
-	padding: 10px 20px;
+  text-align: center;
+  margin: 80px 0;
+  border-radius: 30px;
+  color: #029400;
+  background-color: #ffffff;
+  border: 1px solid #029400;
+  padding: 10px 20px;
   transition: all 0.3s;
-  
+
   ${customMedia.lessThan("mobile")`
     font-size: 16px;
   `}
@@ -243,21 +229,21 @@ const MainButton = styled(Button)`
     margin: 60px 0;
   `}
 	&:hover {
-		color: #ffffff;
-		background-color: #ff6701;
-	}
+    color: #ffffff;
+    background-color: #029400;
+  }
 `;
 
 const SpinContainer = styled.div`
-	width: 100%;
-	height: 80vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	${customMedia.lessThan("mobile")`
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${customMedia.lessThan("mobile")`
     height: 40vh;
   `}
-	${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between("mobile", "largeMobile")`
     height: 40vh;
   `}
 	${customMedia.between("largeMobile", "tablet")`

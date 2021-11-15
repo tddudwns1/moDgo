@@ -1,47 +1,38 @@
-import React,{Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {customMedia} from "../../GlobalStyles";
+import { customMedia } from "../../GlobalStyles";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import banner1 from"../../images/netflix.png";
-import banner2 from"../../images/wave.png";
-import banner3 from"../../images/watchaplay.png";
-import banner4 from"../../images/disneyplus.png";
+import banner1 from "../../images/netflix.png";
+import banner2 from "../../images/wave.png";
+import banner3 from "../../images/watchaplay.png";
+import banner4 from "../../images/disneyplus.png";
 
 export default class ImageSlider extends Component {
-    render(){
-        const settings ={
-            infinite : true,
-            speed :1000,
+    render() {
+        const settings = {
+            infinite: true,
+            speed: 1000,
             slidesToShow: 1,
             slidesToScroll: 1,
             arrows: true,
             autoplay: true,
             autoplaySpeed: 3000,
-            dots:true,
+            dots: true,
         };
-        return(
+        return (
             <Wrapper>
                 <StyledSlider {...settings}>
-                    
-                      <Image onClick={()=>window.open('https://www.netflix.com/kr/','_blank')} src={banner1}></Image>
-                      
 
-                    
-                      <Image onClick={()=>window.open('https://www.wavve.com/','_blank')} src={banner2}></Image>   
-                    
+                    <Image onClick={() => window.open('https://www.netflix.com/kr/', '_blank')} src={banner1}></Image>
+                    <Image onClick={() => window.open('https://www.wavve.com/', '_blank')} src={banner2}></Image>
+                    <Image onClick={() => window.open('https://watcha.com/', '_blank')} src={banner3}></Image>
+                    <Image onClick={() => window.open('https://www.preview.disneyplus.com/ko-kr', '_blank')} src={banner4}></Image>
 
-                    
-                     <Image onClick={()=>window.open('https://watcha.com/','_blank')} src={banner3}></Image>
-                    
-
-                    
-                      <Image onClick={()=>window.open('https://www.preview.disneyplus.com/ko-kr','_blank')} src={banner4}></Image>
-                    
                 </StyledSlider>
             </Wrapper>
         );
@@ -56,16 +47,16 @@ const Wrapper = styled.section`
         display : none;
     `}
 
-    ${customMedia.between("mobile","largeMobile")`
+    ${customMedia.between("mobile", "largeMobile")`
         display : none;
     `}
 
-    ${customMedia.between("tablet","desktop")`
+    ${customMedia.between("tablet", "desktop")`
         width : 880px;
         height : 152.5px;
     `}
 
-    ${customMedia.between("tablet","desktop")`
+    ${customMedia.between("tablet", "desktop")`
     width: 880px;
     height:220px;
     `}
@@ -75,7 +66,7 @@ const Wrapper = styled.section`
 const StyledSlider = styled(Slider)`
 	.slick-prev:before,
 	.slick-next:before {
-		color: #ff6701;
+		color: #029400;
 		margin: 0 auto;
 	}
 	.slick-slider {
