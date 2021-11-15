@@ -16,10 +16,8 @@
     "react-scripts": "4.0.3",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
-<<<<<<< HEAD
-=======
+
     "start": "^5.1.0",
->>>>>>> 3b0726b427b23e0b7bb6e2b643a0ac6e4b6f61ce
     "styled-components": "^5.3.3",
     "styled-media-query": "^2.1.2",
     "web-vitals": "^1.1.2"
