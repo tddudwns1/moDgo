@@ -10,7 +10,7 @@ import { customMedia } from "../../../../GlobalStyles";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "https://true.loca.lt";
+  const url = "https://modgo.loca.lt";
 
   const onSuccess = async (response) => {
     const {
@@ -51,7 +51,7 @@ const Login = ({ ...props }) => {
     console.log("Login Failed: ", response);
   };
 
-  // console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
   return (
     <>
