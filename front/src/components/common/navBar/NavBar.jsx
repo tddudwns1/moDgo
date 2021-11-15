@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Menu, Dropdown } from "antd";
 import styled from "styled-components";
-import { customMedia } from "../../../GlobalStyles.jsx";
+import { customMedia } from "../../../GlobalStyles";
 
 import Login from "./login/Login.jsx";
+// import RegisterForm from "./register/RegisterForm.jsx";
 import logo from "../../../images/icons/logo.png";
 import profile from "../../../images/icons/profile.png";
 import add from "../../../images/icons/add.png";
 
-function NavBar() {
+const NavBar = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userImage, setUserImage] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -42,7 +43,9 @@ function NavBar() {
   const dropdownMenu = (
     <StyledDropdownMenu>
       <Menu.Item key="1">
-        <Link to="/myPage">마이페이지</Link>
+        <Link to="/myPage" style={{ textDecoration: "none" }}>
+          마이페이지
+        </Link>
       </Menu.Item>
       <Menu.Item key="2" onClick={handleLogout}>
         로그아웃
@@ -56,9 +59,6 @@ function NavBar() {
         <Nav>
           <Link to="/" style={{ textDecoration: "none" }}>
             <NavLogo>
-              <LogoIcon>
-                <img src={logo} alt="Logo" />
-              </LogoIcon>
               <LogoTitle>moDgo</LogoTitle>
             </NavLogo>
           </Link>
@@ -66,12 +66,14 @@ function NavBar() {
             <NavLink to="/board" style={{ textDecoration: "none" }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
-            <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+            <NavIcon>
+              <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+            </NavIcon>
           </NavMenu>
         </Nav>
       ) : (
         <Nav>
-          <Link to="/">
+          <Link to="/" style={{ textDecoration: "none" }}>
             <NavLogo>
               <LogoIcon>
                 <img src={logo} alt="Logo" />
@@ -80,7 +82,7 @@ function NavBar() {
             </NavLogo>
           </Link>
           <NavMenu>
-            <NavLink to="/board">
+            <NavLink to="/board" style={{ textDecoration: "none" }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
             <NavIcon>
@@ -101,7 +103,7 @@ function NavBar() {
       )}
     </>
   );
-}
+};
 
 export default NavBar;
 
@@ -156,7 +158,7 @@ const LogoIcon = styled.div`
 const LogoTitle = styled.div`
   font-weight: bold;
   font-size: 30px;
-  color: #f98404;
+  color: #000000;
   ${customMedia.lessThan("mobile")`
     font-size: 20px;
   `}
@@ -187,13 +189,14 @@ const NavMenu = styled.div`
 const NavLink = styled(Link)`
   color: black;
   &:hover {
-    color: #ff6701;
+    color: #029400;
   }
 `;
 
 const NavText = styled.div`
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
   ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
