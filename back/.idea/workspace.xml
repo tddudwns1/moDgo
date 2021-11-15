@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/common/error/ClubDuplicatedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/common/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/common/Messages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/ClubStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/ClubStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/service/ClubService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/service/ClubService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +106,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.moDgo.repository" />
+      <recent name="org.moDgo.common.error" />
       <recent name="org.moDgo.controller.club" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -155,7 +152,9 @@
       <workItem from="1636509835097" duration="350000" />
       <workItem from="1636510235185" duration="5659000" />
       <workItem from="1636519149504" duration="2220000" />
-      <workItem from="1636521879498" duration="10856000" />
+      <workItem from="1636521879498" duration="16053000" />
+      <workItem from="1636596796942" duration="15909000" />
+      <workItem from="1636698920621" duration="4098000" />
     </task>
     <servers />
   </component>
@@ -173,6 +172,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Comment Controller, Service 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment Controller, Service 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

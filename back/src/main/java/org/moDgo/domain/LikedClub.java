@@ -1,27 +1,30 @@
 package org.moDgo.domain;
 
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @Getter
-@Table(name = "likedclubs")
+@NoArgsConstructor
+@ToString
+@Table(name ="likedclubs")
 public class LikedClub {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @JoinColumn(name = "club_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Club club;
 
     @Builder
@@ -29,4 +32,6 @@ public class LikedClub {
         this.user = user;
         this.club = club;
     }
+
+
 }

@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Modal, Menu, Dropdown } from 'antd';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Modal, Menu, Dropdown } from "antd";
+import styled from "styled-components";
 import { customMedia } from "../../../GlobalStyles.jsx";
 
-import Login from './login/Login.jsx';
-
-import logo from '../../../images/icons/logo.png';
-import profile from '../../../images/icons/profile.png';
-import add from '../../../images/icons/add.png';
+import Login from "./login/Login.jsx";
+import logo from "../../../images/icons/logo.png";
+import profile from "../../../images/icons/profile.png";
+import add from "../../../images/icons/add.png";
 
 function NavBar() {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userImage, setUserImage] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -26,7 +24,11 @@ function NavBar() {
   }, [userId, userImg]);
 
   const showModal = () => {
+<<<<<<< HEAD:front/src/components/common/navBar/NavBar.js
    setIsModalVisible(true); 
+=======
+    setIsModalVisible(true);
+>>>>>>> 3b0726b427b23e0b7bb6e2b643a0ac6e4b6f61ce:front/src/components/common/navBar/NavBar.jsx
   };
 
   const handleCancel = () => {
@@ -56,7 +58,7 @@ function NavBar() {
     <>
       {!isLoggedIn ? (
         <Nav>
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <NavLogo>
               <LogoIcon>
                 <img src={logo} alt="Logo" />
@@ -66,9 +68,10 @@ function NavBar() {
           </Link>
 
           <NavMenu>
-            <NavLink  to="/board" style={{ textDecoration: 'none' }}>
+            <NavLink to="/board" style={{ textDecoration: "none" }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
+<<<<<<< HEAD:front/src/components/common/navBar/NavBar.js
 
             <NavIcon>
               <NavProfile onClick={showModal}>
@@ -85,6 +88,9 @@ function NavBar() {
               </SModal>
               
             </NavIcon>
+=======
+            <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+>>>>>>> 3b0726b427b23e0b7bb6e2b643a0ac6e4b6f61ce:front/src/components/common/navBar/NavBar.jsx
           </NavMenu>
         </Nav>
       ) : (
@@ -125,13 +131,13 @@ function NavBar() {
 export default NavBar;
 
 const Nav = styled.nav`
-	width: 1200px;
-	height: 80px;
-	margin: 40px auto;
-	display: flex;
-	justify-content: space-between;
+  width: 1200px;
+  height: 80px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  
+
   ${customMedia.lessThan("mobile")`
     width: 295px;
   `}
@@ -147,18 +153,18 @@ const Nav = styled.nav`
 `;
 
 const NavLogo = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const LogoIcon = styled.div`
-	width: 26px;
-	height: 26px;
-	img {
-		width: 100%;
-	}
-	${customMedia.lessThan("mobile")`
+  width: 26px;
+  height: 26px;
+  img {
+    width: 100%;
+  }
+  ${customMedia.lessThan("mobile")`
     width: 20px;
     height: 20px;
   `}
@@ -173,10 +179,10 @@ const LogoIcon = styled.div`
 `;
 
 const LogoTitle = styled.div`
-	font-weight: bold;
-	font-size: 30px;
-	color: #f98404;
-	${customMedia.lessThan("mobile")`
+  font-weight: bold;
+  font-size: 30px;
+  color: #f98404;
+  ${customMedia.lessThan("mobile")`
     font-size: 20px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -188,11 +194,11 @@ const LogoTitle = styled.div`
 `;
 
 const NavMenu = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 50px;
-	${customMedia.lessThan("mobile")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  ${customMedia.lessThan("mobile")`
     gap: 20px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -204,16 +210,16 @@ const NavMenu = styled.div`
 `;
 
 const NavLink = styled(Link)`
-	color: black;
-	&:hover {
-		color: #ff6701;
-	}
+  color: black;
+  &:hover {
+    color: #ff6701;
+  }
 `;
 
 const NavText = styled.div`
-	font-weight: 500;
-	font-size: 20px;
-	${customMedia.lessThan("mobile")`
+  font-weight: 500;
+  font-size: 20px;
+  ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -225,9 +231,9 @@ const NavText = styled.div`
 `;
 
 const NavIcon = styled.div`
-	display: flex;
-	gap: 30px;
-	${customMedia.lessThan("mobile")`
+  display: flex;
+  gap: 30px;
+  ${customMedia.lessThan("mobile")`
     gap: 10px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -239,14 +245,14 @@ const NavIcon = styled.div`
 `;
 
 const NavProfile = styled.div`
-	width: 48px;
-	height: 48px;
-	cursor: pointer;
-	img {
-		width: 100%;
-		height: 100%;
-	}
-	${customMedia.lessThan("mobile")`
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  ${customMedia.lessThan("mobile")`
     width: 28px;
     height: 28px;
   `}
@@ -261,8 +267,8 @@ const NavProfile = styled.div`
 `;
 
 const Title = styled.div`
-	font-size: 26px;
-	white-space: pre-wrap;
+  font-size: 26px;
+  white-space: pre-wrap;
   ${customMedia.lessThan("mobile")`
     font-size: 18px;
   `}
@@ -275,14 +281,14 @@ const Title = styled.div`
 `;
 
 const NavRegister = styled.div`
-	width: 48px;
-	height: 48px;
-	cursor: pointer;
-	img {
-		width: 100%;
-		height: 100%;
-	}
-	${customMedia.lessThan("mobile")`
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  ${customMedia.lessThan("mobile")`
     width: 28px;
     height: 28px;
   `}
@@ -297,12 +303,12 @@ const NavRegister = styled.div`
 `;
 
 const StyledDropdownMenu = styled(Menu)`
-	.ant-dropdown-menu-item,
-	.ant-dropdown-menu-submenu-title {
-		font-size: 16px;
-		padding: 10px 20px;
-		text-align: center;
-		${customMedia.lessThan("mobile")`
+  .ant-dropdown-menu-item,
+  .ant-dropdown-menu-submenu-title {
+    font-size: 16px;
+    padding: 10px 20px;
+    text-align: center;
+    ${customMedia.lessThan("mobile")`
       font-size: 12px;
       padding: 5px 10px;
     `}
@@ -314,9 +320,10 @@ const StyledDropdownMenu = styled(Menu)`
       font-size: 14px;
       padding: 8px 13px;
     `}
-	}
+  }
 `;
 
+<<<<<<< HEAD:front/src/components/common/navBar/NavBar.js
 const SModal = styled(Modal)`
 	display: flex;
 	justify-content: center;
@@ -324,6 +331,15 @@ const SModal = styled(Modal)`
 		padding: 30px 55px;
 		display: flex;
 		align-items: center;
+=======
+const StyledModal = styled(Modal)`
+  display: flex;
+  justify-content: center;
+  .ant-modal-content {
+    padding: 30px 55px;
+    display: flex;
+    align-items: center;
+>>>>>>> 3b0726b427b23e0b7bb6e2b643a0ac6e4b6f61ce:front/src/components/common/navBar/NavBar.jsx
     ${customMedia.lessThan("mobile")`
       padding: 10px;
     `}
@@ -333,13 +349,13 @@ const SModal = styled(Modal)`
     ${customMedia.between("largeMobile", "tablet")`
       padding: 20px 35px;
     `}
-	}
-	.ant-modal-body {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 48px;
+  }
+  .ant-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
     ${customMedia.lessThan("mobile")`
       gap: 24px;
       padding: 15px;
@@ -350,8 +366,8 @@ const SModal = styled(Modal)`
     ${customMedia.between("largeMobile", "tablet")`
       gap: 32px;
     `}
-	}
-	.ant-modal-footer {
-		display: none;
-	}
+  }
+  .ant-modal-footer {
+    display: none;
+  }
 `;
