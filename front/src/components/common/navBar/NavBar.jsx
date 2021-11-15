@@ -93,7 +93,9 @@ const NavBar = () => {
               <NavText>모임 찾기</NavText>
             </NavLink>
 
-            <NavText onClick={showModal}>모임생성</NavText>
+            <NavLink>
+              <NavText onClick={showModal}>모임생성</NavText>
+            </NavLink>
             <StyledModal visible={isModalVisible} onCancel={handleCancel}>
               <RegisterForm onCancel={handleCancel} />
             </StyledModal>
