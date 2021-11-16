@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { customMedia } from "../../../GlobalStyles";
 
 import Login from "./login/Login.jsx";
-// import RegisterForm from "./register/RegisterForm.jsx";
+import RegisterForm from "./register/RegisterForm.jsx";
 import logo from "../../../images/icons/logo.png";
 import profile from "../../../images/icons/profile.png";
 import add from "../../../images/icons/add.png";
@@ -40,18 +40,18 @@ const NavBar = () => {
     window.location.reload();
   };
 
-  const dropdownMenu = (
-    <StyledDropdownMenu>
-      <Menu.Item key="1">
-        <Link to="/myPage" style={{ textDecoration: "none" }}>
-          마이페이지
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="2" onClick={handleLogout}>
-        로그아웃
-      </Menu.Item>
-    </StyledDropdownMenu>
-  );
+  // const dropdownMenu = (
+  //   <StyledDropdownMenu>
+  //     <Menu.Item key="1">
+  //       <Link to="/myPage" style={{ textDecoration: "none" }}>
+  //         마이페이지
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="2" onClick={handleLogout}>
+  //       로그아웃
+  //     </Menu.Item>
+  //   </StyledDropdownMenu>
+  // );
 
   return (
     <>
@@ -67,7 +67,17 @@ const NavBar = () => {
               <NavText>모임 찾기</NavText>
             </NavLink>
             <NavIcon>
-              <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+              <NavProfile onClick={showModal}>
+                <img src={profile} alt="Profile icon" />
+              </NavProfile>
+              <StyledModal visible={isModalVisible} onCancel={handleCancel}>
+                <Title>
+                  지금 바로,
+                  <br />
+                  <strong>moDgo</strong>에서 모여보세요!
+                </Title>
+                <Login onCancel={handleCancel} setLoggedIn={setLoggedIn} />
+              </StyledModal>
             </NavIcon>
           </NavMenu>
         </Nav>
@@ -82,18 +92,24 @@ const NavBar = () => {
             <NavLink to="/board" style={{ textDecoration: "none" }}>
               <NavText>모임 찾기</NavText>
             </NavLink>
+
+            <NavRegister onClick={showModal}>
+              <NavText>모임 생성</NavText>
+            </NavRegister>
+            <StyledModal visible={isModalVisible} onCancel={handleCancel}>
+              <RegisterForm onCancel={handleCancel} />
+            </StyledModal>
+
+            <NavLink to="/myPage" style={{ textDecoration: "none" }}>
+              <NavText>마이페이지</NavText>
+            </NavLink>
+            <NavLink onClick={handleLogout} style={{ textDecoration: "none" }}>
+              <NavText>로그아웃</NavText>
+            </NavLink>
             <NavIcon>
-              <Dropdown overlay={dropdownMenu} placement="bottomCenter">
-                <NavProfile>
-                  <img src={userImage} alt="User profile" />
-                </NavProfile>
-              </Dropdown>
-              <NavRegister onClick={showModal}>
-                <img src={add} alt="Add icon" />
-              </NavRegister>
-              <StyledModal visible={isModalVisible} onCancel={handleCancel}>
-                {/* <RegisterForm onCancel={handleCancel} /> */}
-              </StyledModal>
+              <NavProfile>
+                <img src={userImage} alt="User profile" />
+              </NavProfile>
             </NavIcon>
           </NavMenu>
         </Nav>
@@ -256,25 +272,10 @@ const Title = styled.div`
 `;
 
 const NavRegister = styled.div`
-  width: 48px;
-  height: 48px;
   cursor: pointer;
-  img {
-    width: 100%;
-    height: 100%;
+  &:hover {
+    color: #029400;
   }
-  ${customMedia.lessThan("mobile")`
-    width: 28px;
-    height: 28px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 30px;
-    height: 30px;
-  `}
-	${customMedia.between("largeMobile", "tablet")`
-    width: 32px;
-    height: 32px;
-  `}
 `;
 
 const StyledDropdownMenu = styled(Menu)`
