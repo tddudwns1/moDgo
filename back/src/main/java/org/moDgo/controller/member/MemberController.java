@@ -6,10 +6,7 @@ import org.moDgo.domain.Member;
 import org.moDgo.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/members")
@@ -29,6 +26,25 @@ public class MemberController {
         } catch (Exception e) {
             return new ResponseEntity("이미 참여신청하셨습니다.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<MemberResponseDto> memberDeny(
+            @RequestParam("userId") String userId,
+            @RequestParam("clubId") Long cludId,
+            @RequestParam("delete") String deleteStatus
+    ) {
+        memberService.deleteMember(userId, cludId, deleteStatus);
+        return new ResponseEntity("참여 취소가 완료 되었습니다.", HttpStatus.OK);
+    }
+
+    //참여 승인에 사용
+    @PutMapping
+    public ResponseEntity<MemberResponseDto> memberApprove(
+            @RequestBody MemberApproveRequestDto memberApproveRequestDto
+    ) {
+        memberService.approveMember(memberApproveRequestDto);
+        return new ResponseEntity("참여가 승인되었습니다.", HttpStatus.OK);
     }
 
 }

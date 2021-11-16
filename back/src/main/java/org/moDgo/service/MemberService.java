@@ -3,6 +3,7 @@ package org.moDgo.service;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.moDgo.common.error.ClubNotFoundException;
+import org.moDgo.common.error.MemberNotFoundException;
 import org.moDgo.common.error.UserNotFoundException;
 import org.moDgo.controller.member.MemberApproveRequestDto;
 import org.moDgo.controller.member.MemberCreateRequestDto;
@@ -38,11 +39,16 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(String userId, Long clubId, String deleteStatus) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        Member member = memberRepository.findByUserAndClub(user, club).orElseThrow(MemberNotFoundException::new);
+        memberRepository.delete(member);
     }
 
     @Transactional
     public void approveMember(MemberApproveRequestDto memberApproveRequestDto) {
-
+        Member member = memberRepository.findById(memberApproveRequestDto.getMemberId()).orElseThrow(MemberNotFoundException::new);
+        member.changeApprovalStatus(ApprovalStatus.CONFIRMED);
     }
 
     //getMemberList
