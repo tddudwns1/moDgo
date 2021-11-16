@@ -51,7 +51,7 @@ const Login = ({ ...props }) => {
     console.log("Login Failed: ", response);
   };
 
-  // console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
   return (
     <>
