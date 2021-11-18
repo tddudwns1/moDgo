@@ -4,9 +4,13 @@ package org.moDgo.controller.member;
 import lombok.RequiredArgsConstructor;
 import org.moDgo.domain.Member;
 import org.moDgo.service.MemberService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/members")
@@ -45,6 +49,48 @@ public class MemberController {
     ) {
         memberService.approveMember(memberApproveRequestDto);
         return new ResponseEntity("참여가 승인되었습니다.", HttpStatus.OK);
+    }
+
+    // 승인 대기자, 참여자, 승인 거부자 조회
+    @GetMapping
+    public ResponseEntity<MemberPageResponseDto> getMembers(
+            @RequestParam("userId") String userId,
+            @RequestParam("approvalStatus") String approvalStatus,
+            @RequestParam("page") int page) {
+        Page<Member> allMembers = memberService.getMemberList(userId, approvalStatus, page);
+        Long totalCount = allMembers.getTotalElements();
+
+        List<MemberResponseDto> response = allMembers
+                .stream()
+                .map(MemberResponseDto::new)
+                .collect(Collectors.toList());
+
+        MemberPageResponseDto memberPageResponseDto = new MemberPageResponseDto(totalCount, response);
+        return new ResponseEntity(memberPageResponseDto, HttpStatus.OK);
+    }
+
+    // 참여중인 모임 조회
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<JoiningClubPageResponse> getJoiningClubs(
+            @PathVariable("userId") String userId,
+            @RequestParam(value="page",defaultValue = "1")  int page) {
+        Page<Member> allJoiningClubs = memberService.getJoiningClubList(userId, page);
+        Long totalCount = allJoiningClubs.getTotalElements();
+        List<JoiningClubResponse> response = allJoiningClubs
+                .stream()
+                .map(JoiningClubResponse::new)
+                .collect(Collectors.toList());
+        JoiningClubPageResponse joiningClubPageResponse = new JoiningClubPageResponse(totalCount, response);
+        return new ResponseEntity(joiningClubPageResponse, HttpStatus.OK);
+    }
+
+    //참여중인 모임 아이디 조회
+    @GetMapping("/ids")
+    public ResponseEntity<JoiningClubIdListResponseDto> getJoiningClubIds(
+            @RequestParam("userId") String userId) {
+        List<Long> joiningClubIdList = memberService.getJoiningClubIds(userId);
+        JoiningClubIdListResponseDto responseDto = new JoiningClubIdListResponseDto(joiningClubIdList);
+        return new ResponseEntity(responseDto, HttpStatus.OK);
     }
 
 }
