@@ -51,7 +51,7 @@ public class MemberController {
         return new ResponseEntity("참여가 승인되었습니다.", HttpStatus.OK);
     }
 
-    // 승인 대기자, 참여자, 승인 거부자 조회
+    // 승인 대기자(WAITING), 참여자(CONFIRMED), 승인 거부자(DENIED) 조회
     @GetMapping
     public ResponseEntity<MemberPageResponseDto> getMembers(
             @RequestParam("userId") String userId,
@@ -90,6 +90,7 @@ public class MemberController {
             @RequestParam("userId") String userId) {
         List<Long> joiningClubIdList = memberService.getJoiningClubIds(userId);
         JoiningClubIdListResponseDto responseDto = new JoiningClubIdListResponseDto(joiningClubIdList);
+
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }
 
