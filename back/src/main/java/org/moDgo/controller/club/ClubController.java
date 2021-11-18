@@ -23,6 +23,7 @@ public class ClubController {
     @PostMapping
     public ResponseEntity<ClubCreateRequestDto> createClub(
             @RequestBody ClubCreateRequestDto clubCreateRequestDto) {
+        System.out.println("clubCreateRequestDto = " + clubCreateRequestDto);
         Club club = clubService.createClub(clubCreateRequestDto);
         return new ResponseEntity("모임 등록 완료. clubId : " + club.getId() + "", HttpStatus.OK);
     }
@@ -66,7 +67,6 @@ public class ClubController {
         ClubDetailPageResponseDto detailPageResponseDto = new ClubDetailPageResponseDto(totalCount, response);
         return new ResponseEntity(detailPageResponseDto, HttpStatus.OK);
     }
-
     //모임 삭제
     @DeleteMapping("/users/{clubId}")
     public ResponseEntity<Void> deleteClub(
