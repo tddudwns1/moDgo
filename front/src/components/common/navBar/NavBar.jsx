@@ -4,11 +4,14 @@ import { Modal, Menu, Dropdown } from 'antd';
 import styled from 'styled-components';
 import { customMedia } from '../../../GlobalStyles';
 
-import Login from './login/Login.jsx';
-import RegisterForm from './register/RegisterForm.jsx';
-import logo from '../../../images/icons/logo.png';
-import profile from '../../../images/icons/profile.png';
-import add from '../../../images/icons/add.png';
+
+
+import Login from "./login/Login.jsx";
+import RegisterForm from "./register/RegisterForm.jsx";
+import logo from "../../../images/icons/logo.png";
+import profile from "../../../images/icons/profile.png";
+import add from "../../../images/icons/add.png";
+
 
 const NavBar = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -40,7 +43,7 @@ const NavBar = () => {
     window.location.reload();
   };
 
- 
+
 
   return (
     <>
@@ -89,10 +92,12 @@ const NavBar = () => {
               <RegisterForm onCancel={handleCancel} />
             </StyledModal>
 
-            <NavLink to="/myPage" style={{ textDecoration: 'none' }}>
+
+            <NavLink to="/myPage" style={{ textDecoration: "none" }}>
               <NavText>마이페이지</NavText>
             </NavLink>
-            <NavLink onClick={handleLogout} style={{ textDecoration: 'none' }}>
+            <NavLink onClick={handleLogout} style={{ textDecoration: "none" }}>
+
               <NavText>로그아웃</NavText>
             </NavLink>
             <NavIcon>

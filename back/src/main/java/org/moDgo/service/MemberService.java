@@ -2,6 +2,15 @@ package org.moDgo.service;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.moDgo.common.error.ClubNotFoundException;
+import org.moDgo.common.error.MemberNotFoundException;
+import org.moDgo.common.error.UserNotFoundException;
+import org.moDgo.controller.member.MemberApproveRequestDto;
+import org.moDgo.controller.member.MemberCreateRequestDto;
+import org.moDgo.domain.ApprovalStatus;
+import org.moDgo.domain.Club;
+import org.moDgo.domain.Member;
+import org.moDgo.domain.User;
 import org.moDgo.repository.ClubRepository;
 import org.moDgo.repository.MemberRepository;
 import org.moDgo.repository.UserRepository;
@@ -17,5 +26,33 @@ public class MemberService {
     private final UserRepository userRepository;
     private final ClubRepository clubRepository;
 
+    @Transactional
+    public Member apply(MemberCreateRequestDto memberCreateRequestDto) {
+        User user = userRepository.findById(memberCreateRequestDto.getUserId()).orElseThrow(UserNotFoundException::new);
+        Club club = clubRepository.findById(memberCreateRequestDto.getClubId()).orElseThrow(ClubNotFoundException::new);
+        if (memberRepository.findByUserAndClub(user, club).isPresent()) {
+            return null;
+        }
+        Member member = Member.builder().user(user).club(club).approvalStatus(ApprovalStatus.WAITING).build();
+        return memberRepository.save(member);
+    }
+
+    @Transactional
+    public void deleteMember(String userId, Long clubId, String deleteStatus) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        Member member = memberRepository.findByUserAndClub(user, club).orElseThrow(MemberNotFoundException::new);
+        memberRepository.delete(member);
+    }
+
+    @Transactional
+    public void approveMember(MemberApproveRequestDto memberApproveRequestDto) {
+        Member member = memberRepository.findById(memberApproveRequestDto.getMemberId()).orElseThrow(MemberNotFoundException::new);
+        member.changeApprovalStatus(ApprovalStatus.CONFIRMED);
+    }
+
+    //getMemberList
+    //getJoiningClubList
+    //getJoiningClubIds
 
 }
