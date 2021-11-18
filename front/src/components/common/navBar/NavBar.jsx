@@ -170,7 +170,7 @@ const LogoIcon = styled.div`
 
 const LogoTitle = styled.div`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 50px;
   color: #000000;
   ${customMedia.lessThan("mobile")`
     font-size: 20px;

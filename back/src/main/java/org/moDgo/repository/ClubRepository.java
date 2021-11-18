@@ -12,9 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface ClubRepository extends JpaRepository<Club,Long> {
+
     Club findByIdAndUser(Long id, User user);
 
     List<Club> findAllByUser(User user);
 
     Page<Club> findAllByUser(User user, Pageable pageable);
+
+    Optional<Club> findByUser(User user);
 }
