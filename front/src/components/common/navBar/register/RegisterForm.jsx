@@ -36,9 +36,9 @@ const RegisterForm = ({ ...props }) => {
     if (selectedTags.includes(tagName)) {
       selectedTags.splice(index, 1);
       setSelectedTags([...selectedTags]);
-    } else if (selectedTags.length === 2) {
+    } else if (selectedTags.length === 1) {
       selectedTags.splice(index, 1);
-      message.error("태그는 최대 2개까지 선택 가능합니다!");
+      message.error("태그는 1개만 선택 가능합니다!");
     } else {
       setSelectedTags([...selectedTags, tagName]);
     }
@@ -47,10 +47,10 @@ const RegisterForm = ({ ...props }) => {
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    const sendTags = selectedTags.join(", ");
-    const formData = new FormData();
+    const sendTags = selectedTags;
+    const formData = new URLSearchParams();
 
-    if (!values.minPersonnel || !values.maxPersonnel) {
+    if (!values.personnel) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
@@ -73,27 +73,31 @@ const RegisterForm = ({ ...props }) => {
     formData.append("userId", userId);
     formData.append("title", values.title);
     formData.append("contents", values.contents);
+    formData.append("imgUrl", "xxx");
     formData.append("startDate", startDate);
     formData.append("endDate", endDate);
-    formData.append("personnel", values.personnel);
     formData.append("tags", sendTags);
+    formData.append("requiredPerson", values.requiredPerson);
+
+    const json = encodeURIComponent(JSON.stringify(formData));
+    console.log(json);
+    const url = "https://modgo.loca.lt/";
 
     try {
-      const res = await axios.get(`/clubs/users/${userId}`);
+      const res = await axios
+        .post(url + "/clubs", formData, {
+          headers: { "Content-Type": `application/json` },
+        })
+        .then((res) => {
+          console.log(res);
+        });
 
-      if (res.status === 204) {
-        const res = await axios.post("/clubs", formData);
-
-        if (res.status === 200) {
-          registerForm.resetFields();
-          message.success("모임이 성공적으로 등록되었습니다!");
-          props.onCancel();
-        } else {
-          message.error("모임 등록에 실패했습니다.");
-        }
-      } else if (res.data) {
+      if (res.status === 200) {
         registerForm.resetFields();
-        message.warning("이미 등록한 모임이 존재합니다.");
+        message.success("모임이 성공적으로 등록되었습니다!");
+        props.onCancel();
+      } else {
+        message.error("모임 등록에 실패했습니다.");
       }
     } catch (err) {
       if (
@@ -156,7 +160,7 @@ const RegisterForm = ({ ...props }) => {
             >
               <Row>
                 <PersonnelRow>
-                  <Form.Item name="minPersonnel">
+                  <Form.Item name="personnel">
                     <StyledInputNumber min={2} max={4} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
@@ -405,56 +409,56 @@ const StyledRangePicker = styled(RangePicker)`
   }
 `;
 
-const FileInput = styled.div`
-  background-color: #f6f6f6;
-  border: 1px solid #94989b;
-  border-radius: 5px;
-  padding: 10px;
-  width: 250px;
+// const FileInput = styled.div`
+//   background-color: #f6f6f6;
+//   border: 1px solid #94989b;
+//   border-radius: 5px;
+//   padding: 10px;
+//   width: 250px;
 
-  ${customMedia.lessThan("mobile")`
-    font-size: 10px;
-    padding: 0;
-    width: 130px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    font-size: 10px;
-    padding: 0;
-    width: 130px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    font-size: 12px;
-    padding: 3px;
-    width: 170px;
-  `}
+//   ${customMedia.lessThan("mobile")`
+//     font-size: 10px;
+//     padding: 0;
+//     width: 130px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     font-size: 10px;
+//     padding: 0;
+//     width: 130px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     font-size: 12px;
+//     padding: 3px;
+//     width: 170px;
+//   `}
 
-  ${customMedia.between("tablet", "desktop")`
-    font-size: 14px;
-    padding: 5px;
-  `}
-`;
+//   ${customMedia.between("tablet", "desktop")`
+//     font-size: 14px;
+//     padding: 5px;
+//   `}
+// `;
 
-const StyledTextArea = styled(TextArea)`
-  font-size: 16px;
-  width: 700px;
-  background-color: #f6f6f6;
-  border: 1px solid #94989b;
-  border-radius: 5px;
-  ${customMedia.lessThan("mobile")`
-    font-size: 10px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    font-size: 10px;
-  `}
+// const StyledTextArea = styled(TextArea)`
+//   font-size: 16px;
+//   width: 700px;
+//   background-color: #f6f6f6;
+//   border: 1px solid #94989b;
+//   border-radius: 5px;
+//   ${customMedia.lessThan("mobile")`
+//     font-size: 10px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     font-size: 10px;
+//   `}
 
-  ${customMedia.between("largeMobile", "tablet")`
-    font-size: 12px;
-  `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     font-size: 12px;
+//   `}
 
-  ${customMedia.between("tablet", "desktop")`
-    font-size: 14px;
-  `}
-`;
+//   ${customMedia.between("tablet", "desktop")`
+//     font-size: 14px;
+//   `}
+// `;
 
 const TagRow = styled(Row)`
   margin-top: 20px;
@@ -496,59 +500,59 @@ const TagContainer = styled.div`
   `}
 `;
 
-const PreviewImage = styled.img`
-  width: 263px;
-  height: 263px;
-  border: none;
-  border-radius: 50%;
-  position: relative;
-  ${customMedia.lessThan("mobile")`
-    width: 85px;
-    height: 85px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 100px;
-    height: 100px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 120px;
-    height: 120px;
-  `}
-  ${customMedia.between("tablet", "desktop")`
-    width: 180px;
-    height: 180px;
-  `}
-`;
+// const PreviewImage = styled.img`
+//   width: 263px;
+//   height: 263px;
+//   border: none;
+//   border-radius: 50%;
+//   position: relative;
+//   ${customMedia.lessThan("mobile")`
+//     width: 85px;
+//     height: 85px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 100px;
+//     height: 100px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 120px;
+//     height: 120px;
+//   `}
+//   ${customMedia.between("tablet", "desktop")`
+//     width: 180px;
+//     height: 180px;
+//   `}
+// `;
 
-const TrashBtn = styled.div`
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  z-index: 10;
-  position: absolute;
-  top: 10%;
-  right: 25%;
+// const TrashBtn = styled.div`
+//   width: 24px;
+//   height: 24px;
+//   cursor: pointer;
+//   z-index: 10;
+//   position: absolute;
+//   top: 10%;
+//   right: 25%;
 
-  ${customMedia.lessThan("mobile")`
-    width: 10px;
-    height: 10px;
-    top: 5%;
-    right: 15%;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 12px;
-    height: 12px;
-    top: 5%;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 18px;
-    height: 18px;
-  `}
-	img {
-    width: 100%;
-    height: 100%;
-  }
-`;
+//   ${customMedia.lessThan("mobile")`
+//     width: 10px;
+//     height: 10px;
+//     top: 5%;
+//     right: 15%;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 12px;
+//     height: 12px;
+//     top: 5%;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 18px;
+//     height: 18px;
+//   `}
+// 	img {
+//     width: 100%;
+//     height: 100%;
+//   }
+// `;
 
 const ButtonRow = styled(Row)`
   margin-top: 30px;
@@ -557,25 +561,25 @@ const ButtonRow = styled(Row)`
   gap: 88px;
 `;
 
-const MapWrapper = styled.div`
-  width: 1000px;
-  height: 250px;
-  margin-top: 40px;
-  ${customMedia.lessThan("mobile")`
-    width: 282px;
-    height: 200px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 350px;
-    height: 200px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 567px;
-  `}
-  ${customMedia.between("tablet", "desktop")`
-    width: 777px;
-  `}
-`;
+// const MapWrapper = styled.div`
+//   width: 1000px;
+//   height: 250px;
+//   margin-top: 40px;
+//   ${customMedia.lessThan("mobile")`
+//     width: 282px;
+//     height: 200px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 350px;
+//     height: 200px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 567px;
+//   `}
+//   ${customMedia.between("tablet", "desktop")`
+//     width: 777px;
+//   `}
+// `;
 
 const FilledBtn = styled(Button)`
   & {
@@ -622,29 +626,29 @@ const UnfilledBtn = styled(Button)`
   }
 `;
 
-const SkeletonImg = styled(Skeleton.Image)`
-  .ant-skeleton-image {
-    width: 263px;
-    height: 263px;
-    border-radius: 50%;
-    ${customMedia.lessThan("mobile")`
-      width: 85px;
-      height: 85px;
-    `}
-    ${customMedia.between("mobile", "largeMobile")`
-      width: 100px;
-      height: 100px;
-  `}
-    ${customMedia.between("largeMobile", "tablet")`
-      width: 120px;
-      height: 120px;
-    `}
-    ${customMedia.between("tablet", "desktop")`
-      width: 180px;
-      height: 180px;
-    `}
-  }
-`;
+// const SkeletonImg = styled(Skeleton.Image)`
+//   .ant-skeleton-image {
+//     width: 263px;
+//     height: 263px;
+//     border-radius: 50%;
+//     ${customMedia.lessThan("mobile")`
+//       width: 85px;
+//       height: 85px;
+//     `}
+//     ${customMedia.between("mobile", "largeMobile")`
+//       width: 100px;
+//       height: 100px;
+//   `}
+//     ${customMedia.between("largeMobile", "tablet")`
+//       width: 120px;
+//       height: 120px;
+//     `}
+//     ${customMedia.between("tablet", "desktop")`
+//       width: 180px;
+//       height: 180px;
+//     `}
+//   }
+// `;
 
 const NavRegister = styled.div`
   width: 48px;
