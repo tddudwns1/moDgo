@@ -21,7 +21,7 @@ const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
-  const tags = ["넷플릭스", "왓챠", "디즈니플러스", "웨이브"];
+  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVE"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -47,10 +47,9 @@ const RegisterForm = ({ ...props }) => {
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    const sendTags = selectedTags;
-    const formData = new URLSearchParams();
+    const sendTags = selectedTags.join(", ");
 
-    if (!values.personnel) {
+    if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
@@ -70,46 +69,41 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-    formData.append("userId", userId);
-    formData.append("title", values.title);
-    formData.append("contents", values.contents);
-    formData.append("imgUrl", "xxx");
-    formData.append("startDate", startDate);
-    formData.append("endDate", endDate);
-    formData.append("tags", sendTags);
-    formData.append("requiredPerson", values.requiredPerson);
+    const url = "https://modgo.loca.lt";
 
-    const json = encodeURIComponent(JSON.stringify(formData));
-    console.log(json);
-    const url = "https://modgo.loca.lt/";
+    const data = {
+      userId: userId,
+      title: values.title,
+      contents: values.contents,
+      imgUrl: "xxx",
+      startDate: startDate,
+      endDate: endDate,
+      tags: sendTags,
+      requiredPerson: values.requiredPerson,
+    };
 
     try {
       const res = await axios
-        .post(url + "/clubs", formData, {
-          headers: { "Content-Type": `application/json` },
+        .post(url + "/clubs", JSON.stringify(data), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
         })
         .then((res) => {
-          console.log(res);
+          if (res.status === 200) {
+            registerForm.resetFields();
+            message.success("모임이 성공적으로 등록되었습니다!");
+            props.onCancel();
+          } else {
+            message.error("모임 등록에 실패했습니다.");
+          }
         });
-
-      if (res.status === 200) {
-        registerForm.resetFields();
-        message.success("모임이 성공적으로 등록되었습니다!");
-        props.onCancel();
-      } else {
-        message.error("모임 등록에 실패했습니다.");
-      }
     } catch (err) {
-      if (
-        err.response.data.message ===
-        "Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field img exceeds its maximum permitted size of 1048576 bytes."
-      )
-        message.warning("Error.");
+      console.log(err);
     }
   };
 
   const onFinish = async (values) => {
-    console.log("form values: ", values);
     sendData(values);
   };
 
@@ -160,8 +154,8 @@ const RegisterForm = ({ ...props }) => {
             >
               <Row>
                 <PersonnelRow>
-                  <Form.Item name="personnel">
-                    <StyledInputNumber min={2} max={4} placeholder={2} />
+                  <Form.Item name="requiredPerson">
+                    <StyledInputNumber min={2} max={5} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
                 </PersonnelRow>
