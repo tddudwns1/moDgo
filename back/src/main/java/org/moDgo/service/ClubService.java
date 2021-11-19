@@ -57,14 +57,14 @@ public class ClubService {
     public void setClubKind(Club club) {
         String tags = club.getTags();
         List<String> tagList = Arrays.asList(tags.split(","));
-        if (tagList.contains("Netflix")) {
+        if (tagList.contains("NETFLIX")) {
             club.changeClubKind(ClubKind.NETFLIX);
-        } else if (tagList.contains("Watcha")) {
+        } else if (tagList.contains("WATCHA")) {
             club.changeClubKind(ClubKind.WATCHA);
-        } else if (tagList.contains("Wave")) {
+        } else if (tagList.contains("WAVE")) {
             club.changeClubKind(ClubKind.WAVE);
-        } else if (tagList.contains("Desney")) {
-            club.changeClubKind(ClubKind.DESNEY);
+        } else if (tagList.contains("DISNEY+")) {
+            club.changeClubKind(ClubKind.DISNEY);
         }
     }
 
