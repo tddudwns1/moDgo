@@ -20,8 +20,10 @@ import Tag from "../../Tag";
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVE"];
+  const [selectedOttTags, setSelectedOttTags] = useState([]);
+  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
+  const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -29,33 +31,54 @@ const RegisterForm = ({ ...props }) => {
     setInputText(e.target.value);
   };
 
-  const handleSelectTags = (e) => {
+  const handleSelectOttTags = (e) => {
     let tagName = e.target.innerText;
-    let index = selectedTags.indexOf(tagName);
+    let index = selectedOttTags.indexOf(tagName);
 
-    if (selectedTags.includes(tagName)) {
-      selectedTags.splice(index, 1);
-      setSelectedTags([...selectedTags]);
-    } else if (selectedTags.length === 1) {
-      selectedTags.splice(index, 1);
+    if (selectedOttTags.includes(tagName)) {
+      selectedOttTags.splice(index, 1);
+      setSelectedOttTags([...selectedOttTags]);
+    } else if (selectedOttTags.length === 1) {
+      selectedOttTags.splice(index, 1);
       message.error("태그는 1개만 선택 가능합니다!");
     } else {
-      setSelectedTags([...selectedTags, tagName]);
+      setSelectedOttTags([...selectedOttTags, tagName]);
+    }
+  };
+
+  const handleSelectRemainTags = (e) => {
+    let tagName = e.target.innerText;
+    let index = selectedRemainTags.indexOf(tagName);
+
+    if (selectedRemainTags.includes(tagName)) {
+      selectedRemainTags.splice(index, 1);
+      setSelectedRemainTags([...selectedRemainTags]);
+    } else if (selectedRemainTags.length === 1) {
+      selectedRemainTags.splice(index, 1);
+      message.error("태그는 1개만 선택 가능합니다!");
+    } else {
+      setSelectedRemainTags([...selectedRemainTags, tagName]);
     }
   };
 
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    const sendTags = selectedTags.join(", ");
+    const sendOttTags = selectedOttTags.join(", ");
+    const sendRemainTags = selectedRemainTags.join(", ");
 
     if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
 
-    if (!sendTags) {
-      message.warning("태그를 선택해주세요.");
+    if (!sendOttTags) {
+      message.warning("OTT 태그를 선택해주세요.");
+      return;
+    }
+
+    if (!sendRemainTags) {
+      message.warning("기간 태그를 선택해주세요.");
       return;
     }
 
@@ -78,7 +101,8 @@ const RegisterForm = ({ ...props }) => {
       imgUrl: "xxx",
       startDate: startDate,
       endDate: endDate,
-      tags: sendTags,
+      tags: sendOttTags,
+      remainTags: sendRemainTags,
       requiredPerson: values.requiredPerson,
     };
 
@@ -101,6 +125,8 @@ const RegisterForm = ({ ...props }) => {
     } catch (err) {
       console.log(err);
     }
+
+    console.log(JSON.stringify(data));
   };
 
   const onFinish = async (values) => {
@@ -177,20 +203,40 @@ const RegisterForm = ({ ...props }) => {
           </Col>
         </Row>
         <TagRow>
-          <TagTitle>태그 (1개만 선택 가능)</TagTitle>
-          <TagContainer>
-            {tags.map((tag, i) => (
-              <Tag
-                type="button"
-                key={i}
-                value={i}
-                onClick={handleSelectTags}
-                selected={selectedTags.includes(tag) ? true : false}
-              >
-                {tag}
-              </Tag>
-            ))}
-          </TagContainer>
+          <TagTitle>OTT 태그 (1개만 선택 가능)</TagTitle>
+          <TagRow>
+            <TagContainer>
+              {tags.map((tag, i) => (
+                <Tag
+                  type="button"
+                  key={i}
+                  value={i}
+                  onClick={handleSelectOttTags}
+                  selected={selectedOttTags.includes(tag) ? true : false}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagContainer>
+          </TagRow>
+        </TagRow>
+        <TagRow>
+          <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
+          <TagRow>
+            <TagContainer>
+              {remainTags.map((tag, i) => (
+                <Tag
+                  type="button"
+                  key={i}
+                  value={i}
+                  onClick={handleSelectRemainTags}
+                  selected={selectedRemainTags.includes(tag) ? true : false}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagContainer>
+          </TagRow>
         </TagRow>
         <ButtonRow>
           <FilledBtn>등록</FilledBtn>
