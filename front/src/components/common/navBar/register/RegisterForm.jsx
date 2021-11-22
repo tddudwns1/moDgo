@@ -10,7 +10,6 @@ import {
   message,
   Skeleton,
   Modal,
-  
 } from "antd";
 import moment from "moment";
 import styled from "styled-components";
@@ -21,50 +20,65 @@ import Tag from "../../Tag";
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const tags = ["넷플릭스", "왓챠", "디즈니플러스", "웨이브"];
+  const [selectedOttTags, setSelectedOttTags] = useState([]);
+  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
+  const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
-
   const onChange = (e) => {
     setInputText(e.target.value);
   };
-  
 
-  const handleSelectTags = (e) => {
+  const handleSelectOttTags = (e) => {
     let tagName = e.target.innerText;
+    let index = selectedOttTags.indexOf(tagName);
 
-    let index = selectedTags.indexOf(tagName);
-
-    if (selectedTags.includes(tagName)) {
-      selectedTags.splice(index, 1);
-      
-      setSelectedTags([...selectedTags]);
-    } else if (selectedTags.length === 1) {
-
-      selectedTags.splice(index, 1);
+    if (selectedOttTags.includes(tagName)) {
+      selectedOttTags.splice(index, 1);
+      setSelectedOttTags([...selectedOttTags]);
+    } else if (selectedOttTags.length === 1) {
+      selectedOttTags.splice(index, 1);
       message.error("태그는 1개만 선택 가능합니다!");
     } else {
-      setSelectedTags([...selectedTags, tagName]);
-      
+      setSelectedOttTags([...selectedOttTags, tagName]);
     }
   };
 
+  const handleSelectRemainTags = (e) => {
+    let tagName = e.target.innerText;
+    let index = selectedRemainTags.indexOf(tagName);
+
+    if (selectedRemainTags.includes(tagName)) {
+      selectedRemainTags.splice(index, 1);
+      setSelectedRemainTags([...selectedRemainTags]);
+    } else if (selectedRemainTags.length === 1) {
+      selectedRemainTags.splice(index, 1);
+      message.error("태그는 1개만 선택 가능합니다!");
+    } else {
+      setSelectedRemainTags([...selectedRemainTags, tagName]);
+    }
+  };
 
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    const sendTags = selectedTags.join(" ");
-    const formData = new URLSearchParams();
+    const sendOttTags = selectedOttTags.join(", ");
+    const sendRemainTags = selectedRemainTags.join(", ");
 
-    if (!values.requiredPersonnel ) {
+    if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
 
-    if (!sendTags) {
-      message.warning("태그를 선택해주세요.");
+    if (!sendOttTags) {
+      message.warning("OTT 태그를 선택해주세요.");
+      return;
+    }
+
+    if (!sendRemainTags) {
+      message.warning("기간 태그를 선택해주세요.");
       return;
     }
 
@@ -73,54 +87,49 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-
-
-    formData.append("userId", userId);
-    formData.append("title", values.title);
-    formData.append("contents", values.contents);
-    formData.append("imgUrl",'xxxx');
-    formData.append("startDate", startDate);
-    formData.append("endDate", endDate);
-    formData.append("tags", sendTags);
-    formData.append("requiredPerson", values.personnel);
-    
-    const json = JSON.stringify(formData);
-    
-    const url = "https://modgo.loca.lt/";
-    
-
-    
-
-    const res = axios.post(url + "/clubs", formData,{
-      headers: { "Content-Type": `application/json`}
-      } )
-      .then((res) => {
-                console.log(res);
-              })
-
-              
-    /*try {
-      
-
-      if (res.status === 200) {
-        registerForm.resetFields();
-        message.success("모임이 성공적으로 등록되었습니다!");
-        props.onCancel();
-      } else {
-        message.error("모임 등록에 실패했습니다.");
-      }  
+    if (values.contents.length > 40) {
+      message.warning("한 줄 소개는 40자까지 입력 가능합니다.");
+      return;
     }
-    catch (err) {
-      if (
-        err.response.data.message ===
-        "Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field img exceeds its maximum permitted size of 1048576 bytes."
-      )
-        message.warning("Error.");
-    }*/
+
+    const url = "https://modgo.loca.lt";
+
+    const data = {
+      userId: userId,
+      title: values.title,
+      contents: values.contents,
+      imgUrl: "xxx",
+      startDate: startDate,
+      endDate: endDate,
+      tags: sendOttTags,
+      remainTags: sendRemainTags,
+      requiredPerson: values.requiredPerson,
+    };
+
+    try {
+      const res = await axios
+        .post(url + "/clubs", JSON.stringify(data), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            registerForm.resetFields();
+            message.success("모임이 성공적으로 등록되었습니다!");
+            props.onCancel();
+          } else {
+            message.error("모임 등록에 실패했습니다.");
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(JSON.stringify(data));
   };
 
   const onFinish = async (values) => {
-    console.log("form values: ", values);
     sendData(values);
   };
 
@@ -148,7 +157,18 @@ const RegisterForm = ({ ...props }) => {
             >
               <StyledInput placeholder="모임 이름" />
             </Form.Item>
-           
+            <Form.Item
+              label="한 줄 소개"
+              name="contents"
+              rules={[
+                {
+                  required: true,
+                  message: "모임의 한 줄 소개를 입력하세요.",
+                },
+              ]}
+            >
+              <StyledInput placeholder="한 줄 소개" />
+            </Form.Item>
             <Form.Item
               label="참여 인원"
               rules={[
@@ -160,8 +180,8 @@ const RegisterForm = ({ ...props }) => {
             >
               <Row>
                 <PersonnelRow>
-                  <Form.Item name="requiredPersonnel">
-                    <StyledInputNumber min={2} max={4} placeholder={2} />
+                  <Form.Item name="requiredPerson">
+                    <StyledInputNumber min={2} max={5} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
                 </PersonnelRow>
@@ -182,24 +202,42 @@ const RegisterForm = ({ ...props }) => {
             </Form.Item>
           </Col>
         </Row>
-
         <TagRow>
-          <TagTitle>태그 (1개만 선택 가능)</TagTitle>
-          <TagContainer>
-            {tags.map((tag, i) => (
-              <Tag
-                type="button"
-                key={i}
-                value={i}
-                onClick={handleSelectTags}
-                selected={selectedTags.includes(tag) ? true : false}
-              >
-                {tag}
-              </Tag>
-            ))}
-          </TagContainer>
+          <TagTitle>OTT 태그 (1개만 선택 가능)</TagTitle>
+          <TagRow>
+            <TagContainer>
+              {tags.map((tag, i) => (
+                <Tag
+                  type="button"
+                  key={i}
+                  value={i}
+                  onClick={handleSelectOttTags}
+                  selected={selectedOttTags.includes(tag) ? true : false}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagContainer>
+          </TagRow>
         </TagRow>
-
+        <TagRow>
+          <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
+          <TagRow>
+            <TagContainer>
+              {remainTags.map((tag, i) => (
+                <Tag
+                  type="button"
+                  key={i}
+                  value={i}
+                  onClick={handleSelectRemainTags}
+                  selected={selectedRemainTags.includes(tag) ? true : false}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagContainer>
+          </TagRow>
+        </TagRow>
         <ButtonRow>
           <FilledBtn>등록</FilledBtn>
           <UnfilledBtn type="button" onClick={props.onCancel}>
@@ -372,36 +410,30 @@ const StyledRangePicker = styled(RangePicker)`
   background-color: #f6f6f6;
   border: 1px solid #94989b;
   border-radius: 5px;
-
   ${customMedia.lessThan("mobile")`
     height: 28px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
     height: 28px;
   `}
-
   ${customMedia.between("largeMobile", "tablet")`
     height: 32px;
   `}
   ${customMedia.between("tablet", "desktop")`
     height: 40px;
   `}
-
   .ant-picker-input > input {
     font-size: 16px;
     text-align: center;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
     ${customMedia.between("mobile", "largeMobile")`
       font-size: 10px;
     `}
-
     ${customMedia.between("largeMobile", "tablet")`
       font-size: 12px;
     `}
-
     ${customMedia.between("tablet", "desktop")`
       font-size: 14px;
     `}
@@ -411,56 +443,56 @@ const StyledRangePicker = styled(RangePicker)`
   }
 `;
 
-const FileInput = styled.div`
-  background-color: #f6f6f6;
-  border: 1px solid #94989b;
-  border-radius: 5px;
-  padding: 10px;
-  width: 250px;
+// const FileInput = styled.div`
+//   background-color: #f6f6f6;
+//   border: 1px solid #94989b;
+//   border-radius: 5px;
+//   padding: 10px;
+//   width: 250px;
 
-  ${customMedia.lessThan("mobile")`
-    font-size: 10px;
-    padding: 0;
-    width: 130px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    font-size: 10px;
-    padding: 0;
-    width: 130px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    font-size: 12px;
-    padding: 3px;
-    width: 170px;
-  `}
+//   ${customMedia.lessThan("mobile")`
+//     font-size: 10px;
+//     padding: 0;
+//     width: 130px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     font-size: 10px;
+//     padding: 0;
+//     width: 130px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     font-size: 12px;
+//     padding: 3px;
+//     width: 170px;
+//   `}
 
-  ${customMedia.between("tablet", "desktop")`
-    font-size: 14px;
-    padding: 5px;
-  `}
-`;
+//   ${customMedia.between("tablet", "desktop")`
+//     font-size: 14px;
+//     padding: 5px;
+//   `}
+// `;
 
-const StyledTextArea = styled(TextArea)`
-  font-size: 16px;
-  width: 700px;
-  background-color: #f6f6f6;
-  border: 1px solid #94989b;
-  border-radius: 5px;
-  ${customMedia.lessThan("mobile")`
-    font-size: 10px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    font-size: 10px;
-  `}
+// const StyledTextArea = styled(TextArea)`
+//   font-size: 16px;
+//   width: 700px;
+//   background-color: #f6f6f6;
+//   border: 1px solid #94989b;
+//   border-radius: 5px;
+//   ${customMedia.lessThan("mobile")`
+//     font-size: 10px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     font-size: 10px;
+//   `}
 
-  ${customMedia.between("largeMobile", "tablet")`
-    font-size: 12px;
-  `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     font-size: 12px;
+//   `}
 
-  ${customMedia.between("tablet", "desktop")`
-    font-size: 14px;
-  `}
-`;
+//   ${customMedia.between("tablet", "desktop")`
+//     font-size: 14px;
+//   `}
+// `;
 
 const TagRow = styled(Row)`
   margin-top: 20px;
@@ -470,18 +502,15 @@ const TagTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 7px;
-
   ${customMedia.lessThan("mobile")`
     font-size: 10px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
     font-size: 10px;
   `}
-
   ${customMedia.between("largeMobile", "tablet")`
     font-size: 14px;
   `}
-
   ${customMedia.between("tablet", "desktop")`
     font-size: 16px;
   `};
@@ -502,59 +531,59 @@ const TagContainer = styled.div`
   `}
 `;
 
-const PreviewImage = styled.img`
-  width: 263px;
-  height: 263px;
-  border: none;
-  border-radius: 50%;
-  position: relative;
-  ${customMedia.lessThan("mobile")`
-    width: 85px;
-    height: 85px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 100px;
-    height: 100px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 120px;
-    height: 120px;
-  `}
-  ${customMedia.between("tablet", "desktop")`
-    width: 180px;
-    height: 180px;
-  `}
-`;
+// const PreviewImage = styled.img`
+//   width: 263px;
+//   height: 263px;
+//   border: none;
+//   border-radius: 50%;
+//   position: relative;
+//   ${customMedia.lessThan("mobile")`
+//     width: 85px;
+//     height: 85px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 100px;
+//     height: 100px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 120px;
+//     height: 120px;
+//   `}
+//   ${customMedia.between("tablet", "desktop")`
+//     width: 180px;
+//     height: 180px;
+//   `}
+// `;
 
-const TrashBtn = styled.div`
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  z-index: 10;
-  position: absolute;
-  top: 10%;
-  right: 25%;
+// const TrashBtn = styled.div`
+//   width: 24px;
+//   height: 24px;
+//   cursor: pointer;
+//   z-index: 10;
+//   position: absolute;
+//   top: 10%;
+//   right: 25%;
 
-  ${customMedia.lessThan("mobile")`
-    width: 10px;
-    height: 10px;
-    top: 5%;
-    right: 15%;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 12px;
-    height: 12px;
-    top: 5%;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 18px;
-    height: 18px;
-  `}
-	img {
-    width: 100%;
-    height: 100%;
-  }
-`;
+//   ${customMedia.lessThan("mobile")`
+//     width: 10px;
+//     height: 10px;
+//     top: 5%;
+//     right: 15%;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 12px;
+//     height: 12px;
+//     top: 5%;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 18px;
+//     height: 18px;
+//   `}
+// 	img {
+//     width: 100%;
+//     height: 100%;
+//   }
+// `;
 
 const ButtonRow = styled(Row)`
   margin-top: 30px;
@@ -563,25 +592,25 @@ const ButtonRow = styled(Row)`
   gap: 88px;
 `;
 
-const MapWrapper = styled.div`
-  width: 1000px;
-  height: 250px;
-  margin-top: 40px;
-  ${customMedia.lessThan("mobile")`
-    width: 282px;
-    height: 200px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 350px;
-    height: 200px;
-  `}
-  ${customMedia.between("largeMobile", "tablet")`
-    width: 567px;
-  `}
-  ${customMedia.between("tablet", "desktop")`
-    width: 777px;
-  `}
-`;
+// const MapWrapper = styled.div`
+//   width: 1000px;
+//   height: 250px;
+//   margin-top: 40px;
+//   ${customMedia.lessThan("mobile")`
+//     width: 282px;
+//     height: 200px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 350px;
+//     height: 200px;
+//   `}
+//   ${customMedia.between("largeMobile", "tablet")`
+//     width: 567px;
+//   `}
+//   ${customMedia.between("tablet", "desktop")`
+//     width: 777px;
+//   `}
+// `;
 
 const FilledBtn = styled(Button)`
   & {
@@ -590,7 +619,6 @@ const FilledBtn = styled(Button)`
     border: none;
     border-radius: 6px;
     outline: none;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
@@ -612,7 +640,6 @@ const UnfilledBtn = styled(Button)`
     background-color: #ffffff;
     border: 2px solid #029400;
     border-radius: 6px;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
@@ -628,29 +655,29 @@ const UnfilledBtn = styled(Button)`
   }
 `;
 
-const SkeletonImg = styled(Skeleton.Image)`
-  .ant-skeleton-image {
-    width: 263px;
-    height: 263px;
-    border-radius: 50%;
-    ${customMedia.lessThan("mobile")`
-      width: 85px;
-      height: 85px;
-    `}
-    ${customMedia.between("mobile", "largeMobile")`
-      width: 100px;
-      height: 100px;
-  `}
-    ${customMedia.between("largeMobile", "tablet")`
-      width: 120px;
-      height: 120px;
-    `}
-    ${customMedia.between("tablet", "desktop")`
-      width: 180px;
-      height: 180px;
-    `}
-  }
-`;
+// const SkeletonImg = styled(Skeleton.Image)`
+//   .ant-skeleton-image {
+//     width: 263px;
+//     height: 263px;
+//     border-radius: 50%;
+//     ${customMedia.lessThan("mobile")`
+//       width: 85px;
+//       height: 85px;
+//     `}
+//     ${customMedia.between("mobile", "largeMobile")`
+//       width: 100px;
+//       height: 100px;
+//   `}
+//     ${customMedia.between("largeMobile", "tablet")`
+//       width: 120px;
+//       height: 120px;
+//     `}
+//     ${customMedia.between("tablet", "desktop")`
+//       width: 180px;
+//       height: 180px;
+//     `}
+//   }
+// `;
 
 const NavRegister = styled.div`
   width: 48px;
@@ -712,4 +739,3 @@ const StyledModal = styled(Modal)`
     display: none;
   }
 `;
-

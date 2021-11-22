@@ -6,14 +6,14 @@ import Tag from "../common/Tag";
 
 const TagFilter = (props) => {
   const tags = [
-    "넷플릭스",
-    "왓챠",
-    "웨이브",
-    "디즈니플러스",
-    "모집중",
+    "NETFLIX",
+    "WATCHA",
+    "DISNEY +",
+    "WAVVE",
     "30일 이하",
     "50일 이하",
     "100일 이하",
+    "100일 이상",
   ];
 
   const handleSelectTags = (e) => {

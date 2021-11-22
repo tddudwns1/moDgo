@@ -7,7 +7,7 @@ import Detail from "../src/pages/Detail";
 import MyPage from "./pages/MyPage";
 import ScrollToTop from "./components/common/ScrollToTop";
 import GlobalStyles from "./GlobalStyles";
-import RegisterForm from "./components/common/navBar/register/RegisterForm";
+
 
 const App = () => {
 
@@ -20,7 +20,7 @@ const App = () => {
 					<Route exact path="/board" component={Board} />
 					<Route exact path="/detail/:id" component={Detail} />
 					<Route exact path="/myPage" component={MyPage} />
-          <Route exact path="/register" component={RegisterForm}/>
+         
 				</Switch>
 			</ScrollToTop>
 		</BrowserRouter>
