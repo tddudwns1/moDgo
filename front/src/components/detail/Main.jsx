@@ -12,6 +12,8 @@ import Spin from "../common/Spin";
 import Pagination from "../common/Pagination";
 import profile from "../../images/icons/profile.png";
 
+const url = "https://modgo.loca.lt";
+
 const Main = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [club, setClub] = useState();
@@ -31,12 +33,12 @@ const Main = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/clubs/${clubId}`);
+        const res = await axios.get(url + `/clubs/${clubId}`);
 
         setClub(res.data);
 
         if (userId) {
-          const likedClubRes = await axios.get("/likedClubs/ids", {
+          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
             params: {
               userId: userId,
             },
@@ -44,7 +46,7 @@ const Main = (props) => {
 
           setLikedClubs(likedClubRes.data.likedClubIdList);
 
-          const applyRes = await axios.get("/members/ids", {
+          const applyRes = await axios.get(url + "/members/ids", {
             params: { userId: userId },
           });
 
@@ -61,7 +63,7 @@ const Main = (props) => {
   }, [userImg, total, page]);
 
   const fetchCmtData = async () => {
-    const res = await axios.get(`/comments/clubs/${clubId}`, {
+    const res = await axios.get(url + `/comments/clubs/${clubId}`, {
       params: { page: page },
     });
 
@@ -85,7 +87,7 @@ const Main = (props) => {
     };
 
     try {
-      const res = await axios.post("/comments", data);
+      const res = await axios.post(url + "/comments", data);
 
       if (res.status === 200) {
         message.success("댓글이 성공적으로 등록되었습니다.");
@@ -106,7 +108,7 @@ const Main = (props) => {
     };
 
     try {
-      const res = await axios.put(`/comments/${id}`, data);
+      const res = await axios.put(url + `/comments/${id}`, data);
 
       if (res.status === 200) {
         message.success("댓글이 성공적으로 수정되었습니다.");
@@ -122,7 +124,7 @@ const Main = (props) => {
 
   const handleDeleteComment = async (id) => {
     try {
-      const res = await axios.delete(`/comments/${id}`);
+      const res = await axios.delete(url + `/comments/${id}`);
 
       if (res.status === 200) {
         message.success("댓글이 성공적으로 삭제되었습니다.");
@@ -160,7 +162,7 @@ const Main = (props) => {
     };
 
     try {
-      await axios.post("/likedClubs", data);
+      await axios.post(url + "/likedClubs", data);
     } catch (err) {
       console.log(err);
     }
@@ -168,7 +170,7 @@ const Main = (props) => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      await axios.delete("/likedClubs", {
+      await axios.delete(url + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -183,7 +185,7 @@ const Main = (props) => {
   const handlePostApply = async (id) => {
     try {
       const data = { userId: userId, clubId: Number(id) };
-      const res = await axios.post("/members", data);
+      const res = await axios.post(url + "/members", data);
       if (res.status === 400) {
         message.error("이미 참여신청한 모임입니다.");
       }
@@ -195,7 +197,7 @@ const Main = (props) => {
 
   const handleDeleteApply = async (clubId) => {
     try {
-      const res = await axios.delete("/members", {
+      const res = await axios.delete(url + "/members", {
         params: {
           userId: userId,
           clubId: Number(clubId),
