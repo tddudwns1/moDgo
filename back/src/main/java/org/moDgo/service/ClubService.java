@@ -61,7 +61,7 @@ public class ClubService {
             club.changeClubKind(ClubKind.NETFLIX);
         } else if (tagList.contains("WATCHA")) {
             club.changeClubKind(ClubKind.WATCHA);
-        } else if (tagList.contains("WAVE")) {
+        } else if (tagList.contains("WAVVE")) {
             club.changeClubKind(ClubKind.WAVE);
         } else if (tagList.contains("DISNEY+")) {
             club.changeClubKind(ClubKind.DISNEY);
