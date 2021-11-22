@@ -10,6 +10,8 @@ import MainClubCard from "./MainClubCard";
 import Button from "../common/Button.jsx";
 import Spin from "../common/Spin.jsx";
 
+const url = "https://modgo.loca.lt";
+
 const Main = () => {
   const [sortByCreatedAtClubs, setSortByCreatedAtClubs] = useState([]);
   const [sortByLikesClubs, setsortByLikesClubs] = useState([]);
@@ -18,13 +20,13 @@ const Main = () => {
   const userId = localStorage.getItem("user_id");
 
   useEffect(() => {
-    // fetchData();
+    fetchData();
     setLoading(false);
   }, [userId]);
 
   const fetchData = async () => {
     try {
-      const createdAtRes = await axios.get("/clubs", {
+      const createdAtRes = await axios.get(url + "/clubs", {
         params: {
           sortBy: "createdAt",
           tags: "",
@@ -35,19 +37,8 @@ const Main = () => {
       });
       setSortByCreatedAtClubs(createdAtRes.data.clubList);
 
-      const likesRes = await axios.get("/clubs", {
-        params: {
-          sortBy: "likes",
-          tags: "",
-          clubStatus: "ACTIVE",
-          keyword: "",
-          page: 1,
-        },
-      });
-      setsortByLikesClubs(likesRes.data.clubList);
-
       if (userId) {
-        const likedClubRes = await axios.get("/likedClubs/ids", {
+        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
           params: {
             userId: userId,
           },
@@ -80,7 +71,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post("/likedClubs", {
+      await axios.post(url + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -93,7 +84,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete("/likedClubs", {
+      axios.delete(url + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -112,9 +103,9 @@ const Main = () => {
       ) : (
         <>
           <ImageSlider />
-          <Title>마감 임박 순</Title>
+          <Title>신규 생성 순</Title>
           <CardRow>
-            {sortByLikesClubs
+            {sortByCreatedAtClubs
               .filter((club, i) => i < 8)
               .map((club) => (
                 <MainClubCard

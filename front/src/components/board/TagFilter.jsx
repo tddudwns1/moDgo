@@ -8,7 +8,7 @@ const TagFilter = (props) => {
   const tags = [
     "NETFLIX",
     "WATCHA",
-    "DISNEY +",
+    "DISNEY+",
     "WAVVE",
     "30일 이하",
     "50일 이하",
