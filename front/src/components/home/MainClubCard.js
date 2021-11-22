@@ -8,6 +8,8 @@ import SmallTag from '../common/SmallTag';
 import unfilledHeart from '../../images/icons/unfilled_heart.png';
 import filledHeart from '../../images/icons/filled_heart.png';
 
+const url = "http://modgo.loca.lt";
+
 const MainClubCard = ({ ...props }) => {
   const history = useHistory();
   return (
@@ -20,7 +22,7 @@ const MainClubCard = ({ ...props }) => {
           <SkeletonImg />
         )
       }
-      onClick={() => history.push(`/detail/${props.club.id}`)}
+      onClick={() => history.push(url+`/detail/${props.club.id}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
       <TagContainer>

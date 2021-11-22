@@ -10,6 +10,8 @@ import MainClubCard from "./MainClubCard";
 import Button from "../common/Button.jsx";
 import Spin from "../common/Spin.jsx";
 
+const url = "http://modgo.loca.lt";
+
 const Main = () => {
   const [sortByCreatedAtClubs, setSortByCreatedAtClubs] = useState([]);
   const [sortByLikesClubs, setsortByLikesClubs] = useState([]);
@@ -24,7 +26,7 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const createdAtRes = await axios.get("/clubs", {
+      const createdAtRes = await axios.get(url+"/clubs", { //신규모임
         params: {
           sortBy: "createdAt",
           tags: "",
@@ -35,7 +37,18 @@ const Main = () => {
       });
       setSortByCreatedAtClubs(createdAtRes.data.clubList);
 
-      const likesRes = await axios.get("/clubs", {
+      // const Allclubs = await axios.get(url+"/clubs",{
+      //   params: {
+      //     sortBy: "",
+      //     tags: "",
+      //     clubStatus: "",
+      //     keyword:"",
+      //     page: 1,
+      //   },
+      // });
+      // setSortByCreatedAtClubs(Allclubs.data.clubList)
+
+      const likesRes = await axios.get(url+"/clubs", { //인기있는 모임
         params: {
           sortBy: "likes",
           tags: "",
@@ -47,7 +60,7 @@ const Main = () => {
       setsortByLikesClubs(likesRes.data.clubList);
 
       if (userId) {
-        const likedClubRes = await axios.get("/likedClubs/ids", {
+        const likedClubRes = await axios.get(url+"/likedClubs/ids", {
           params: {
             userId: userId,
           },
@@ -80,7 +93,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post("/likedClubs", {
+      await axios.post(url+"/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -93,7 +106,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete("/likedClubs", {
+      axios.delete(url+"/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {

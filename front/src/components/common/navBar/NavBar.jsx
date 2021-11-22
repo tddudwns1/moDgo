@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal, Menu, Dropdown } from 'antd';
+import { Modal , Menu } from 'antd';
 import styled from 'styled-components';
 import { customMedia } from '../../../GlobalStyles';
 
@@ -8,9 +8,9 @@ import { customMedia } from '../../../GlobalStyles';
 
 import Login from "./login/Login.jsx";
 import RegisterForm from "./register/RegisterForm.jsx";
-import logo from "../../../images/icons/logo.png";
+//import logo from "../../../images/icons/logo.png";
 import profile from "../../../images/icons/profile.png";
-import add from "../../../images/icons/add.png";
+//import add from "../../../images/icons/add.png";
 
 
 const NavBar = () => {
@@ -142,25 +142,25 @@ const NavLogo = styled.div`
   gap: 10px;
 `;
 
-const LogoIcon = styled.div`
-  width: 26px;
-  height: 26px;
-  img {
-    width: 100%;
-  }
-  ${customMedia.lessThan('mobile')`
-    width: 20px;
-    height: 20px;
-  `}
-  ${customMedia.between('mobile', 'largeMobile')`
-    width: 22px;
-    height: 22px;
-  `}
-	${customMedia.between('largeMobile', 'tablet')`
-    width: 24px;
-    height: 24px;
-  `}
-`;
+// const LogoIcon = styled.div`
+//   width: 26px;
+//   height: 26px;
+//   img {
+//     width: 100%;
+//   }
+//   ${customMedia.lessThan('mobile')`
+//     width: 20px;
+//     height: 20px;
+//   `}
+//   ${customMedia.between('mobile', 'largeMobile')`
+//     width: 22px;
+//     height: 22px;
+//   `}
+// 	${customMedia.between('largeMobile', 'tablet')`
+//     width: 24px;
+//     height: 24px;
+//   `}
+// `;
 
 const LogoTitle = styled.div`
   font-weight: bold;
@@ -272,26 +272,26 @@ const NavRegister = styled.div`
   }
 `;
 
-const StyledDropdownMenu = styled(Menu)`
-  .ant-dropdown-menu-item,
-  .ant-dropdown-menu-submenu-title {
-    font-size: 16px;
-    padding: 10px 20px;
-    text-align: center;
-    ${customMedia.lessThan('mobile')`
-      font-size: 12px;
-      padding: 5px 10px;
-    `}
-    ${customMedia.between('mobile', 'largeMobile')`
-      font-size: 12px;
-      padding: 5px 10px;
-    `}
-		${customMedia.between('largeMobile', 'tablet')`
-      font-size: 14px;
-      padding: 8px 13px;
-    `}
-  }
-`;
+// const StyledDropdownMenu = styled(Menu)`
+//   .ant-dropdown-menu-item,
+//   .ant-dropdown-menu-submenu-title {
+//     font-size: 16px;
+//     padding: 10px 20px;
+//     text-align: center;
+//     ${customMedia.lessThan('mobile')`
+//       font-size: 12px;
+//       padding: 5px 10px;
+//     `}
+//     ${customMedia.between('mobile', 'largeMobile')`
+//       font-size: 12px;
+//       padding: 5px 10px;
+//     `}
+// 		${customMedia.between('largeMobile', 'tablet')`
+//       font-size: 14px;
+//       padding: 8px 13px;
+//     `}
+//   }
+// `;
 
 const StyledModal = styled(Modal)`
   display: flex;
