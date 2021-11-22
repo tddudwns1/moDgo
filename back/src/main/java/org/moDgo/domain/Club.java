@@ -37,7 +37,7 @@ public class Club extends BaseTime{
     @Column(nullable = false)
     private String tags;
 
-    @Column(nullable = false)
+    @Column(length = 10000, nullable = false)
     private String imgUrl;
 
     @Column(nullable = false)
