@@ -22,7 +22,7 @@ import watchaCover from "../../../../images/watchaCover.png";
 import disneyplusCover from "../../../../images/disneyplusCover.png";
 import wavveCover from "../../../../images/wavveCover.png";
 
-const url = "http://f95b-39-112-117-42.ngrok.io";
+const url = "https://modgo.loca.lt";
 
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();

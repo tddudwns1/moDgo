@@ -25,6 +25,8 @@ const Main = () => {
 
   // const history = useHistory();
 
+  const url = "https://modgo.loca.lt";
+
   useEffect(() => {
     fetchData();
     setLoading(false);
@@ -34,7 +36,7 @@ const Main = () => {
     const sendTags = selectedTags.join(", ");
 
     try {
-      const res = await axios.get("/clubs", {
+      const res = await axios.get(url + "/clubs", {
         params: {
           sortBy: sortBy,
           tags: sendTags,
@@ -48,7 +50,7 @@ const Main = () => {
       setTotal(res.data.totalCount);
 
       if (userId) {
-        const likedClubRes = await axios.get("/likedClubs/ids", {
+        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
           params: {
             userId: userId,
           },
@@ -81,7 +83,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post("/likedClubs", {
+      await axios.post(url + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -92,7 +94,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete("/likedClubs", {
+      axios.delete(url + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -125,14 +127,14 @@ const Main = () => {
             >
               모집중
             </CheckboxFilter>
-            {/* <SortFilter
+            <SortFilter
               showSearch
               placeholder="정렬필터"
               onChange={(value) => setSortBy(value)}
             >
               <Option value="createdAt">최신순</Option>
               <Option value="likes">좋아요순</Option>
-            </SortFilter> */}
+            </SortFilter>
           </TitleRow>
           <CardRow>
             {clubs != null
