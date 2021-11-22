@@ -9,7 +9,7 @@ import ExpiredTag from "../common/ExpiredTag";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-const url = "http://576c-39-112-117-42.ngrok.io";
+const url = "http://f95b-39-112-117-42.ngrok.io";
 
 const LikedClubCard = ({ ...props }) => {
   const history = useHistory();

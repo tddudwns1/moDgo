@@ -16,7 +16,7 @@ import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 
-const url = "http://576c-39-112-117-42.ngrok.io";
+const url = "http://f95b-39-112-117-42.ngrok.io";
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);

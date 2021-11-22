@@ -10,7 +10,7 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "http://576c-39-112-117-42.ngrok.io";
+  const url = "http://f95b-39-112-117-42.ngrok.io";
 
   const onSuccess = async (response) => {
     const {

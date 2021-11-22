@@ -21,14 +21,16 @@ import watchaCover from "../../images/watchaCover.png";
 import disneyplusCover from "../../images/disneyplusCover.png";
 import wavveCover from "../../images/wavveCover.png";
 
+const url = "http://f95b-39-112-117-42.ngrok.io";
+
 const EditForm = ({ ...props }) => {
   const [editForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedOttTags, setSelectedOttTags] = useState([]);
-  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  // const [selectedRemainTags, setSelectedRemainTags] = useState([]);
   const [coverImg, setCoverImg] = useState(null);
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
-  const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
+  // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -63,26 +65,26 @@ const EditForm = ({ ...props }) => {
     }
   };
 
-  const handleSelectRemainTags = (e) => {
-    let tagName = e.target.innerText;
-    let index = selectedRemainTags.indexOf(tagName);
+  // const handleSelectRemainTags = (e) => {
+  //   let tagName = e.target.innerText;
+  //   let index = selectedRemainTags.indexOf(tagName);
 
-    if (selectedRemainTags.includes(tagName)) {
-      selectedRemainTags.splice(index, 1);
-      setSelectedRemainTags([...selectedRemainTags]);
-    } else if (selectedRemainTags.length === 1) {
-      selectedRemainTags.splice(index, 1);
-      message.error("태그는 1개만 선택 가능합니다!");
-    } else {
-      setSelectedRemainTags([...selectedRemainTags, tagName]);
-    }
-  };
+  //   if (selectedRemainTags.includes(tagName)) {
+  //     selectedRemainTags.splice(index, 1);
+  //     setSelectedRemainTags([...selectedRemainTags]);
+  //   } else if (selectedRemainTags.length === 1) {
+  //     selectedRemainTags.splice(index, 1);
+  //     message.error("태그는 1개만 선택 가능합니다!");
+  //   } else {
+  //     setSelectedRemainTags([...selectedRemainTags, tagName]);
+  //   }
+  // };
 
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
     const sendOttTags = selectedOttTags.join(", ");
-    const sendRemainTags = selectedRemainTags.join(", ");
+    // const sendRemainTags = selectedRemainTags.join(", ");
 
     if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
@@ -90,14 +92,14 @@ const EditForm = ({ ...props }) => {
     }
 
     if (!sendOttTags) {
-      message.warning("OTT 태그를 선택해주세요.");
+      message.warning("태그를 선택해주세요.");
       return;
     }
 
-    if (!sendRemainTags) {
-      message.warning("기간 태그를 선택해주세요.");
-      return;
-    }
+    // if (!sendRemainTags) {
+    //   message.warning("기간 태그를 선택해주세요.");
+    //   return;
+    // }
 
     if (values.title.length > 10) {
       message.warning("이름은 10자까지 입력 가능합니다.");
@@ -109,8 +111,6 @@ const EditForm = ({ ...props }) => {
       return;
     }
 
-    const url = "http://576c-39-112-117-42.ngrok.io";
-
     const data = {
       userId: userId,
       title: values.title,
@@ -119,7 +119,7 @@ const EditForm = ({ ...props }) => {
       startDate: startDate,
       endDate: endDate,
       tags: sendOttTags,
-      remainTags: sendRemainTags,
+      // remainTags: sendRemainTags,
       requiredPerson: values.requiredPerson,
     };
 
@@ -220,7 +220,7 @@ const EditForm = ({ ...props }) => {
           </Col>
         </Row>
         <TagRow>
-          <TagTitle>OTT 태그 (1개만 선택 가능)</TagTitle>
+          <TagTitle>태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
               {tags.map((tag, i) => (
@@ -237,7 +237,7 @@ const EditForm = ({ ...props }) => {
             </TagContainer>
           </TagRow>
         </TagRow>
-        <TagRow>
+        {/* <TagRow>
           <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
@@ -254,7 +254,7 @@ const EditForm = ({ ...props }) => {
               ))}
             </TagContainer>
           </TagRow>
-        </TagRow>
+        </TagRow> */}
         <ButtonRow>
           <FilledBtn>수정</FilledBtn>
         </ButtonRow>
