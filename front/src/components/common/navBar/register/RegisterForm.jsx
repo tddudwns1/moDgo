@@ -17,13 +17,21 @@ import { customMedia } from "../../../../GlobalStyles";
 import Button from "../../Button";
 import Tag from "../../Tag";
 
+import netflixCover from "../../../../images/netflixCover.png";
+import watchaCover from "../../../../images/watchaCover.png";
+import disneyplusCover from "../../../../images/disneyplusCover.png";
+import wavveCover from "../../../../images/wavveCover.png";
+
+const url = "http://f95b-39-112-117-42.ngrok.io";
+
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedOttTags, setSelectedOttTags] = useState([]);
-  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  // const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  const [coverImg, setCoverImg] = useState(null);
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
-  const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
+  // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -44,28 +52,41 @@ const RegisterForm = ({ ...props }) => {
     } else {
       setSelectedOttTags([...selectedOttTags, tagName]);
     }
-  };
 
-  const handleSelectRemainTags = (e) => {
-    let tagName = e.target.innerText;
-    let index = selectedRemainTags.indexOf(tagName);
-
-    if (selectedRemainTags.includes(tagName)) {
-      selectedRemainTags.splice(index, 1);
-      setSelectedRemainTags([...selectedRemainTags]);
-    } else if (selectedRemainTags.length === 1) {
-      selectedRemainTags.splice(index, 1);
-      message.error("태그는 1개만 선택 가능합니다!");
+    if (tagName === "NETFLIX") {
+      setCoverImg(netflixCover);
+    } else if (tagName === "WATCHA") {
+      setCoverImg(watchaCover);
+    } else if (tagName === "DISNEY+") {
+      setCoverImg(disneyplusCover);
+    } else if (tagName === "WAVVE") {
+      setCoverImg(wavveCover);
     } else {
-      setSelectedRemainTags([...selectedRemainTags, tagName]);
+      setCoverImg(Skeleton);
     }
   };
+
+  // 기간태그 주석처리
+  // const handleSelectRemainTags = (e) => {
+  //   let tagName = e.target.innerText;
+  //   let index = selectedRemainTags.indexOf(tagName);
+
+  //   if (selectedRemainTags.includes(tagName)) {
+  //     selectedRemainTags.splice(index, 1);
+  //     setSelectedRemainTags([...selectedRemainTags]);
+  //   } else if (selectedRemainTags.length === 1) {
+  //     selectedRemainTags.splice(index, 1);
+  //     message.error("태그는 1개만 선택 가능합니다!");
+  //   } else {
+  //     setSelectedRemainTags([...selectedRemainTags, tagName]);
+  //   }
+  // };
 
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
     const sendOttTags = selectedOttTags.join(", ");
-    const sendRemainTags = selectedRemainTags.join(", ");
+    // const sendRemainTags = selectedRemainTags.join(", ");
 
     if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
@@ -73,14 +94,14 @@ const RegisterForm = ({ ...props }) => {
     }
 
     if (!sendOttTags) {
-      message.warning("OTT 태그를 선택해주세요.");
+      message.warning("태그를 선택해주세요.");
       return;
     }
 
-    if (!sendRemainTags) {
-      message.warning("기간 태그를 선택해주세요.");
-      return;
-    }
+    // if (!sendRemainTags) {
+    //   message.warning("기간 태그를 선택해주세요.");
+    //   return;
+    // }
 
     if (values.title.length > 10) {
       message.warning("이름은 10자까지 입력 가능합니다.");
@@ -92,17 +113,15 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-    const url = "https://modgo.loca.lt";
-
     const data = {
       userId: userId,
       title: values.title,
       contents: values.contents,
-      imgUrl: "xxx",
+      imgUrl: coverImg,
       startDate: startDate,
       endDate: endDate,
       tags: sendOttTags,
-      remainTags: sendRemainTags,
+      // remainTags: sendRemainTags,
       requiredPerson: values.requiredPerson,
     };
 
@@ -181,7 +200,7 @@ const RegisterForm = ({ ...props }) => {
               <Row>
                 <PersonnelRow>
                   <Form.Item name="requiredPerson">
-                    <StyledInputNumber min={2} max={5} placeholder={2} />
+                    <StyledInputNumber min={2} max={4} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
                 </PersonnelRow>
@@ -203,7 +222,7 @@ const RegisterForm = ({ ...props }) => {
           </Col>
         </Row>
         <TagRow>
-          <TagTitle>OTT 태그 (1개만 선택 가능)</TagTitle>
+          <TagTitle>태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
               {tags.map((tag, i) => (
@@ -220,7 +239,7 @@ const RegisterForm = ({ ...props }) => {
             </TagContainer>
           </TagRow>
         </TagRow>
-        <TagRow>
+        {/* <TagRow>
           <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
@@ -237,7 +256,7 @@ const RegisterForm = ({ ...props }) => {
               ))}
             </TagContainer>
           </TagRow>
-        </TagRow>
+        </TagRow> */}
         <ButtonRow>
           <FilledBtn>등록</FilledBtn>
           <UnfilledBtn type="button" onClick={props.onCancel}>
