@@ -17,13 +17,15 @@ import { customMedia } from "../../../../GlobalStyles";
 import Button from "../../Button";
 import Tag from "../../Tag";
 
+const url = "http://modgo.loca.lt";
+
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedOttTags, setSelectedOttTags] = useState([]);
   const [selectedRemainTags, setSelectedRemainTags] = useState([]);
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
-  const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
+  //const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -77,10 +79,10 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-    if (!sendRemainTags) {
-      message.warning("기간 태그를 선택해주세요.");
-      return;
-    }
+    // if (!sendRemainTags) {
+    //   message.warning("기간 태그를 선택해주세요.");
+    //   return;
+    // }
 
     if (values.title.length > 10) {
       message.warning("이름은 10자까지 입력 가능합니다.");
@@ -92,7 +94,7 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-    const url = "https://modgo.loca.lt";
+    
 
     const data = {
       userId: userId,
@@ -220,7 +222,7 @@ const RegisterForm = ({ ...props }) => {
             </TagContainer>
           </TagRow>
         </TagRow>
-        <TagRow>
+        {/* <TagRow>
           <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
@@ -237,7 +239,7 @@ const RegisterForm = ({ ...props }) => {
               ))}
             </TagContainer>
           </TagRow>
-        </TagRow>
+        </TagRow> */}
         <ButtonRow>
           <FilledBtn>등록</FilledBtn>
           <UnfilledBtn type="button" onClick={props.onCancel}>
@@ -410,36 +412,30 @@ const StyledRangePicker = styled(RangePicker)`
   background-color: #f6f6f6;
   border: 1px solid #94989b;
   border-radius: 5px;
-
   ${customMedia.lessThan("mobile")`
     height: 28px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
     height: 28px;
   `}
-
   ${customMedia.between("largeMobile", "tablet")`
     height: 32px;
   `}
   ${customMedia.between("tablet", "desktop")`
     height: 40px;
   `}
-
   .ant-picker-input > input {
     font-size: 16px;
     text-align: center;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
     ${customMedia.between("mobile", "largeMobile")`
       font-size: 10px;
     `}
-
     ${customMedia.between("largeMobile", "tablet")`
       font-size: 12px;
     `}
-
     ${customMedia.between("tablet", "desktop")`
       font-size: 14px;
     `}
@@ -508,18 +504,15 @@ const TagTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 7px;
-
   ${customMedia.lessThan("mobile")`
     font-size: 10px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
     font-size: 10px;
   `}
-
   ${customMedia.between("largeMobile", "tablet")`
     font-size: 14px;
   `}
-
   ${customMedia.between("tablet", "desktop")`
     font-size: 16px;
   `};
@@ -628,7 +621,6 @@ const FilledBtn = styled(Button)`
     border: none;
     border-radius: 6px;
     outline: none;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
@@ -650,7 +642,6 @@ const UnfilledBtn = styled(Button)`
     background-color: #ffffff;
     border: 2px solid #029400;
     border-radius: 6px;
-
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}

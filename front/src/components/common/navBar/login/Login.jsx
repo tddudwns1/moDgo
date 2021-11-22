@@ -10,7 +10,7 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "http://7127-121-125-113-36.ngrok.io";
+  const url = "http://modgo.loca.lt";
 
   const onSuccess = async (response) => {
     const {
