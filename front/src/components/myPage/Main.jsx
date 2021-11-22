@@ -16,6 +16,8 @@ import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 
+const url = "https://modgo.loca.lt";
+
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [myClub, setMyClub] = useState();
@@ -53,20 +55,23 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`/comments/users/${userId}`, {
+      const res = await axios.get(url + `/comments/users/${userId}`, {
         params: { page: myCommentsPage },
       });
 
       setMyComments(res.data.commentList);
       setMyCommentsTotal(res.data.totalCount);
 
-      const likedClubsRes = await axios.get(`/likedClubs/users/${userId}`, {
-        params: { page: myLikedClubsPage },
-      });
+      const likedClubsRes = await axios.get(
+        url + `/likedClubs/users/${userId}`,
+        {
+          params: { page: myLikedClubsPage },
+        }
+      );
       setMyLikedClubs(likedClubsRes.data.likedClubList);
       setMyLikedClubsTotal(likedClubsRes.data.totalCount);
 
-      const joinedClubsRes = await axios.get(`/members/users/${userId}`, {
+      const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
         params: {
           page: myJoinedClubsPage,
         },
@@ -75,10 +80,10 @@ const Main = () => {
       setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
 
-      const myClubRes = await axios.get(`/clubs/users/${userId}`);
+      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
 
       if (myClubRes.data) {
-        const pendingMembersRes = await axios.get("/members", {
+        const pendingMembersRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
             approvalStatus: "WAITING",
@@ -89,7 +94,7 @@ const Main = () => {
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-        const memberRes = await axios.get("/members", {
+        const memberRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
             approvalStatus: "CONFIRMED",
@@ -103,7 +108,7 @@ const Main = () => {
 
       setMyClub(myClubRes.data);
 
-      const likedClubRes = await axios.get("/likedClubs/ids", {
+      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
         params: {
           userId: userId,
         },
@@ -126,10 +131,10 @@ const Main = () => {
 
   const handleDeleteClub = async () => {
     try {
-      const res = await axios.get(`/clubs/users/${userId}`);
+      const res = await axios.get(url + `/clubs/users/${userId}`);
 
       if (res.data) {
-        const deleteRes = await axios.delete(`/clubs/users/${userId}`);
+        const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
 
         if (deleteRes.status === 200) {
           message.success("모임이 성공적으로 삭제되었습니다.");
@@ -167,7 +172,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post("/likedClubs", {
+      await axios.post(url + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -180,7 +185,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete("/likedClubs", {
+      axios.delete(url + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -192,7 +197,7 @@ const Main = () => {
 
   const handleMemberApproval = async (memberId) => {
     try {
-      const res = axios.put("/members", { memberId: memberId });
+      const res = axios.put(url + "/members", { memberId: memberId });
       if (res.status === 200) {
         message.success("모임 참여가 승인되었습니다.");
       }
@@ -205,7 +210,7 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-      const res = axios.delete("/members", {
+      const res = axios.delete(url + "/members", {
         params: {
           userId: userId,
           clubId: clubId,
@@ -224,7 +229,7 @@ const Main = () => {
 
   const handleMemberDelete = async (userId, clubId) => {
     try {
-      const res = axios.delete("/members", {
+      const res = axios.delete(url + "/members", {
         params: {
           userId: userId,
           clubId: Number(clubId),

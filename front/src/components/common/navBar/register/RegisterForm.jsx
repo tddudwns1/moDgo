@@ -17,11 +17,17 @@ import { customMedia } from "../../../../GlobalStyles";
 import Button from "../../Button";
 import Tag from "../../Tag";
 
+import netflixCover from "../../../../images/netfilxCover.png";
+import watchaCover from "../../../../images/watchaCover.png";
+import disneyplusCover from "../../../../images/disneyplusCover.png";
+import wavveCover from "../../../../images/wavveCover.png";
+
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedOttTags, setSelectedOttTags] = useState([]);
   const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  const [coverImg, setCoverImg] = useState(null);
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
   const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
@@ -43,6 +49,18 @@ const RegisterForm = ({ ...props }) => {
       message.error("태그는 1개만 선택 가능합니다!");
     } else {
       setSelectedOttTags([...selectedOttTags, tagName]);
+    }
+
+    if (tagName === "NETFLIX") {
+      setCoverImg(netflixCover);
+    } else if (tagName === "WATCHA") {
+      setCoverImg(watchaCover);
+    } else if (tagName === "DISNEY+") {
+      setCoverImg(disneyplusCover);
+    } else if (tagName === "WAVVE") {
+      setCoverImg(wavveCover);
+    } else {
+      setCoverImg(null);
     }
   };
 
@@ -98,7 +116,7 @@ const RegisterForm = ({ ...props }) => {
       userId: userId,
       title: values.title,
       contents: values.contents,
-      imgUrl: "xxx",
+      imgUrl: coverImg,
       startDate: startDate,
       endDate: endDate,
       tags: sendOttTags,
@@ -181,7 +199,7 @@ const RegisterForm = ({ ...props }) => {
               <Row>
                 <PersonnelRow>
                   <Form.Item name="requiredPerson">
-                    <StyledInputNumber min={2} max={5} placeholder={2} />
+                    <StyledInputNumber min={2} max={4} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
                 </PersonnelRow>
