@@ -17,10 +17,12 @@ import { customMedia } from "../../../../GlobalStyles";
 import Button from "../../Button";
 import Tag from "../../Tag";
 
-import netflixCover from "../../../../images/netfilxCover.png";
+import netflixCover from "../../../../images/netflixCover.png";
 import watchaCover from "../../../../images/watchaCover.png";
 import disneyplusCover from "../../../../images/disneyplusCover.png";
 import wavveCover from "../../../../images/wavveCover.png";
+
+const url = "http://576c-39-112-117-42.ngrok.io";
 
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
@@ -60,7 +62,7 @@ const RegisterForm = ({ ...props }) => {
     } else if (tagName === "WAVVE") {
       setCoverImg(wavveCover);
     } else {
-      setCoverImg(null);
+      setCoverImg(Skeleton);
     }
   };
 
@@ -109,8 +111,6 @@ const RegisterForm = ({ ...props }) => {
       message.warning("한 줄 소개는 40자까지 입력 가능합니다.");
       return;
     }
-
-    const url = "https://modgo.loca.lt";
 
     const data = {
       userId: userId,

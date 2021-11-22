@@ -16,7 +16,7 @@ import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 
-const url = "https://modgo.loca.lt";
+const url = "http://576c-39-112-117-42.ngrok.io";
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,15 +24,15 @@ const Main = () => {
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
-  const [myComments, setMyComments] = useState(null);
+  // const [myComments, setMyComments] = useState(null);
   const [myPendingMembers, setMyPendingMembers] = useState();
   const [myPendingMembersTotal, setMyPendingMembersTotal] = useState(0);
   const [myPendingMembersPage, setMyPendingMembersPage] = useState(1);
   const [myMembers, setMyMembers] = useState();
   const [myMembersTotal, setMyMembersTotal] = useState(0);
   const [myMembersPage, setMyMembersPage] = useState(1);
-  const [myCommentsTotal, setMyCommentsTotal] = useState(0);
-  const [myCommentsPage, setMyCommentsPage] = useState(1);
+  // const [myCommentsTotal, setMyCommentsTotal] = useState(0);
+  // const [myCommentsPage, setMyCommentsPage] = useState(1);
   const [myLikedClubsTotal, setMyLikedClubsTotal] = useState(0);
   const [myLikedClubsPage, setMyLikedClubsPage] = useState(1);
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
@@ -50,17 +50,17 @@ const Main = () => {
     myJoinedClubsPage,
     myLikedClubsTotal,
     myLikedClubsPage,
-    myCommentsPage,
+    // myCommentsPage,
   ]);
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(url + `/comments/users/${userId}`, {
-        params: { page: myCommentsPage },
-      });
+      // const res = await axios.get(url + `/comments/users/${userId}`, {
+      //   params: { page: myCommentsPage },
+      // });
 
-      setMyComments(res.data.commentList);
-      setMyCommentsTotal(res.data.totalCount);
+      // setMyComments(res.data.commentList);
+      // setMyCommentsTotal(res.data.totalCount);
 
       const likedClubsRes = await axios.get(
         url + `/likedClubs/users/${userId}`,
@@ -129,27 +129,27 @@ const Main = () => {
     setIsModalVisible(false);
   };
 
-  const handleDeleteClub = async () => {
-    try {
-      const res = await axios.get(url + `/clubs/users/${userId}`);
+  // const handleDeleteClub = async () => {
+  //   try {
+  //     const res = await axios.get(url + `/clubs/users/${userId}`);
 
-      if (res.data) {
-        const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
+  //     if (res.data) {
+  //       const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
 
-        if (deleteRes.status === 200) {
-          message.success("모임이 성공적으로 삭제되었습니다.");
-          handleCancel();
-          history.go(0);
-        } else {
-          message.error("모임 삭제에 실패하였습니다.");
-        }
-      } else {
-        message.error("현재 운영중인 독서모임이 존재하지 않습니다.");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //       if (deleteRes.status === 200) {
+  //         message.success("모임이 성공적으로 삭제되었습니다.");
+  //         handleCancel();
+  //         history.go(0);
+  //       } else {
+  //         message.error("모임 삭제에 실패하였습니다.");
+  //       }
+  //     } else {
+  //       message.error("현재 운영중인 독서모임이 존재하지 않습니다.");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleLikedClubs = (clubId) => {
     let index = likedClubs.indexOf(clubId);
@@ -227,25 +227,25 @@ const Main = () => {
     }
   };
 
-  const handleMemberDelete = async (userId, clubId) => {
-    try {
-      const res = axios.delete(url + "/members", {
-        params: {
-          userId: userId,
-          clubId: Number(clubId),
-          delete: "OUT",
-        },
-      });
+  // const handleMemberDelete = async (userId, clubId) => {
+  //   try {
+  //     const res = axios.delete(url + "/members", {
+  //       params: {
+  //         userId: userId,
+  //         clubId: Number(clubId),
+  //         delete: "OUT",
+  //       },
+  //     });
 
-      if (res.status === 200) {
-        message.warning("모임에서 내보내기 처리되었습니다.");
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      fetchData();
-    }
-  };
+  //     if (res.status === 200) {
+  //       message.warning("모임에서 내보내기 처리되었습니다.");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     fetchData();
+  //   }
+  // };
 
   return (
     <Wrapper>
@@ -279,7 +279,7 @@ const Main = () => {
                 <NotFound>🚫 내 댓글이 존재하지 않습니다.🚫</NotFound>
               )}
             </TabPane> */}
-            <TabPane tab="좋아요한 모임" key="2">
+            <TabPane tab="좋아요한 모임" key="1">
               {myLikedClubsTotal !== 0 ? (
                 <TabContainer>
                   <CardRow>
@@ -303,10 +303,10 @@ const Main = () => {
                   </PaginationRow>
                 </TabContainer>
               ) : (
-                <NotFound>🚫 좋아요한 모임이 존재하지 않습니다🚫</NotFound>
+                <NotFound>🚫 좋아요한 모임이 존재하지 않습니다 🚫</NotFound>
               )}
             </TabPane>
-            <TabPane tab="참여중인 모임" key="3">
+            <TabPane tab="참여중인 모임" key="2">
               {myJoinedClubsTotal !== 0 ? (
                 <TabContainer>
                   <CardRow>
@@ -330,10 +330,10 @@ const Main = () => {
                   </PaginationRow>
                 </TabContainer>
               ) : (
-                <NotFound>🚫 참여중인 모임이 존재하지 않습니다🚫</NotFound>
+                <NotFound>🚫 참여중인 모임이 존재하지 않습니다 🚫</NotFound>
               )}
             </TabPane>
-            <TabPane tab="모임 관리" key="4">
+            <TabPane tab="모임 관리" key="3">
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
                   <Box>
@@ -363,7 +363,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                        🚫 현재 대기중인 멤버가 없습니다.🚫
+                        🚫 현재 대기중인 멤버가 없습니다. 🚫
                       </MemberNotFound>
                     )}
                     <Divider />
@@ -373,10 +373,7 @@ const Main = () => {
                         <Row gutter={[0, 16]}>
                           {myMembers.map((member) => (
                             <Row key={member.id}>
-                              <Member
-                                myMember={member}
-                                handleMemberDelete={handleMemberDelete}
-                              />
+                              <Member myMember={member} />
                             </Row>
                           ))}
                         </Row>
@@ -391,7 +388,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                        🚫 현재 참여중인 멤버가 없습니다.🚫
+                        🚫 현재 참여중인 멤버가 없습니다. 🚫
                       </MemberNotFound>
                     )}
                   </Box>
@@ -399,32 +396,6 @@ const Main = () => {
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm myClub={myClub} />
                     <Divider />
-                    <DeleteBtnContainer>
-                      <TextBox>
-                        <LargeText>모임 삭제하기</LargeText>
-                        <Text>
-                          한 번 모임을 삭제하면 복구할 수 없습니다. 신중하게
-                          결정해주세요!
-                        </Text>
-                      </TextBox>
-                      <DeleteBtn onClick={showModal}>모임 삭제</DeleteBtn>
-                      <StyledModal
-                        visible={isModalVisible}
-                        onCancel={handleCancel}
-                      >
-                        <ModalTitle>정말로 모임을 삭제하시겠습니까?</ModalTitle>
-                        <Text>
-                          한 번 삭제하시면 다시 되돌릴 수 없습니다. <br />{" "}
-                          신중하게 선택하신 다음 확인 버튼을 눌러주세요.
-                        </Text>
-                        <ButtonRow>
-                          <FilledBtn onClick={handleDeleteClub}>확인</FilledBtn>
-                          <UnfilledBtn type="button" onClick={handleCancel}>
-                            취소
-                          </UnfilledBtn>
-                        </ButtonRow>
-                      </StyledModal>
-                    </DeleteBtnContainer>
                   </Box>
                 </TabContainer>
               ) : (
