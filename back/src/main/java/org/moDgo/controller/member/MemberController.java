@@ -55,9 +55,11 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<MemberPageResponseDto> getMembers(
             @RequestParam("userId") String userId,
+            @RequestParam("club_id") Long clubId,
             @RequestParam("approvalStatus") String approvalStatus,
             @RequestParam("page") int page) {
-        Page<Member> allMembers = memberService.getMemberList(userId, approvalStatus, page);
+
+        Page<Member> allMembers = memberService.getMemberList(userId, clubId, approvalStatus, page);
         Long totalCount = allMembers.getTotalElements();
 
         List<MemberResponseDto> response = allMembers

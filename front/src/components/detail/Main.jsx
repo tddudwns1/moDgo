@@ -3,7 +3,6 @@ import axios from "axios";
 import { Row, message } from "antd";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
-
 import InfoBox from "./InfoBox";
 import DetailInfo from "./DetailInfo";
 import Comment from "./Comment";
@@ -11,6 +10,8 @@ import Button from "../common/Button";
 import Spin from "../common/Spin";
 import Pagination from "../common/Pagination";
 import profile from "../../images/icons/profile.png";
+
+const url = "http://modgo.loca.lt";
 
 const Main = (props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -31,12 +32,12 @@ const Main = (props) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const res = await axios.get(`/clubs/${clubId}`);
+				const res = await axios.get(url+`/clubs/${clubId}`);
 
 				setClub(res.data);
 
 				if (userId) {
-					const likedClubRes = await axios.get("/likedClubs/ids", {
+					const likedClubRes = await axios.get(url+"/likedClubs/ids", {
 						params: {
 							userId: userId,
 						},

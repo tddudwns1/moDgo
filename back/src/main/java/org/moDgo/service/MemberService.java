@@ -59,7 +59,51 @@ public class MemberService {
     }
 
 
-    public Page<Member> getMemberList(String userId,String approvalStatus, int page) {
+    public Page<Member> getMemberList(String userId, Long clubId, String approvalStatus, int page) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        // 한 명의 user가 n개의 club을 생성 가능하므로 clubId로 해당 club 접근
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+
+        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by("id").descending());
+        ApprovalStatus status;
+
+        if (!approvalStatus.equals(ApprovalStatus.CONFIRMED.toString())) {
+            if(approvalStatus.equals(ApprovalStatus.WAITING.toString())){
+                status = ApprovalStatus.WAITING;
+            }
+            else {
+                status = ApprovalStatus.DENIED;
+            }
+        } else {
+            status = ApprovalStatus.CONFIRMED;
+        }
+
+        return memberRepository.findByClubAndApprovalStatus(club, status, pageRequest);
+
+    }
+
+
+    public Page<Member> getJoiningClubList(String userId, int page) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by("id").descending());
+        return memberRepository.findAllByUser(user, pageRequest);
+    }
+
+
+    public List<Long> getJoiningClubIds(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
+        List<Member> joiningClubList = memberRepository.findAllByUser(user);
+        List<Long> joiningClubIdList = new ArrayList<>();
+
+        for (Member member : joiningClubList) {
+            joiningClubIdList.add(member.getClub().getId());
+        }
+        return joiningClubIdList;
+    }
+
+
+/*    public Page<Member> getMemberList(String userId,String approvalStatus, int page) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Club club = clubRepository.findByUser(user).orElseThrow(ClubNotFoundException::new);
 
@@ -80,25 +124,6 @@ public class MemberService {
 
         return memberRepository.findByClubAndApprovalStatus(club, status, pageRequest);
 
-    }
-
-    public Page<Member> getJoiningClubList(String userId, int page) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by("id").descending());
-        return memberRepository.findAllByUser(user, pageRequest);
-    }
-
-
-    public List<Long> getJoiningClubIds(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-
-        List<Member> joiningClubList = memberRepository.findAllByUser(user);
-        List<Long> joiningClubIdList = new ArrayList<>();
-
-        for (Member member : joiningClubList) {
-            joiningClubIdList.add(member.getClub().getId());
-        }
-        return joiningClubIdList;
-    }
+    }*/
 
 }
