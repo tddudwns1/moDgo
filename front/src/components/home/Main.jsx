@@ -60,7 +60,7 @@ const Main = () => {
       setsortByLikesClubs(likesRes.data.clubList);
 
       if (userId) {
-        const likedClubRes = await axios.get(url+"/likedClubs/ids", {
+        const likedClubRes = await axios.get(url+"/likedClubs/ids", { //참여중인모임아이디조회
           params: {
             userId: userId,
           },

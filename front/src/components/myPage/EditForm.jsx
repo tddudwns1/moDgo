@@ -18,7 +18,9 @@ import { customMedia } from "../../GlobalStyles";
 import Button from "../common/Button";
 import Tag from "../common/Tag";
 
-import trash from "../../images/icons/trash.png";
+
+const url = "https://modgo.loca.lt";
+
 
 const EditForm = ({ ...props }) => {
 	const [editForm] = Form.useForm();
@@ -276,7 +278,7 @@ const EditForm = ({ ...props }) => {
 							<StyledRangePicker disabledDate={disabledDate} />
 						</Form.Item>
 					</Col>
-					<Col span={8}>
+					{/* <Col span={8}>
 						<Form.Item
 							label="사진"
 							name="img"
@@ -314,7 +316,7 @@ const EditForm = ({ ...props }) => {
 								</FileInput>
 							</Row>
 						</Form.Item>
-					</Col>
+					</Col> */}
 				</Row>
 				<TagRow>
 					<TagTitle>태그 (3개까지 선택 가능)</TagTitle>

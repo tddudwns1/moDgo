@@ -11,292 +11,294 @@ import Spin from "../common/Spin";
 import Pagination from "../common/Pagination";
 import profile from "../../images/icons/profile.png";
 
-const url = "http://modgo.loca.lt";
+
+const url = "https://modgo.loca.lt";
 
 const Main = (props) => {
-	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [club, setClub] = useState();
-	const [comments, setComments] = useState();
-	const [postComment, setPostComment] = useState("");
-	const [updateComment, setUpdateComment] = useState("");
-	const [editable, setEditable] = useState();
-	const [total, setTotal] = useState(0);
-	const [page, setPage] = useState(1);
-	const [likedClubs, setLikedClubs] = useState([]);
-	const [apply, setApply] = useState();
-	const [loading, setLoading] = useState(true);
-	const clubId = Number(props.match.params.id);
-	const userId = localStorage.getItem("user_id");
-	const userImg = localStorage.getItem("user_image");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [club, setClub] = useState();
+  const [comments, setComments] = useState();
+  const [postComment, setPostComment] = useState("");
+  const [updateComment, setUpdateComment] = useState("");
+  const [editable, setEditable] = useState();
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [likedClubs, setLikedClubs] = useState([]);
+  const [apply, setApply] = useState();
+  const [loading, setLoading] = useState(true);
+  const clubId = Number(props.match.params.id);
+  const userId = localStorage.getItem("user_id");
+  const userImg = localStorage.getItem("user_image");
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await axios.get(url+`/clubs/${clubId}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(url + `/clubs/${clubId}`);
 
-				setClub(res.data);
+        setClub(res.data);
 
-				if (userId) {
-					const likedClubRes = await axios.get(url+"/likedClubs/ids", {
-						params: {
-							userId: userId,
-						},
-					});
+        if (userId) {
+          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+            params: {
+              userId: userId,
+            },
+          });
 
-					setLikedClubs(likedClubRes.data.likedClubIdList);
+          setLikedClubs(likedClubRes.data.likedClubIdList);
 
-					const applyRes = await axios.get("/members/ids", {
-						params: { userId: userId },
-					});
+          const applyRes = await axios.get(url + "/members/ids", {
+            params: { userId: userId },
+          });
 
-					setApply(applyRes.data.joiningClubIdList);
-				}
+          setApply(applyRes.data.joiningClubIdList);
+        }
 
-				setLoading(false);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		fetchData();
-		fetchCmtData();
-	}, [userImg, total, page]);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+    fetchCmtData();
+  }, [userImg, total, page]);
 
-	const fetchCmtData = async () => {
-		const res = await axios.get(`/comments/clubs/${clubId}`, {
-			params: { page: page },
-		});
+  const fetchCmtData = async () => {
+    const res = await axios.get(url + `/comments/clubs/${clubId}`, {
+      params: { page: page },
+    });
 
-		setComments(res.data.commentList);
-		setTotal(res.data.totalCount);
-	};
+    setComments(res.data.commentList);
+    setTotal(res.data.totalCount);
+  };
 
-	const showModal = () => {
-		setIsModalVisible(true);
-	};
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
-	const handleCancel = () => {
-		setIsModalVisible(false);
-	};
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
-	const handlePostComment = async () => {
-		const data = {
-			userId: userId,
-			clubId: Number(clubId),
-			contents: postComment,
-		};
+  const handlePostComment = async () => {
+    const data = {
+      userId: userId,
+      clubId: Number(clubId),
+      contents: postComment,
+    };
 
-		try {
-			const res = await axios.post("/comments", data);
+    try {
+      const res = await axios.post(url + "/comments", data);
 
-			if (res.status === 200) {
-				message.success("댓글이 성공적으로 등록되었습니다.");
-			} else {
-				message.error("댓글 등록에 실패했습니다.");
-			}
-		} catch (err) {
-			console.log(err);
-		} finally {
-			fetchCmtData();
-		}
-	};
+      if (res.status === 200) {
+        message.success("댓글이 성공적으로 등록되었습니다.");
+      } else {
+        message.error("댓글 등록에 실패했습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchCmtData();
+    }
+  };
 
-	const handleUpdateComment = async (id) => {
-		const data = {
-			userId: userId,
-			contents: updateComment,
-		};
+  const handleUpdateComment = async (id) => {
+    const data = {
+      userId: userId,
+      contents: updateComment,
+    };
 
-		try {
-			const res = await axios.put(`/comments/${id}`, data);
+    try {
+      const res = await axios.put(url + `/comments/${id}`, data);
 
-			if (res.status === 200) {
-				message.success("댓글이 성공적으로 수정되었습니다.");
-			} else {
-				message.error("댓글 수정에 실패했습니다.");
-			}
-		} catch (err) {
-			console.log(err);
-		} finally {
-			fetchCmtData();
-		}
-	};
+      if (res.status === 200) {
+        message.success("댓글이 성공적으로 수정되었습니다.");
+      } else {
+        message.error("댓글 수정에 실패했습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchCmtData();
+    }
+  };
 
-	const handleDeleteComment = async (id) => {
-		try {
-			const res = await axios.delete(`/comments/${id}`);
+  const handleDeleteComment = async (id) => {
+    try {
+      const res = await axios.delete(url + `/comments/${id}`);
 
-			if (res.status === 200) {
-				message.success("댓글이 성공적으로 삭제되었습니다.");
-			} else {
-				message.error("댓글 삭제에 실패했습니다.");
-			}
-		} catch (err) {
-			console.log(err);
-		} finally {
-			fetchCmtData();
-		}
-	};
+      if (res.status === 200) {
+        message.success("댓글이 성공적으로 삭제되었습니다.");
+      } else {
+        message.error("댓글 삭제에 실패했습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchCmtData();
+    }
+  };
 
-	const handleLikedClubs = (clubId) => {
-		let index = likedClubs.indexOf(clubId);
+  const handleLikedClubs = (clubId) => {
+    let index = likedClubs.indexOf(clubId);
 
-		try {
-			if (likedClubs.includes(clubId)) {
-				likedClubs.splice(index, 1);
-				setLikedClubs([...likedClubs]);
-				handleLikeDelete(clubId);
-			} else {
-				setLikedClubs([...likedClubs, clubId]);
-				handleLikePost(clubId);
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    try {
+      if (likedClubs.includes(clubId)) {
+        likedClubs.splice(index, 1);
+        setLikedClubs([...likedClubs]);
+        handleLikeDelete(clubId);
+      } else {
+        setLikedClubs([...likedClubs, clubId]);
+        handleLikePost(clubId);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const handleLikePost = async (clubId) => {
-		const data = {
-			clubId: Number(clubId),
-			userId: userId,
-		};
+  const handleLikePost = async (clubId) => {
+    const data = {
+      clubId: Number(clubId),
+      userId: userId,
+    };
 
-		try {
-			await axios.post("/likedClubs", data);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    try {
+      await axios.post(url + "/likedClubs", data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const handleLikeDelete = async (clubId) => {
-		try {
-			await axios.delete("/likedClubs", {
-				params: { userId: userId, clubId: Number(clubId) },
-			});
-		} catch (err) {
-			console.log(err);
-		}
-	};
+  const handleLikeDelete = async (clubId) => {
+    try {
+      await axios.delete(url + "/likedClubs", {
+        params: { userId: userId, clubId: Number(clubId) },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const onReset = () => {
-		setPostComment("");
-	};
+  const onReset = () => {
+    setPostComment("");
+  };
 
-	const handlePostApply = async (id) => {
-		try {
-			const data = { userId: userId, clubId: Number(id) };
-			const res = await axios.post("/members", data);
-			if (res.status === 400) {
-				message.error("이미 참여신청한 모임입니다.");
-			}
-			setApply([...apply, id]);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+  const handlePostApply = async (id) => {
+    try {
+      const data = { userId: userId, clubId: Number(id) };
+      const res = await axios.post(url + "/members", data);
+      if (res.status === 400) {
+        message.error("이미 참여신청한 모임입니다.");
+      }
+      setApply([...apply, id]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const handleDeleteApply = async (clubId) => {
-		try {
-			const res = await axios.delete("/members", {
-				params: {
-					userId: userId,
-					clubId: Number(clubId),
-					delete: "",
-				},
-			});
-			if (res.status === 400) {
-				message.error("이미 참여취소한 모임입니다.");
-			}
+  const handleDeleteApply = async (clubId) => {
+    try {
+      const res = await axios.delete(url + "/members", {
+        params: {
+          userId: userId,
+          clubId: Number(clubId),
+          delete: "",
+        },
+      });
+      if (res.status === 400) {
+        message.error("이미 참여취소한 모임입니다.");
+      }
 
-			const index = apply.indexOf(clubId);
-			apply.splice(index, 1);
-			setApply([...apply]);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+      const index = apply.indexOf(clubId);
+      apply.splice(index, 1);
+      setApply([...apply]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	return (
-		<Wrapper>
-			{loading ? (
-				<SpinContainer>
-					<Spin />
-				</SpinContainer>
-			) : (
-				<>
-					<InfoBox
-						userId={userId}
-						club={club}
-						likedClubs={likedClubs}
-						handleLikedClubs={handleLikedClubs}
-						apply={apply}
-						handlePostApply={handlePostApply}
-						handleDeleteApply={handleDeleteApply}
-						isModalVisible={isModalVisible}
-						showModal={showModal}
-						handleCancel={handleCancel}
-					/>
-					<DetailInfo club={club} />
-					<TitleRow>
-						<Title>댓글 ({total})</Title>
-					</TitleRow>
-					<CmtContainer>
-						<InputBox>
-							<ProfileIcon>
-								{userImg ? (
-									<img src={userImg} alt="User profile" />
-								) : (
-									<img src={profile} alt="User profile icon" />
-								)}
-							</ProfileIcon>
-							<StyledInput
-								value={postComment}
-								placeholder="댓글을 입력하세요..."
-								onChange={(e) => {
-									setPostComment(e.target.value);
-								}}
-							/>
-							<CmtPost
-								onClick={() => {
-									if (userId) {
-										handlePostComment();
-										onReset();
-									} else {
-										message.warning("로그인이 필요한 기능입니다.");
-									}
-								}}
-							>
-								등록
-							</CmtPost>
-						</InputBox>
-						<ListRow>
-							{comments
-								? comments.map((comment) => (
-										<Comment
-											key={comment.id}
-											comment={comment}
-											userId={userId}
-											setUpdateComment={setUpdateComment}
-											editable={editable}
-											setEditable={setEditable}
-											handleUpdateComment={handleUpdateComment}
-											handleDeleteComment={handleDeleteComment}
-										/>
-								  ))
-								: ""}
-						</ListRow>
-					</CmtContainer>
-					<PaginationRow>
-						<Pagination
-							total={total}
-							pageSize={5}
-							current={page}
-							onChange={(page) => setPage(page)}
-						/>
-					</PaginationRow>
-				</>
-			)}
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      {loading ? (
+        <SpinContainer>
+          <Spin />
+        </SpinContainer>
+      ) : (
+        <>
+          <InfoBox
+            userId={userId}
+            club={club}
+            likedClubs={likedClubs}
+            handleLikedClubs={handleLikedClubs}
+            apply={apply}
+            handlePostApply={handlePostApply}
+            handleDeleteApply={handleDeleteApply}
+            isModalVisible={isModalVisible}
+            showModal={showModal}
+            handleCancel={handleCancel}
+          />
+          <DetailInfo club={club} />
+          <TitleRow>
+            <Title>댓글 ({total})</Title>
+          </TitleRow>
+          <CmtContainer>
+            <InputBox>
+              <ProfileIcon>
+                {userImg ? (
+                  <img src={userImg} alt="User profile" />
+                ) : (
+                  <img src={profile} alt="User profile icon" />
+                )}
+              </ProfileIcon>
+              <StyledInput
+                value={postComment}
+                placeholder="댓글을 입력하세요..."
+                onChange={(e) => {
+                  setPostComment(e.target.value);
+                }}
+              />
+              <CmtPost
+                onClick={() => {
+                  if (userId) {
+                    handlePostComment();
+                    onReset();
+                  } else {
+                    message.warning("로그인이 필요한 기능입니다.");
+                  }
+                }}
+              >
+                등록
+              </CmtPost>
+            </InputBox>
+            <ListRow>
+              {comments
+                ? comments.map((comment) => (
+                    <Comment
+                      key={comment.id}
+                      comment={comment}
+                      userId={userId}
+                      setUpdateComment={setUpdateComment}
+                      editable={editable}
+                      setEditable={setEditable}
+                      handleUpdateComment={handleUpdateComment}
+                      handleDeleteComment={handleDeleteComment}
+                    />
+                  ))
+                : ""}
+            </ListRow>
+          </CmtContainer>
+          <PaginationRow>
+            <Pagination
+              total={total}
+              pageSize={5}
+              current={page}
+              onChange={(page) => setPage(page)}
+            />
+          </PaginationRow>
+        </>
+      )}
+    </Wrapper>
+  );
+
 };
 
 export default Main;

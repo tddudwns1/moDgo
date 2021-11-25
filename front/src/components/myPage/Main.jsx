@@ -17,7 +17,7 @@ import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 
 
-const url = "http://modgo.loca.lt";
+const url = "https://modgo.loca.lt";
 
 
 const Main = () => {

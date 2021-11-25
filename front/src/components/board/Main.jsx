@@ -27,6 +27,8 @@ const Main = () => {
 
   // const history = useHistory();
 
+  const url = "https://modgo.loca.lt";
+
   useEffect(() => {
     fetchData();
     setLoading(false);
@@ -36,7 +38,10 @@ const Main = () => {
     const sendTags = selectedTags.join(", ");
 
     try {
-      const res = await axios.get(url+ "/clubs", {
+
+
+      const res = await axios.get(url + "/clubs", {
+
         params: {
           sortBy: sortBy,
           tags: sendTags,
@@ -50,7 +55,9 @@ const Main = () => {
       setTotal(res.data.totalCount);
 
       if (userId) {
-        const likedClubRes = await axios.get(url+"/likedClubs/ids", {
+
+        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+
           params: {
             userId: userId,
           },
@@ -83,7 +90,9 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post(url+"/likedClubs", {
+
+      await axios.post(url + "/likedClubs", {
+
         clubId: Number(clubId),
         userId: userId,
       });
@@ -94,7 +103,9 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete(url+"/likedClubs", {
+
+      axios.delete(url + "/likedClubs", {
+
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {

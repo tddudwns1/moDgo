@@ -10,7 +10,7 @@ import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
 
-const url = "http://modgo.loca.lt";
+const url = "https://modgo.loca.lt";
 
 
 const LikedClubCard = ({ ...props }) => {

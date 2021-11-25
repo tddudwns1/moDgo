@@ -23,6 +23,8 @@ import disneyplusCover from "../../../../images/disneyplusCover.png";
 import wavveCover from "../../../../images/wavveCover.png";
 const url = "http://modgo.loca.lt";
 
+
+
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
