@@ -9,6 +9,7 @@ import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
 const InfoBox = (props) => {
+
   const tags = props.club.tags.split(", ");
 
   return (
@@ -117,16 +118,19 @@ const InfoBox = (props) => {
       </ClubInfo>
     </InfoBoxContainer>
   );
+
 };
 
 export default InfoBox;
 
 const InfoBoxContainer = styled.div`
+
   width: 100%;
   height: 332px;
   border: 1.5px solid #e5e5e5;
   border-radius: 10px;
   display: flex;
+
   ${customMedia.lessThan("mobile")`
     flex-direction: column;
     height: 372px;
@@ -144,12 +148,14 @@ const InfoBoxContainer = styled.div`
 `;
 
 const ClubThumbnail = styled.div`
+
   width: 493px;
   height: 100%;
   img {
     width: 100%;
     height: 100%;
     border-radius: 10px 0 0 10px;
+
 
     ${customMedia.lessThan("mobile")`
       border-radius: 10px 10px 0 0;
@@ -158,6 +164,8 @@ const ClubThumbnail = styled.div`
       border-radius: 10px 10px 0 0;
     `}
   }
+
+
 
   ${customMedia.lessThan("mobile")`
     width: 295px;
@@ -176,12 +184,14 @@ const ClubThumbnail = styled.div`
 `;
 
 const ClubInfo = styled.div`
+
   width: 50%;
   padding: 0 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   ${customMedia.lessThan("mobile")`
+
     width: 100%;
     height: 50%;
     padding: 5px 17px;
@@ -196,6 +206,7 @@ const ClubInfo = styled.div`
 `;
 
 const InfoRow = styled.div`
+
   display: flex;
   align-items: center;
   gap: 20px;
@@ -205,6 +216,7 @@ const Title = styled.div`
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
+
 
   ${customMedia.lessThan("mobile")`
     font-size: 16px;
@@ -223,9 +235,11 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
+
   font-size: 22px;
   font-weight: 500;
   color: #f98404;
+
   ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
@@ -241,8 +255,10 @@ const SubTitle = styled.div`
 `;
 
 const Text = styled.div`
+
   font-size: 20px;
   ${customMedia.lessThan("mobile")`
+
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -257,18 +273,22 @@ const Text = styled.div`
 `;
 
 const TagContainer = styled.div`
+
   display: flex;
   gap: 10px;
   margin-top: 15px;
   ${customMedia.between("mobile", "largeMobile")`
+
     margin-top: 5px;
   `}
 `;
 
 const Tag = styled(SmallTag)`
+
   & {
     font-size: 16px;
     padding: 7px 25px;
+
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
       padding: 5px 10px;
@@ -295,6 +315,7 @@ const BtnRow = styled.div`
   gap: 30px;
   margin-top: 40px;
   ${customMedia.lessThan("mobile")`
+
     gap: 10px;
     margin-top: 10px;
   `}
@@ -309,6 +330,7 @@ const BtnRow = styled.div`
 `;
 
 const LikeIconContainer = styled.div`
+
   width: 50px;
   height: 50px;
   border: 2px solid #e5e5e5;
@@ -317,6 +339,7 @@ const LikeIconContainer = styled.div`
   justify-content: center;
   align-items: center;
   ${customMedia.lessThan("mobile")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     width: 40px;
     height: 40px;
   `}
@@ -332,6 +355,7 @@ const LikeIconContainer = styled.div`
 `;
 
 const LikeIcon = styled.div`
+
   width: 32px;
   height: 30px;
   cursor: pointer;
@@ -340,6 +364,7 @@ const LikeIcon = styled.div`
     height: 100%;
   }
   ${customMedia.lessThan("mobile")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     width: 24px;
     height: 22px;
   `}
@@ -358,6 +383,7 @@ const LikeIcon = styled.div`
 `;
 
 const ApplyBtn = styled(Button)`
+
   width: 300px;
   height: 50px;
   color: #ffffff;
@@ -365,11 +391,14 @@ const ApplyBtn = styled(Button)`
   border-radius: 5px;
   padding: 0;
   text-align: center;
+
   &:disabled {
     opacity: 60%;
     cursor: not-allowed;
   }
+
   ${customMedia.lessThan("mobile")`
+
     width: 200px;
     height: 40px;
     font-size: 14px;
@@ -392,6 +421,7 @@ const ApplyBtn = styled(Button)`
 `;
 
 const StyledModal = styled(Modal)`
+
   display: flex;
   justify-content: center;
   .ant-modal-content {
@@ -421,11 +451,13 @@ const ModalTitle = styled.div`
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "tablet")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     font-size: 18px;
   `}
 `;
 
 const ButtonRow = styled(Row)`
+
   margin-top: 30px;
   display: flex;
   justify-content: center;
@@ -454,6 +486,7 @@ const SkeletonImg = styled(Skeleton.Image)`
     width: 493px;
     height: 332px;
 
+
     ${customMedia.lessThan("mobile")`
       width: 295px;
       height: 186px;
@@ -471,4 +504,6 @@ const SkeletonImg = styled(Skeleton.Image)`
       height: 293px;
     `}
   }
+
 `;
+
