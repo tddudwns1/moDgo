@@ -3031,10 +3031,17 @@
   "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz"
   "version" "5.2.0"
 
+<<<<<<< HEAD
+"antd@^4.16.11":
+  "integrity" "sha512-EMPD3fzKe7oayx9keD/GA1oKatcx7j5CGlkJj5eLS0/eEDDEkxVj3DFmKOPuHYt4BK7ltTzMFS+quSTmqUXPiw=="
+  "resolved" "https://registry.npmjs.org/antd/-/antd-4.16.13.tgz"
+  "version" "4.16.13"
+=======
 "antd@^4.16.13":
   "integrity" "sha512-V2xBGzBK+s2Iy7Re5JOcOBtAvaZtJ9t7R1fFOP51T6ynfSvJqaRtG4DjBu7i9inhXkCzrt7eGcX3vMqLCqXV8g=="
   "resolved" "https://registry.npmjs.org/antd/-/antd-4.17.0.tgz"
   "version" "4.17.0"
+>>>>>>> 7a57e5a1a3e7a8f695caec6b9eef3e9566ad3bb1
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
@@ -4775,9 +4782,9 @@
     "cssom" "~0.3.6"
 
 "csstype@^3.0.2":
-  "integrity" "sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw=="
-  "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.9.tgz"
-  "version" "3.0.9"
+  "integrity" "sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA=="
+  "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.10.tgz"
+  "version" "3.0.10"
 
 "cyclist@^1.0.1":
   "integrity" "sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk="
@@ -7689,6 +7696,8 @@
     "supports-color" "^6.1.0"
 
 "jest-worker@^26.5.0":
+<<<<<<< HEAD
+=======
   "integrity" "sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ=="
   "resolved" "https://registry.npmjs.org/jest-worker/-/jest-worker-26.6.2.tgz"
   "version" "26.6.2"
@@ -7698,6 +7707,7 @@
     "supports-color" "^7.0.0"
 
 "jest-worker@^26.6.2":
+>>>>>>> a368d709040127e92ad4bda7f67615a25e1ee1e5
   "integrity" "sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ=="
   "resolved" "https://registry.npmjs.org/jest-worker/-/jest-worker-26.6.2.tgz"
   "version" "26.6.2"
@@ -7706,6 +7716,18 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
+<<<<<<< HEAD
+"jest-worker@^26.6.2":
+  "integrity" "sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ=="
+  "resolved" "https://registry.npmjs.org/jest-worker/-/jest-worker-26.6.2.tgz"
+  "version" "26.6.2"
+  dependencies:
+    "@types/node" "*"
+    "merge-stream" "^2.0.0"
+    "supports-color" "^7.0.0"
+
+=======
+>>>>>>> a368d709040127e92ad4bda7f67615a25e1ee1e5
 "jest-worker@^27.3.1":
   "integrity" "sha512-ks3WCzsiZaOPJl/oMsDjaf0TRiSv7ctNgs0FqRr2nARsovz6AWWy4oLElwcquGSz692DzgZQrCLScPNs5YlC4g=="
   "resolved" "https://registry.npmjs.org/jest-worker/-/jest-worker-27.3.1.tgz"
