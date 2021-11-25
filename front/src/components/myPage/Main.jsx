@@ -39,7 +39,7 @@ const Main = () => {
   const [myLikedClubsPage, setMyLikedClubsPage] = useState(1);
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const userId = localStorage.getItem("user_id");
 
   const history = useHistory();
@@ -67,12 +67,12 @@ const Main = () => {
       // setMyCommentsTotal(res.data.totalCount);
 
 
-      const likedClubsRes = await axios.get(
-        url + `/likedClubs/users/${userId}`,
-        {
-          params: { page: myLikedClubsPage },
-        }
-      );
+      const likedClubsRes = await axios.get(url + `/likedClubs/users/${userId}`, {
+          params: { 
+            page: myLikedClubsPage,
+           },
+        });
+        
       setMyLikedClubs(likedClubsRes.data.likedClubList);
       setMyLikedClubsTotal(likedClubsRes.data.totalCount);
 
@@ -125,9 +125,11 @@ const Main = () => {
           userId: userId,
         },
       });
+
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
-      setLoading(false);
+      setLoading(true);
+
     } catch (err) {
       console.log(err);
     }
@@ -327,9 +329,10 @@ const Main = () => {
                   </PaginationRow>
                 </TabContainer>
               ) : (
-                <NotFound>🚫 좋아요한 모임이 존재하지 않습니다 🚫</NotFound>
+                <NotFound> 좋아요한 모임이 존재하지 않습니다 </NotFound>
               )}
             </TabPane>
+
             <TabPane tab="참여중인 모임" key="2">
               {myJoinedClubsTotal !== 0 ? (
                 <TabContainer>
@@ -354,9 +357,10 @@ const Main = () => {
                   </PaginationRow>
                 </TabContainer>
               ) : (
-                <NotFound>🚫 참여중인 모임이 존재하지 않습니다 🚫</NotFound>
+                <NotFound> 참여중인 모임이 존재하지 않습니다 </NotFound>
               )}
             </TabPane>
+
             <TabPane tab="모임 관리" key="3">
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
@@ -387,7 +391,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                        🚫 현재 대기중인 멤버가 없습니다. 🚫
+                         현재 대기중인 멤버가 없습니다. 
                       </MemberNotFound>
                     )}
                     <Divider />
@@ -412,10 +416,11 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                        🚫 현재 참여중인 멤버가 없습니다. 🚫
+                         현재 참여중인 멤버가 없습니다. 
                       </MemberNotFound>
                     )}
                   </Box>
+
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm myClub={myClub} />
@@ -424,7 +429,7 @@ const Main = () => {
                 </TabContainer>
               ) : (
                 <NotFound>
-                  🚫 현재 운영중인 모임이 존재하지 않습니다 🚫
+                   현재 운영중인 모임이 존재하지 않습니다 
                 </NotFound>
               )}
             </TabPane>
@@ -490,7 +495,7 @@ const StyledTabs = styled(Tabs)`
     `}
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #fa9423;
+    color: #029400;
     font-weight: bold;
     ${customMedia.lessThan("mobile")`
       font-weight: 500;
@@ -504,11 +509,11 @@ const StyledTabs = styled(Tabs)`
     `}
   }
   .ant-tabs-tab:hover {
-    color: #fa9423;
+    color: #029400;
   }
   .ant-tabs-ink-bar {
-    border: 2px solid #fa9423;
-    background-color: #fa9423;
+    border: 2px solid #029400;
+    background-color: #029400;
   }
 `;
 

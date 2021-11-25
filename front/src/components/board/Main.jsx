@@ -163,7 +163,7 @@ const Main = () => {
           <PaginationRow>
             <Pagination
               total={total}
-              pageSize={9}
+              pageSize={6}
               current={page}
               onChange={(page) => setPage(page)}
             />
