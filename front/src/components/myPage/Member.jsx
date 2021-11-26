@@ -138,7 +138,7 @@ const MemberBtn = styled(Button)`
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;
-  background-color: #ff6701;
+  background-color: #029400;
   border: none;
   border-radius: 6px;
   margin-right: 55px;

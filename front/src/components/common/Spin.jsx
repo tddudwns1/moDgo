@@ -9,5 +9,5 @@ export default CustomSpin;
 const antIcon = <LoadingOutlined style={{ fontSize: 60 }} spin />;
 
 const StyledSpin = styled(Spin)`
-  color: #fea82f;
+  color: #029400;
 `;

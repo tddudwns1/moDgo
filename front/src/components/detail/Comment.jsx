@@ -270,7 +270,7 @@ const ConfirmBtn = styled(Button)`
   & {
     font-size: 16px;
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     padding: 6px 10px;
     border-radius: 5px;
     margin-left: 15px;
@@ -305,9 +305,9 @@ const CancelBtn = styled(Button)`
   & {
     font-size: 16px;
     background-color: #ffffff;
-    color: #ff6701;
+    color: #029400;
     padding: 6px 10px;
-    border: 1px solid #ff6701;
+    border: 1px solid #029400;
     border-radius: 5px;
     margin-left: 15px;
     ${customMedia.lessThan("mobile")`

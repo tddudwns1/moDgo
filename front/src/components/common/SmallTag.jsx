@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import classnames from 'classnames';
+import styled from "styled-components";
+import classnames from "classnames";
 
 const SmallTag = ({ ...props }) => {
   return (
     <StyledTag
       color="#fea82f"
-      className={classnames('smallTag', props.className)}
+      className={classnames("smallTag", props.className)}
     >
       {props.children}
     </StyledTag>
@@ -18,7 +18,7 @@ const StyledTag = styled.button`
   font-family: Roboto;
   font-weight: bold;
   color: #ffffff;
-  background-color: #f98404;
+  background-color: #029400;
   border: none;
   border-radius: 30px;
 `;

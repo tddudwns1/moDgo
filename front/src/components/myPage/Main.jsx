@@ -16,9 +16,7 @@ import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 
-
 const url = "https://modgo.loca.lt";
-
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -57,27 +55,26 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-
       // const res = await axios.get(url + `/comments/users/${userId}`, {
       //   params: { page: myCommentsPage },
       // });
 
-
       // setMyComments(res.data.commentList);
       // setMyCommentsTotal(res.data.totalCount);
 
-
-      const likedClubsRes = await axios.get(url + `/likedClubs/users/${userId}`, {
-          params: { 
+      const likedClubsRes = await axios.get(
+        url + `/likedClubs/users/${userId}`,
+        {
+          params: {
             page: myLikedClubsPage,
-           },
-        });
-        
+          },
+        }
+      );
+
       setMyLikedClubs(likedClubsRes.data.likedClubList);
       setMyLikedClubsTotal(likedClubsRes.data.totalCount);
 
       const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
-
         params: {
           page: myJoinedClubsPage,
         },
@@ -86,12 +83,10 @@ const Main = () => {
       setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
 
-
       const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
 
       if (myClubRes.data) {
         const pendingMembersRes = await axios.get(url + "/members", {
-
           params: {
             userId: userId,
             approvalStatus: "WAITING",
@@ -102,9 +97,7 @@ const Main = () => {
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-
         const memberRes = await axios.get(url + "/members", {
-
           params: {
             userId: userId,
             approvalStatus: "CONFIRMED",
@@ -118,9 +111,7 @@ const Main = () => {
 
       setMyClub(myClubRes.data);
 
-
       const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-
         params: {
           userId: userId,
         },
@@ -129,7 +120,6 @@ const Main = () => {
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
       setLoading(true);
-
     } catch (err) {
       console.log(err);
     }
@@ -142,7 +132,6 @@ const Main = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
 
   // const handleDeleteClub = async () => {
   //   try {
@@ -166,7 +155,6 @@ const Main = () => {
   //   }
   // };
 
-
   const handleLikedClubs = (clubId) => {
     let index = likedClubs.indexOf(clubId);
 
@@ -188,9 +176,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-
       await axios.post(url + "/likedClubs", {
-
         clubId: Number(clubId),
         userId: userId,
       });
@@ -203,9 +189,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-
       axios.delete(url + "/likedClubs", {
-
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -217,7 +201,6 @@ const Main = () => {
 
   const handleMemberApproval = async (memberId) => {
     try {
-
       const res = axios.put(url + "/members", { memberId: memberId });
 
       if (res.status === 200) {
@@ -232,9 +215,7 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-
       const res = axios.delete(url + "/members", {
-
         params: {
           userId: userId,
           clubId: clubId,
@@ -250,7 +231,6 @@ const Main = () => {
       fetchData();
     }
   };
-
 
   // const handleMemberDelete = async (userId, clubId) => {
   //   try {
@@ -271,7 +251,6 @@ const Main = () => {
   //     fetchData();
   //   }
   // };
-
 
   return (
     <Wrapper>
@@ -391,7 +370,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                         현재 대기중인 멤버가 없습니다. 
+                        현재 대기중인 멤버가 없습니다.
                       </MemberNotFound>
                     )}
                     <Divider />
@@ -416,7 +395,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                         현재 참여중인 멤버가 없습니다. 
+                        현재 참여중인 멤버가 없습니다.
                       </MemberNotFound>
                     )}
                   </Box>
@@ -428,9 +407,7 @@ const Main = () => {
                   </Box>
                 </TabContainer>
               ) : (
-                <NotFound>
-                   현재 운영중인 모임이 존재하지 않습니다 
-                </NotFound>
+                <NotFound>현재 운영중인 모임이 존재하지 않습니다</NotFound>
               )}
             </TabPane>
           </StyledTabs>
@@ -728,7 +705,7 @@ const ButtonRow = styled(Row)`
 const FilledBtn = styled(Button)`
   & {
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     border: none;
     border-radius: 6px;
     outline: none;
@@ -751,9 +728,9 @@ const FilledBtn = styled(Button)`
 
 const UnfilledBtn = styled(Button)`
   & {
-    color: #ff6701;
+    color: #029400;
     background-color: #ffffff;
-    border: 2px solid #ff6701;
+    border: 2px solid #029400;
     border-radius: 6px;
     cursor: pointer;
 
