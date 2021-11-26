@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="Comment Controller, Service 추가">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/likedclub/LikedClubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/likedclub/LikedClubController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +68,7 @@
       <map>
         <entry key="JPA Inspector" value="false" />
         <entry key="JPA Palette" value="false" />
-        <entry key="JPA Structure" value="false" />
+        <entry key="JPA Structure" value="true" />
       </map>
     </option>
   </component>
@@ -107,11 +105,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.moDgo.controller.club" />
       <recent name="org.moDgo.controller.member" />
       <recent name="org.moDgo.service" />
       <recent name="org.moDgo.repository" />
       <recent name="org.moDgo.common.error" />
-      <recent name="org.moDgo.controller.club" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.moDgo.common" />
@@ -166,7 +164,6 @@
       <workItem from="1637114527588" duration="363000" />
       <workItem from="1637243913616" duration="7381000" />
       <workItem from="1637588454346" duration="5377000" />
-      <workItem from="1637842224292" duration="2727000" />
     </task>
     <servers />
   </component>

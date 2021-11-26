@@ -37,7 +37,7 @@ public class Club extends BaseTime{
     @Column(nullable = false)
     private String tags;
 
-    @Column(length = 10000, nullable = false)
+    @Column(length = 100000, nullable = false)
     private String imgUrl;
 
     @Column(nullable = false)
@@ -90,20 +90,15 @@ public class Club extends BaseTime{
     }
 
 
-    public void updateClub(String title,String contents, String imgUrl,
+    public void updateClub(String title,String contents,
                            LocalDate startDate, LocalDate endDate,
-                           int requiredPerson, int likes, ClubStatus clubStatus,
-                           String tags) {
+                           int requiredPerson
+                           ) {
         this.title = title;
         this.contents = contents;
-        this.imgUrl = imgUrl;
         this.startDate = startDate;
         this.endDate = endDate;
         this.requiredPerson = requiredPerson;
-        this.likes = likes;
-        this.clubStatus = clubStatus;
-        this.tags = tags;
-
     }
 
     public void changeLikes(int likes) {
