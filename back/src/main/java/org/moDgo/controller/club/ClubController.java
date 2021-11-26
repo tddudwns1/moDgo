@@ -54,17 +54,17 @@ public class ClubController {
         );
     }
 
-    //사용자가 만든 모임들 조회(최대 n개)
+    //사용자가 만든 모임들 조회(최대 4개)
     @GetMapping("/users/{userId}")
     public ResponseEntity<ClubDetailResponseDto> getUserClub(
             @PathVariable String userId,@RequestParam("page") int page
     ) {
         Page<Club> allClubsByUserId = clubService.findAllClubByUserId(userId, page);
         Long totalCount = allClubsByUserId.getTotalElements();
-        List<ClubDetailResponseDto> response = allClubsByUserId.stream().map(ClubDetailResponseDto::new)
+        List<ClubResponseDto> response = allClubsByUserId.stream().map(ClubResponseDto::new)
                 .collect(Collectors.toList());
 
-        ClubDetailPageResponseDto detailPageResponseDto = new ClubDetailPageResponseDto(totalCount, response);
+        ClubPageResponseDto detailPageResponseDto = new ClubPageResponseDto(totalCount, response);
         return new ResponseEntity(detailPageResponseDto, HttpStatus.OK);
     }
     //모임 삭제
@@ -75,6 +75,23 @@ public class ClubController {
         Long id = Long.parseLong(clubId);
         clubService.deleteClub(id);
         return new ResponseEntity("모임 삭제가 완료되었습니다.", HttpStatus.OK);
+    }
+
+    //모임 수정(in 마이페이지)
+    @PutMapping("/users/{clubId}")
+    public ResponseEntity<Void> updateClub(
+            ClubUpdateRequestDto requestDto,
+            @PathVariable String clubId
+    ) {
+        long id = Long.parseLong(clubId);
+        try {
+            clubService.updateClub(requestDto, id);
+            return new ResponseEntity("모임 수정 완료되었습니다.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
     }
 
 }

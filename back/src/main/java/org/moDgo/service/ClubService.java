@@ -6,6 +6,7 @@ import org.moDgo.common.error.ClubDuplicatedException;
 import org.moDgo.common.error.ClubNotFoundException;
 import org.moDgo.common.error.UserNotFoundException;
 import org.moDgo.controller.club.ClubCreateRequestDto;
+import org.moDgo.controller.club.ClubUpdateRequestDto;
 import org.moDgo.domain.Club;
 import org.moDgo.domain.ClubKind;
 import org.moDgo.domain.ClubStatus;
@@ -125,7 +126,7 @@ public class ClubService {
     //user_id로 해당 사용자가 만든 모든 클럽 찾기 - Paging 사용을 위한 오버 로딩
     public Page<Club> findAllClubByUserId(String userId, int page) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of((page - 1), 4, Sort.by(Sort.Direction.DESC, "id"));
         return clubRepository.findAllByUser(user,pageRequest);
     }
 
@@ -164,4 +165,16 @@ public class ClubService {
         likedClubRepository.deleteByClub(club);
     }
 
+    public void updateClub(ClubUpdateRequestDto requestDto, Long clubId) {
+        Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        LocalDate startDate = LocalDate.parse(requestDto.getStartDate(), DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse(requestDto.getEndDate(), DateTimeFormatter.ISO_DATE);
+        club.updateClub(
+                requestDto.getTitle(),
+                requestDto.getContents(),
+                startDate,
+                endDate,
+                requestDto.getRequiredPerson()
+        );
+    }
 }
