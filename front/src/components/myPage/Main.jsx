@@ -42,7 +42,7 @@ const Main = () => {
   const [loading, setLoading] = useState(false);
   const userId = localStorage.getItem("user_id");
 
-  const history = useHistory();
+  const history = useHistory(); 
 
   useEffect(() => {
     fetchData();
@@ -67,7 +67,7 @@ const Main = () => {
       // setMyCommentsTotal(res.data.totalCount);
 
 
-      const likedClubsRes = await axios.get(url + `/likedClubs/users/${userId}`, {
+      const likedClubsRes = await axios.get(url + `/likedclubs/users/${userId}`, {
           params: { 
             page: myLikedClubsPage,
            },
@@ -87,39 +87,43 @@ const Main = () => {
       setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
 
 
-      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
-
-      if (myClubRes.data) {
-        const pendingMembersRes = await axios.get(url + "/members", {
-
-          params: {
-            userId: userId,
-            approvalStatus: "WAITING",
-            page: myPendingMembersPage,
-          },
-        });
-
-        setMyPendingMembers(pendingMembersRes.data.memberList);
-        setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+      const myClubRes = await axios.get(url + `/clubs/users/${userId}`,);
+      
 
 
-        const memberRes = await axios.get(url + "/members", {
+        if (myClubRes.data) {
+          const pendingMembersRes = await axios.get(url + "/members", {
 
-          params: {
-            userId: userId,
-            approvalStatus: "CONFIRMED",
-            page: myMembersPage,
-          },
-        });
+            params: {
+              userId: userId,
+              approvalStatus: "",
+              page: myPendingMembersPage,
+            },
+          });
 
-        setMyMembers(memberRes.data.memberList);
-        setMyMembersTotal(memberRes.data.totalCount);
-      }
+          setMyPendingMembers(pendingMembersRes.data.memberList);
+          setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+
+
+          const memberRes = await axios.get(url + "/members", {
+
+            params: {
+              userId: userId,
+              approvalStatus: "CONFIRMED",
+              page: myMembersPage,
+            },
+          });
+
+          setMyMembers(memberRes.data.memberList);
+          setMyMembersTotal(memberRes.data.totalCount);
+        }
+      
+      
 
       setMyClub(myClubRes.data);
 
 
-      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+      const likedClubRes = await axios.get(url + "/likedclubs/ids", {
 
         params: {
           userId: userId,
@@ -144,27 +148,27 @@ const Main = () => {
   };
 
 
-  // const handleDeleteClub = async () => {
-  //   try {
-  //     const res = await axios.get(url + `/clubs/users/${userId}`);
+  const handleDeleteClub = async () => {
+    try {
+      const res = await axios.get(url + `/clubs/users/${userId}`);
 
-  //     if (res.data) {
-  //       const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
+      if (res.data) {
+        const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
 
-  //       if (deleteRes.status === 200) {
-  //         message.success("모임이 성공적으로 삭제되었습니다.");
-  //         handleCancel();
-  //         history.go(0);
-  //       } else {
-  //         message.error("모임 삭제에 실패하였습니다.");
-  //       }
-  //     } else {
-  //       message.error("현재 운영중인 독서모임이 존재하지 않습니다.");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+        if (deleteRes.status === 200) {
+          message.success("모임이 성공적으로 삭제되었습니다.");
+          handleCancel();
+          history.go(0);
+        } else {
+          message.error("모임 삭제에 실패하였습니다.");
+        }
+      } else {
+        message.error("현재 운영중인 독서모임이 존재하지 않습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
   const handleLikedClubs = (clubId) => {
@@ -189,7 +193,7 @@ const Main = () => {
   const handleLikePost = async (clubId) => {
     try {
 
-      await axios.post(url + "/likedClubs", {
+      await axios.post(url + "/likedclubs", {
 
         clubId: Number(clubId),
         userId: userId,
@@ -204,7 +208,7 @@ const Main = () => {
   const handleLikeDelete = async (clubId) => {
     try {
 
-      axios.delete(url + "/likedClubs", {
+      axios.delete(url + "/likedclubs", {
 
         params: { userId: userId, clubId: Number(clubId) },
       });
@@ -361,7 +365,7 @@ const Main = () => {
               )}
             </TabPane>
 
-            <TabPane tab="모임 관리" key="3">
+            <TabPane tab="관리중인 모임" key="3">
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
                   <Box>

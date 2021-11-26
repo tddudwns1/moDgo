@@ -56,7 +56,7 @@ const Main = () => {
 
       if (userId) {
 
-        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+        const likedClubRes = await axios.get(url + "/likedclubs/ids", {
 
           params: {
             userId: userId,
@@ -91,7 +91,7 @@ const Main = () => {
   const handleLikePost = async (clubId) => {
     try {
 
-      await axios.post(url + "/likedClubs", {
+      await axios.post(url+ "/likedclubs", {
 
         clubId: Number(clubId),
         userId: userId,
@@ -104,7 +104,7 @@ const Main = () => {
   const handleLikeDelete = async (clubId) => {
     try {
 
-      axios.delete(url + "/likedClubs", {
+      axios.delete(url + "/likedclubs", {
 
         params: { userId: userId, clubId: Number(clubId) },
       });

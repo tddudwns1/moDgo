@@ -38,7 +38,7 @@ const Main = (props) => {
         setClub(res.data);
 
         if (userId) {
-          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+          const likedClubRes = await axios.get(url + "/likedclubs/ids", {
             params: {
               userId: userId,
             },
@@ -162,7 +162,7 @@ const Main = (props) => {
     };
 
     try {
-      await axios.post(url + "/likedClubs", data);
+      await axios.post(url + "/likedclubs", data);
     } catch (err) {
       console.log(err);
     }
@@ -170,7 +170,7 @@ const Main = (props) => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      await axios.delete(url + "/likedClubs", {
+      await axios.delete(url + "/likedclubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {

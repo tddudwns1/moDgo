@@ -56,7 +56,7 @@ const LikedClubCard = ({ ...props }) => {
         ) : (
           <img src={unfilledHeart} alt="Unfilled like icon" />
         )}
-        <LikeNum>{props.club.likes}</LikeNum>
+        
       </LikeIcon>
     </StyledCard>
   );

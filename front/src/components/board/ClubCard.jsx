@@ -25,7 +25,7 @@ const ClubCard = (props) => {
           <SkeletonImg />
         )
       }
-      onClick={() => history.push(url+`/detail/${props.club.id}`)}
+      onClick={() => history.push(`/detail/${props.club.id}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
       {props.club.clubStatus === "EXPIRED" ? (
