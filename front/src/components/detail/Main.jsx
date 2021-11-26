@@ -11,7 +11,6 @@ import Spin from "../common/Spin";
 import Pagination from "../common/Pagination";
 import profile from "../../images/icons/profile.png";
 
-
 const url = "https://modgo.loca.lt";
 
 const Main = (props) => {
@@ -23,7 +22,7 @@ const Main = (props) => {
   const [editable, setEditable] = useState();
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [likedClubs, setLikedClubs] = useState([]);
+  // const [likedClubs, setLikedClubs] = useState([]);
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
@@ -36,15 +35,16 @@ const Main = (props) => {
         const res = await axios.get(url + `/clubs/${clubId}`);
 
         setClub(res.data);
+        console.log(res.data);
 
         if (userId) {
-          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-            params: {
-              userId: userId,
-            },
-          });
+          // const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+          //   params: {
+          //     userId: userId,
+          //   },
+          // });
 
-          setLikedClubs(likedClubRes.data.likedClubIdList);
+          // setLikedClubs(likedClubRes.data.likedClubIdList);
 
           const applyRes = await axios.get(url + "/members/ids", {
             params: { userId: userId },
@@ -138,45 +138,45 @@ const Main = (props) => {
     }
   };
 
-  const handleLikedClubs = (clubId) => {
-    let index = likedClubs.indexOf(clubId);
+  // const handleLikedClubs = (clubId) => {
+  //   let index = likedClubs.indexOf(clubId);
 
-    try {
-      if (likedClubs.includes(clubId)) {
-        likedClubs.splice(index, 1);
-        setLikedClubs([...likedClubs]);
-        handleLikeDelete(clubId);
-      } else {
-        setLikedClubs([...likedClubs, clubId]);
-        handleLikePost(clubId);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     if (likedClubs.includes(clubId)) {
+  //       likedClubs.splice(index, 1);
+  //       setLikedClubs([...likedClubs]);
+  //       handleLikeDelete(clubId);
+  //     } else {
+  //       setLikedClubs([...likedClubs, clubId]);
+  //       handleLikePost(clubId);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const handleLikePost = async (clubId) => {
-    const data = {
-      clubId: Number(clubId),
-      userId: userId,
-    };
+  // const handleLikePost = async (clubId) => {
+  //   const data = {
+  //     clubId: Number(clubId),
+  //     userId: userId,
+  //   };
 
-    try {
-      await axios.post(url + "/likedClubs", data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     await axios.post(url + "/likedClubs", data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const handleLikeDelete = async (clubId) => {
-    try {
-      await axios.delete(url + "/likedClubs", {
-        params: { userId: userId, clubId: Number(clubId) },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleLikeDelete = async (clubId) => {
+  //   try {
+  //     await axios.delete(url + "/likedClubs", {
+  //       params: { userId: userId, clubId: Number(clubId) },
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const onReset = () => {
     setPostComment("");
@@ -227,8 +227,8 @@ const Main = (props) => {
           <InfoBox
             userId={userId}
             club={club}
-            likedClubs={likedClubs}
-            handleLikedClubs={handleLikedClubs}
+            // likedClubs={likedClubs}
+            // handleLikedClubs={handleLikedClubs}
             apply={apply}
             handlePostApply={handlePostApply}
             handleDeleteApply={handleDeleteApply}
@@ -298,13 +298,12 @@ const Main = (props) => {
       )}
     </Wrapper>
   );
-
 };
 
 export default Main;
 
 const Wrapper = styled.section`
-	width: 996px;
+  width: 996px;
   margin: 60px auto;
   flex: 1;
   padding-bottom: 60px;
@@ -326,17 +325,17 @@ const Wrapper = styled.section`
 `;
 
 const TitleRow = styled.div`
-	display: flex;
-	align-items: center;
-	text-align: center;
-	margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 15px;
 `;
 
 const Title = styled.div`
-	font-weight: 500;
-	font-size: 24px;
+  font-weight: 500;
+  font-size: 24px;
   margin-top: 50px;
-  
+
   ${customMedia.lessThan("mobile")`
     font-size: 16px;
   `}
@@ -352,17 +351,17 @@ const Title = styled.div`
 `;
 
 const CmtContainer = styled.div`
-	width: 100%;
+  width: 100%;
 `;
 
 const InputBox = styled.div`
-	width: 840px;
-	border: 1px solid #c4c4c4;
-	border-radius: 10px;
-	margin: 0 auto;
-	padding: 10px;
+  width: 840px;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 10px;
   display: flex;
-  
+
   ${customMedia.lessThan("mobile")`
     width: 295px;
   `}
@@ -378,14 +377,14 @@ const InputBox = styled.div`
 `;
 
 const ProfileIcon = styled.div`
-	width: 48px;
-	height: 48px;
-	margin-right: 10px;
-	img {
-		width: 100%;
-		height: 100%;
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+  img {
+    width: 100%;
+    height: 100%;
   }
-  
+
   ${customMedia.lessThan("mobile")`
     width: 28px;
     height: 28px;
@@ -405,11 +404,11 @@ const ProfileIcon = styled.div`
 `;
 
 const StyledInput = styled.input`
-	border: none;
-	outline: none;
-	font-size: 20px;
+  border: none;
+  outline: none;
+  font-size: 20px;
   flex: 2;
-  
+
   ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
@@ -434,12 +433,12 @@ const CmtPost = styled(Button)`
   `}
   
 	& {
-		font-size: 16px;
-		color: #ffffff;
-		background-color: #ff6701;
-		padding: 0;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #029400;
+    padding: 0;
     border-radius: 5px;
-    
+
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
@@ -452,23 +451,23 @@ const CmtPost = styled(Button)`
     ${customMedia.between("tablet", "desktop")`
       font-size: 14px;
     `}
-	}
+  }
 `;
 
 const ListRow = styled.div`
-	width: 100%;
-	margin: 20px 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 20px;
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 `;
 
 const PaginationRow = styled(Row)`
-	width: 100%;
-	margin-top: 48px;
-	justify-content: center;
-	${customMedia.lessThan("mobile")`
+  width: 100%;
+  margin-top: 48px;
+  justify-content: center;
+  ${customMedia.lessThan("mobile")`
     margin-top: 24px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -480,12 +479,12 @@ const PaginationRow = styled(Row)`
 `;
 
 const SpinContainer = styled.div`
-	width: 100%;
-	height: 80vh;
-	display: flex;
-	justify-content: center;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  
+
   ${customMedia.lessThan("mobile")`
     margin-top: 45px;
   `}
