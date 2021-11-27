@@ -76,12 +76,14 @@ public class MemberController {
     public ResponseEntity<JoiningClubPageResponse> getJoiningClubs(
             @PathVariable("userId") String userId,
             @RequestParam(value="page",defaultValue = "1")  int page) {
+        System.out.println("userId = " + userId);
         Page<Member> allJoiningClubs = memberService.getJoiningClubList(userId, page);
         Long totalCount = allJoiningClubs.getTotalElements();
         List<JoiningClubResponse> response = allJoiningClubs
                 .stream()
                 .map(JoiningClubResponse::new)
                 .collect(Collectors.toList());
+        System.out.println("response = " + response);
         JoiningClubPageResponse joiningClubPageResponse = new JoiningClubPageResponse(totalCount, response);
         return new ResponseEntity(joiningClubPageResponse, HttpStatus.OK);
     }

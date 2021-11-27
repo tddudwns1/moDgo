@@ -15,8 +15,8 @@
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/domain/Club.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/domain/Club.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/domain/Club.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/member/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/member/MemberController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +177,10 @@
       <workItem from="1637243913616" duration="7381000" />
       <workItem from="1637588454346" duration="5377000" />
       <workItem from="1637765776653" duration="3000" />
-      <workItem from="1637843226625" duration="6648000" />
+      <workItem from="1637843226625" duration="6905000" />
+      <workItem from="1637852030994" duration="2753000" />
+      <workItem from="1637855724297" duration="2367000" />
+      <workItem from="1637934219042" duration="6637000" />
     </task>
     <servers />
   </component>
