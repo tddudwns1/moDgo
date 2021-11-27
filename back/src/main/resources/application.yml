@@ -19,3 +19,7 @@ spring:
     web:
       pageable:
         one-indexed-parameters: true
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false

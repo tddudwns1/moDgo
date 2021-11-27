@@ -3,10 +3,9 @@ import axios from "axios";
 import { Row, message } from "antd";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
-
-import InfoBox from "./InfoBox.jsx";
-import DetailInfo from "./DetailInfo.jsx";
-import Comment from "./Comment.jsx";
+import InfoBox from "./InfoBox";
+import DetailInfo from "./DetailInfo";
+import Comment from "./Comment";
 import Button from "../common/Button";
 import Spin from "../common/Spin";
 import Pagination from "../common/Pagination";
@@ -23,7 +22,7 @@ const Main = (props) => {
   const [editable, setEditable] = useState();
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [likedClubs, setLikedClubs] = useState([]);
+  // const [likedClubs, setLikedClubs] = useState([]);
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
@@ -36,20 +35,20 @@ const Main = (props) => {
         const res = await axios.get(url + `/clubs/${clubId}`);
 
         setClub(res.data);
+        console.log(res.data);
 
         if (userId) {
-          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-            params: {
-              userId: userId,
-            },
-          });
+          // const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+          //   params: {
+          //     userId: userId,
+          //   },
+          // });
 
-          setLikedClubs(likedClubRes.data.likedClubIdList);
+          // setLikedClubs(likedClubRes.data.likedClubIdList);
 
           const applyRes = await axios.get(url + "/members/ids", {
             params: { userId: userId },
           });
-
           setApply(applyRes.data.joiningClubIdList);
         }
 
@@ -138,45 +137,45 @@ const Main = (props) => {
     }
   };
 
-  const handleLikedClubs = (clubId) => {
-    let index = likedClubs.indexOf(clubId);
+  // const handleLikedClubs = (clubId) => {
+  //   let index = likedClubs.indexOf(clubId);
 
-    try {
-      if (likedClubs.includes(clubId)) {
-        likedClubs.splice(index, 1);
-        setLikedClubs([...likedClubs]);
-        handleLikeDelete(clubId);
-      } else {
-        setLikedClubs([...likedClubs, clubId]);
-        handleLikePost(clubId);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     if (likedClubs.includes(clubId)) {
+  //       likedClubs.splice(index, 1);
+  //       setLikedClubs([...likedClubs]);
+  //       handleLikeDelete(clubId);
+  //     } else {
+  //       setLikedClubs([...likedClubs, clubId]);
+  //       handleLikePost(clubId);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const handleLikePost = async (clubId) => {
-    const data = {
-      clubId: Number(clubId),
-      userId: userId,
-    };
+  // const handleLikePost = async (clubId) => {
+  //   const data = {
+  //     clubId: Number(clubId),
+  //     userId: userId,
+  //   };
 
-    try {
-      await axios.post(url + "/likedClubs", data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     await axios.post(url + "/likedClubs", data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const handleLikeDelete = async (clubId) => {
-    try {
-      await axios.delete(url + "/likedClubs", {
-        params: { userId: userId, clubId: Number(clubId) },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleLikeDelete = async (clubId) => {
+  //   try {
+  //     await axios.delete(url + "/likedClubs", {
+  //       params: { userId: userId, clubId: Number(clubId) },
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const onReset = () => {
     setPostComment("");
@@ -227,8 +226,8 @@ const Main = (props) => {
           <InfoBox
             userId={userId}
             club={club}
-            likedClubs={likedClubs}
-            handleLikedClubs={handleLikedClubs}
+            // likedClubs={likedClubs}
+            // handleLikedClubs={handleLikedClubs}
             apply={apply}
             handlePostApply={handlePostApply}
             handleDeleteApply={handleDeleteApply}
@@ -435,7 +434,7 @@ const CmtPost = styled(Button)`
 	& {
     font-size: 16px;
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     padding: 0;
     border-radius: 5px;
 

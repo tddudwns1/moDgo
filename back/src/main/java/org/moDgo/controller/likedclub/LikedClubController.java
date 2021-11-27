@@ -68,4 +68,14 @@ public class LikedClubController {
 
     }
 
+    // 사용자가 좋아요한 모임 아이디 모두 조회
+    @GetMapping("/ids")
+    public ResponseEntity<LikedClubIdListResponseDto> getUserLikedClubIds(
+            @RequestParam("userId") String userId) {
+        List<Long> likedClubIdList = likedClubService.getLikedClubIds(userId);
+        LikedClubIdListResponseDto responseDto = new LikedClubIdListResponseDto(likedClubIdList);
+        return new ResponseEntity(responseDto, HttpStatus.OK);
+    }
+
+
 }

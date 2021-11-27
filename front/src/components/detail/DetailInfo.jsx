@@ -12,29 +12,6 @@ const DetailInfo = ({ ...props }) => {
         <Contents>{props.club.description}</Contents>
       </TextBox>
       <Divider />
-      <Title>모임</Title>
-      <TextBox>
-        <SubTitle>
-          {props.club.bookTitle}, {props.club.author},{" "}
-          {props.club.publisher === "undefined"
-            ? "미입력"
-            : props.club.publisher}
-          , {props.club.publishedAt !== 0 ? props.club.publishedAt : "미입력"}{" "}
-        </SubTitle>
-        <Contents>{props.club.bookDescription}</Contents>
-      </TextBox>
-      <Divider />
-      <Title>모임 장소</Title>
-      <TextBox>
-        <SubTitle>
-          {props.club.addressStreet !== "undefined"
-            ? props.club.addressStreet
-            : ""}{" "}
-          {props.club.addressDetail !== "undefined"
-            ? props.club.addressDetail
-            : ""}
-        </SubTitle>
-      </TextBox>
     </DetailInfoContainer>
   );
 };

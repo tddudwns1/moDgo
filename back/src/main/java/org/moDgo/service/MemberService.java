@@ -59,27 +59,17 @@ public class MemberService {
     }
 
 
-    public Page<Member> getMemberList(String userId, Long clubId, String approvalStatus, int page) {
+    public Page<Member> getMemberList(String userId, Long clubId, ApprovalStatus approvalStatus, int page) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         // 한 명의 user가 n개의 club을 생성 가능하므로 clubId로 해당 club 접근
         Club club = clubRepository.findById(clubId).orElseThrow(ClubNotFoundException::new);
+        System.out.println("club.getId() = " + club.getId());
+        PageRequest pageRequest = PageRequest.of((page - 1), 4, Sort.by("id").descending());
+        ApprovalStatus status = ApprovalStatus.DENIED;
 
-        PageRequest pageRequest = PageRequest.of((page - 1), 3, Sort.by("id").descending());
-        ApprovalStatus status;
+        System.out.println("approvalStatus = " + approvalStatus);
 
-        if (!approvalStatus.equals(ApprovalStatus.CONFIRMED.toString())) {
-            if(approvalStatus.equals(ApprovalStatus.WAITING.toString())){
-                status = ApprovalStatus.WAITING;
-            }
-            else {
-                status = ApprovalStatus.DENIED;
-            }
-        } else {
-            status = ApprovalStatus.CONFIRMED;
-        }
-
-        return memberRepository.findByClubAndApprovalStatus(club, status, pageRequest);
-
+        return memberRepository.findByClubAndApprovalStatus(club, approvalStatus, pageRequest);
     }
 
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.moDgo.domain.Club;
+import org.moDgo.domain.ClubStatus;
 import org.springframework.beans.BeanUtils;
 
 @Getter
@@ -16,7 +17,7 @@ public class ClubResponseDto {
     private String imgUrl;
     private Long remainDays;
     private String tags;
-    private String clubStatus;
+    private ClubStatus clubStatus;
 
     public ClubResponseDto(Club club) {
         BeanUtils.copyProperties(club, this);

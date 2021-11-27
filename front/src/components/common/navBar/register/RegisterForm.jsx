@@ -21,8 +21,9 @@ import netflixCover from "../../../../images/netflixCover.png";
 import watchaCover from "../../../../images/watchaCover.png";
 import disneyplusCover from "../../../../images/disneyplusCover.png";
 import wavveCover from "../../../../images/wavveCover.png";
-
 const url = "http://modgo.loca.lt";
+
+
 
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
@@ -113,6 +114,7 @@ const RegisterForm = ({ ...props }) => {
       message.warning("한 줄 소개는 40자까지 입력 가능합니다.");
       return;
     }
+
 
     const data = {
       userId: userId,

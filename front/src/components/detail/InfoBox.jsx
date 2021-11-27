@@ -24,9 +24,7 @@ const InfoBox = (props) => {
         <Title>{props.club.title}</Title>
         <InfoRow>
           <SubTitle>참여 인원</SubTitle>{" "}
-          <Text>
-            {props.club.minPersonnel}인 ~ {props.club.maxPersonnel}인
-          </Text>
+          <Text>{props.club.requiredPerson}인</Text>
         </InfoRow>
         <InfoRow>
           <SubTitle>진행 기간</SubTitle>{" "}
@@ -40,7 +38,7 @@ const InfoBox = (props) => {
           ))}
         </TagContainer>
         <BtnRow>
-          <LikeIconContainer>
+          {/* <LikeIconContainer>
             <LikeIcon
               onClick={() => {
                 if (props.userId) {
@@ -56,9 +54,12 @@ const InfoBox = (props) => {
                 <img src={unfilledHeart} alt="Unfilled like icon" />
               )}
             </LikeIcon>
-          </LikeIconContainer>
+          </LikeIconContainer> */}
           {(() => {
-            if (props.club.clubStatus !== "EXPIRED") {
+            console.log(props.club.clubStatus);
+            if (props.club.clubStatus === "ACTIVE") {
+              console.log(props.userId);
+              console.log(props.apply);
               if (props.userId && props.apply.includes(props.club.id))
                 return (
                   <>
@@ -111,7 +112,9 @@ const InfoBox = (props) => {
                     </StyledModal>
                   </>
                 );
-            } else return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            } else {
+              return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            }
           })()}
         </BtnRow>
       </ClubInfo>
@@ -127,6 +130,7 @@ const InfoBoxContainer = styled.div`
   border: 1.5px solid #e5e5e5;
   border-radius: 10px;
   display: flex;
+
   ${customMedia.lessThan("mobile")`
     flex-direction: column;
     height: 372px;
@@ -182,6 +186,7 @@ const ClubInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   ${customMedia.lessThan("mobile")`
+
     width: 100%;
     height: 50%;
     padding: 5px 17px;
@@ -224,8 +229,9 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   font-size: 22px;
-  font-weight: 500;
-  color: #f98404;
+  font-weight: bold;
+  color: #000000;
+
   ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
@@ -243,6 +249,7 @@ const SubTitle = styled.div`
 const Text = styled.div`
   font-size: 20px;
   ${customMedia.lessThan("mobile")`
+
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -261,6 +268,7 @@ const TagContainer = styled.div`
   gap: 10px;
   margin-top: 15px;
   ${customMedia.between("mobile", "largeMobile")`
+
     margin-top: 5px;
   `}
 `;
@@ -269,6 +277,7 @@ const Tag = styled(SmallTag)`
   & {
     font-size: 16px;
     padding: 7px 25px;
+
     ${customMedia.lessThan("mobile")`
       font-size: 10px;
       padding: 5px 10px;
@@ -295,6 +304,7 @@ const BtnRow = styled.div`
   gap: 30px;
   margin-top: 40px;
   ${customMedia.lessThan("mobile")`
+
     gap: 10px;
     margin-top: 10px;
   `}
@@ -317,6 +327,7 @@ const LikeIconContainer = styled.div`
   justify-content: center;
   align-items: center;
   ${customMedia.lessThan("mobile")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     width: 40px;
     height: 40px;
   `}
@@ -331,45 +342,49 @@ const LikeIconContainer = styled.div`
   `}
 `;
 
-const LikeIcon = styled.div`
-  width: 32px;
-  height: 30px;
-  cursor: pointer;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  ${customMedia.lessThan("mobile")`
-    width: 24px;
-    height: 22px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 18px;
-    height: 16px;
-  `}
-	${customMedia.between("largeMobile", "tablet")`
-    width: 24px;
-    height: 22px;
-  `}
-	${customMedia.between("tablet", "desktop")`
-    width: 28px;
-    height: 26px;
-  `}
-`;
+// const LikeIcon = styled.div`
+//   width: 32px;
+//   height: 30px;
+//   cursor: pointer;
+//   img {
+//     width: 100%;
+//     height: 100%;
+//   }
+//   ${customMedia.lessThan("mobile")`
+// >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
+//     width: 24px;
+//     height: 22px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 18px;
+//     height: 16px;
+//   `}
+// 	${customMedia.between("largeMobile", "tablet")`
+//     width: 24px;
+//     height: 22px;
+//   `}
+// 	${customMedia.between("tablet", "desktop")`
+//     width: 28px;
+//     height: 26px;
+//   `}
+// `;
 
 const ApplyBtn = styled(Button)`
   width: 300px;
   height: 50px;
   color: #ffffff;
-  background-color: #ff6701;
+  background-color: #029400;
   border-radius: 5px;
   padding: 0;
   text-align: center;
+
   &:disabled {
     opacity: 60%;
     cursor: not-allowed;
   }
+
   ${customMedia.lessThan("mobile")`
+
     width: 200px;
     height: 40px;
     font-size: 14px;
@@ -421,6 +436,7 @@ const ModalTitle = styled.div`
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "tablet")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     font-size: 18px;
   `}
 `;
@@ -435,7 +451,7 @@ const ButtonRow = styled(Row)`
 const FilledBtn = styled(Button)`
   & {
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     border: none;
     border-radius: 6px;
     outline: none;

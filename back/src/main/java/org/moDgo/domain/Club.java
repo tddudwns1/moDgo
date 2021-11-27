@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "clubs")
-@ToString(exclude = {"members","comments"})
 @Entity
 public class Club extends BaseTime{
     @Id

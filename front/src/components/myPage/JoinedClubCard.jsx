@@ -10,7 +10,7 @@ import WaitingTag from "../common/WaitingTag";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-const url = "https://modgo.loca.lt";
+const url = "http://modgo.loca.lt";
 
 const JoinedClubCard = (props) => {
   const history = useHistory();
@@ -25,7 +25,7 @@ const JoinedClubCard = (props) => {
           <SkeletonImg />
         )
       }
-      onClick={() => history.push(url + `/detail/${props.club.clubId}`)}
+      onClick={() => history.push(`/detail/${props.club.clubId}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
       <>
