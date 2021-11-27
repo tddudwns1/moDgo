@@ -16,13 +16,13 @@ const Member = (props) => {
       </MemberProfileIcon>
       <MemberUsername>{props.myMember.name}</MemberUsername>
       <MemberEmail>{props.myMember.email}</MemberEmail>
-      <MemberBtn
+      {/* <MemberBtn
         onClick={() =>
           props.handleMemberDelete(props.myMember.userId, props.myMember.clubId)
         }
       >
         내보내기
-      </MemberBtn>
+      </MemberBtn> */}
     </MemberBar>
   );
 };
