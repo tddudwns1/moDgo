@@ -56,7 +56,10 @@ const InfoBox = (props) => {
             </LikeIcon>
           </LikeIconContainer> */}
           {(() => {
-            if (props.club.clubStatus !== "EXPIRED") {
+            console.log(props.club.clubStatus);
+            if (props.club.clubStatus === "ACTIVE") {
+              console.log(props.userId);
+              console.log(props.apply);
               if (props.userId && props.apply.includes(props.club.id))
                 return (
                   <>
@@ -109,7 +112,9 @@ const InfoBox = (props) => {
                     </StyledModal>
                   </>
                 );
-            } else return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            } else {
+              return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            }
           })()}
         </BtnRow>
       </ClubInfo>

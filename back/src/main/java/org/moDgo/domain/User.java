@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-@ToString(exclude = {"club", "memberList", "likedClubList", "commentList"})
 @Getter
 public class User {
     @Id
