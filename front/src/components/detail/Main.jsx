@@ -50,7 +50,6 @@ const Main = (props) => {
           const applyRes = await axios.get(url + "/members/ids", {
             params: { userId: userId },
           });
-
           setApply(applyRes.data.joiningClubIdList);
 
           console.log("joiningClubIdList");

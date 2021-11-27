@@ -109,7 +109,9 @@ const InfoBox = (props) => {
                     </StyledModal>
                   </>
                 );
-            } else return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            } else {
+              return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            }
           })()}
         </BtnRow>
       </ClubInfo>

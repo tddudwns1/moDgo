@@ -2,6 +2,7 @@ package org.moDgo.controller.member;
 
 
 import lombok.RequiredArgsConstructor;
+import org.moDgo.domain.ApprovalStatus;
 import org.moDgo.domain.Member;
 import org.moDgo.service.MemberService;
 import org.springframework.data.domain.Page;
@@ -35,10 +36,10 @@ public class MemberController {
     @DeleteMapping
     public ResponseEntity<MemberResponseDto> memberDeny(
             @RequestParam("userId") String userId,
-            @RequestParam("clubId") Long cludId,
+            @RequestParam("clubId") Long clubId,
             @RequestParam("delete") String deleteStatus
     ) {
-        memberService.deleteMember(userId, cludId, deleteStatus);
+        memberService.deleteMember(userId, clubId, deleteStatus);
         return new ResponseEntity("참여 취소가 완료 되었습니다.", HttpStatus.OK);
     }
 
@@ -55,9 +56,11 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<MemberPageResponseDto> getMembers(
             @RequestParam("userId") String userId,
-            @RequestParam("club_id") Long clubId,
-            @RequestParam("approvalStatus") String approvalStatus,
+            @RequestParam("clubId") Long clubId,
+            @RequestParam("approvalStatus") ApprovalStatus approvalStatus,
             @RequestParam("page") int page) {
+
+        System.out.println("clubId = " + clubId);
 
         Page<Member> allMembers = memberService.getMemberList(userId, clubId, approvalStatus, page);
         Long totalCount = allMembers.getTotalElements();
@@ -66,7 +69,11 @@ public class MemberController {
                 .stream()
                 .map(MemberResponseDto::new)
                 .collect(Collectors.toList());
+        for (MemberResponseDto dto:response
+             ) {
 
+        }
+        System.out.println("response = " + response);
         MemberPageResponseDto memberPageResponseDto = new MemberPageResponseDto(totalCount, response);
         return new ResponseEntity(memberPageResponseDto, HttpStatus.OK);
     }
@@ -76,12 +83,14 @@ public class MemberController {
     public ResponseEntity<JoiningClubPageResponse> getJoiningClubs(
             @PathVariable("userId") String userId,
             @RequestParam(value="page",defaultValue = "1")  int page) {
+        System.out.println("userId = " + userId);
         Page<Member> allJoiningClubs = memberService.getJoiningClubList(userId, page);
         Long totalCount = allJoiningClubs.getTotalElements();
         List<JoiningClubResponse> response = allJoiningClubs
                 .stream()
                 .map(JoiningClubResponse::new)
                 .collect(Collectors.toList());
+        System.out.println("response = " + response);
         JoiningClubPageResponse joiningClubPageResponse = new JoiningClubPageResponse(totalCount, response);
         return new ResponseEntity(joiningClubPageResponse, HttpStatus.OK);
     }
@@ -91,6 +100,7 @@ public class MemberController {
     public ResponseEntity<JoiningClubIdListResponseDto> getJoiningClubIds(
             @RequestParam("userId") String userId) {
         List<Long> joiningClubIdList = memberService.getJoiningClubIds(userId);
+        System.out.println("joiningClubIdList = " + joiningClubIdList);
         JoiningClubIdListResponseDto responseDto = new JoiningClubIdListResponseDto(joiningClubIdList);
 
         return new ResponseEntity(responseDto, HttpStatus.OK);
