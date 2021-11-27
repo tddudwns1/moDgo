@@ -18,7 +18,7 @@ const StyledTag = styled.button`
   font-family: Roboto;
   font-weight: bold;
   color: #ffffff;
-  background-color: #f98404;
+  background-color: #029400;
   border: none;
   border-radius: 30px;
 `;

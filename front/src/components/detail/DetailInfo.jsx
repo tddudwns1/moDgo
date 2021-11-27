@@ -13,7 +13,7 @@ const DetailInfo = ({ ...props }) => {
         <Contents>{props.club.description}</Contents>
       </TextBox>
       <Divider />
-      <Title>모임</Title>
+      {/* <Title>모임</Title>
       <TextBox>
         <SubTitle>
           {props.club.bookTitle}, {props.club.author},{" "}
@@ -35,7 +35,7 @@ const DetailInfo = ({ ...props }) => {
             ? props.club.addressDetail
             : ""}
         </SubTitle>
-      </TextBox>
+      </TextBox> */}
     </DetailInfoContainer>
   );
 

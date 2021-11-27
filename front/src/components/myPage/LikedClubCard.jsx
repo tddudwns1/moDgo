@@ -27,7 +27,7 @@ const LikedClubCard = ({ ...props }) => {
         )
       }
 
-      onClick={() => history.push(url + `/detail/${props.club.clubId}`)}
+      onClick={() => history.push(`/detail/${props.club.clubId}`)}
 
     >
       <Meta title={props.club.title} description={props.club.contents} />

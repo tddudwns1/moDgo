@@ -26,7 +26,7 @@ const InfoBox = (props) => {
         <InfoRow>
           <SubTitle>참여 인원</SubTitle>{" "}
           <Text>
-            {props.club.minPersonnel}인 ~ {props.club.maxPersonnel}인
+            {props.club.requiredPerson}인 
           </Text>
         </InfoRow>
         <InfoRow>
@@ -41,7 +41,7 @@ const InfoBox = (props) => {
           ))}
         </TagContainer>
         <BtnRow>
-          <LikeIconContainer>
+          {/* <LikeIconContainer>
             <LikeIcon
               onClick={() => {
                 if (props.userId) {
@@ -57,7 +57,7 @@ const InfoBox = (props) => {
                 <img src={unfilledHeart} alt="Unfilled like icon" />
               )}
             </LikeIcon>
-          </LikeIconContainer>
+          </LikeIconContainer> */}
           {(() => {
             if (props.club.clubStatus !== "EXPIRED") {
               if (props.userId && props.apply.includes(props.club.id))
@@ -71,6 +71,7 @@ const InfoBox = (props) => {
                     >
                       참여취소
                     </ApplyBtn>
+
                     <StyledModal
                       visible={props.isModalVisible}
                       onCancel={() => props.handleCancel()}
@@ -99,6 +100,7 @@ const InfoBox = (props) => {
                     >
                       참여신청
                     </ApplyBtn>
+                    
                     <StyledModal
                       visible={props.isModalVisible}
                       onCancel={() => props.handleCancel()}
@@ -237,8 +239,8 @@ const Title = styled.div`
 const SubTitle = styled.div`
 
   font-size: 22px;
-  font-weight: 500;
-  color: #f98404;
+  font-weight: bold;
+  color: #000000;
 
   ${customMedia.lessThan("mobile")`
     font-size: 14px;
@@ -387,7 +389,7 @@ const ApplyBtn = styled(Button)`
   width: 300px;
   height: 50px;
   color: #ffffff;
-  background-color: #ff6701;
+  background-color: #029400;
   border-radius: 5px;
   padding: 0;
   text-align: center;
@@ -467,7 +469,7 @@ const ButtonRow = styled(Row)`
 const FilledBtn = styled(Button)`
   & {
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     border: none;
     border-radius: 6px;
     outline: none;

@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
+import MyClubCard from "./MyClubCard";
 
 
 const url = "https://modgo.loca.lt";
@@ -39,8 +40,10 @@ const Main = () => {
   const [myLikedClubsPage, setMyLikedClubsPage] = useState(1);
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [clubs, setClubs] = useState();
+  const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
+
 
   const history = useHistory(); 
 
@@ -67,48 +70,61 @@ const Main = () => {
       // setMyCommentsTotal(res.data.totalCount);
 
 
-      const likedClubsRes = await axios.get(url + `/likedclubs/users/${userId}`, {
+      const likedClubsRes = await axios.get(url + `/likedClubs/users/${userId}`, {
           params: { 
             page: myLikedClubsPage,
            },
         });
         
+        
       setMyLikedClubs(likedClubsRes.data.likedClubList);
       setMyLikedClubsTotal(likedClubsRes.data.totalCount);
+      
 
-      const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
+      // const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
 
-        params: {
-          page: myJoinedClubsPage,
-        },
-      });
+      //   params: {
+      //     page: myJoinedClubsPage,
+      //   },
+      // });
+      
 
-      setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
-      setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
+      // setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
+      // setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
+      // console.log(joinedClubsRes.data);
+
 
 
       const myClubRes = await axios.get(url + `/clubs/users/${userId}`,);
+        console.log(myClubRes.data);
       
 
 
         if (myClubRes.data) {
-          const pendingMembersRes = await axios.get(url + "/members", {
+          console.log("get 시작전");
 
-            params: {
-              userId: userId,
-              approvalStatus: "",
-              page: myPendingMembersPage,
-            },
-          });
+          // const pendingMembersRes = await axios.get(url + "/members", {
+            
+          //   params: {
+          //     userId: userId,
+          //     clubId: 2,
+          //     approvalStatus: "WAITING",
+          //     page: myPendingMembersPage,
+          //   },
+            
+          // });
+          
+          
 
-          setMyPendingMembers(pendingMembersRes.data.memberList);
-          setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+          // setMyPendingMembers(pendingMembersRes.data.memberList);
+          // setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
 
           const memberRes = await axios.get(url + "/members", {
 
             params: {
               userId: userId,
+              clubId: 2,
               approvalStatus: "CONFIRMED",
               page: myMembersPage,
             },
@@ -117,13 +133,16 @@ const Main = () => {
           setMyMembers(memberRes.data.memberList);
           setMyMembersTotal(memberRes.data.totalCount);
         }
+        console.log("get끝");
+
       
       
 
       setMyClub(myClubRes.data);
+      
 
 
-      const likedClubRes = await axios.get(url + "/likedclubs/ids", {
+      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
 
         params: {
           userId: userId,
@@ -132,7 +151,7 @@ const Main = () => {
 
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
-      setLoading(true);
+      setLoading(false);
 
     } catch (err) {
       console.log(err);
@@ -193,7 +212,7 @@ const Main = () => {
   const handleLikePost = async (clubId) => {
     try {
 
-      await axios.post(url + "/likedclubs", {
+      await axios.post(url + "/likedClubs", {
 
         clubId: Number(clubId),
         userId: userId,
@@ -208,7 +227,7 @@ const Main = () => {
   const handleLikeDelete = async (clubId) => {
     try {
 
-      axios.delete(url + "/likedclubs", {
+      axios.delete(url + "/likedClubs", {
 
         params: { userId: userId, clubId: Number(clubId) },
       });
@@ -285,6 +304,7 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
+            
           <StyledTabs defaultActiveKey="1">
             {/* <TabPane tab="내 댓글" key="1">
               {myCommentsTotal !== 0 ? (
@@ -369,8 +389,23 @@ const Main = () => {
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
                   <Box>
+                      <CardRow>
+                        {clubs != null
+                          ? clubs.map((club) => (
+                              <MyClubCard
+                                key={club.id}
+                                userId={userId}
+                                club={club}
+                                likedClubs={likedClubs}
+                                handleLikedClubs={handleLikedClubs}
+                              />
+                            ))
+                          : ""}
+                      </CardRow>
+                  </Box>
+                  <Box>
                     <MidTitle>참여자 관리</MidTitle>
-                    <Text>승인 대기자</Text>
+                    {/* <Text>승인 대기자</Text>
                     {myPendingMembers.length !== 0 ? (
                       <>
                         <Row gutter={[0, 16]}>
@@ -384,6 +419,7 @@ const Main = () => {
                             </Row>
                           ))}
                         </Row>
+                        
                         <PaginationRow>
                           <Pagination
                             total={myPendingMembersTotal}
@@ -397,7 +433,7 @@ const Main = () => {
                       <MemberNotFound>
                          현재 대기중인 멤버가 없습니다. 
                       </MemberNotFound>
-                    )}
+                    )} */}
                     <Divider />
                     <Text>참여자 목록</Text>
                     {myMembers.length !== 0 ? (

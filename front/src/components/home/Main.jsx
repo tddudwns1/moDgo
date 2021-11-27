@@ -33,7 +33,7 @@ const Main = () => {
 
       setSortByCreatedAtClubs(createdAtRes.data.clubList);
       if (userId) {
-        const likedClubRes = await axios.get(url + '/likedclubs/ids', {
+        const likedClubRes = await axios.get(url + '/likedClubs/ids', {
           params: {
             userId: userId,
           },
@@ -65,7 +65,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post(url + '/likedclubs', {
+      await axios.post(url + '/likedClubs', {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -78,7 +78,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete(url + '/likedclubs', {
+      axios.delete(url + '/likedClubs', {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
