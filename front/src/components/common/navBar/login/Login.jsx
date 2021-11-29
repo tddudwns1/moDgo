@@ -10,17 +10,15 @@ import google from "../../../../images/icons/google.png";
 const Login = ({ ...props }) => {
   const history = useHistory();
 
-  const url = "https://modgo.loca.lt";
-
-
-
   const onSuccess = async (response) => {
     const {
       profileObj: { googleId, email, name, imageUrl },
     } = response;
 
     try {
-      const res = await axios.get(url + `/users/${googleId}`);
+      const res = await axios.get(
+        process.env.REACT_APP_API_URL + `/users/${googleId}`
+      );
 
       if (res.status === 204) {
         const user = {
@@ -30,9 +28,9 @@ const Login = ({ ...props }) => {
           imgUrl: imageUrl,
         };
 
-        await axios.post(url + "/users", user);
+        await axios.post(process.env.REACT_APP_API_URL + "/users", user);
 
-        await axios.get(url + `users/${user.id}`);
+        await axios.get(process.env.REACT_APP_API_URL + `users/${user.id}`);
 
         localStorage.setItem("user_id", user.id);
         localStorage.setItem("user_image", user.imgUrl);

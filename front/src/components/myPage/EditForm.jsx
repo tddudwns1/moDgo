@@ -21,8 +21,6 @@ import watchaCover from "../../images/watchaCover.png";
 import disneyplusCover from "../../images/disneyplusCover.png";
 import wavveCover from "../../images/wavveCover.png";
 
-const url = "https://modgo.loca.lt";
-
 const EditForm = ({ ...props }) => {
   const [editForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
@@ -125,7 +123,7 @@ const EditForm = ({ ...props }) => {
 
     try {
       const res = await axios
-        .post(url + "/clubs", JSON.stringify(data), {
+        .post(process.env.REACT_APP_API_URL + "/clubs", JSON.stringify(data), {
           headers: {
             "Content-Type": `application/json`,
           },

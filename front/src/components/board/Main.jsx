@@ -11,8 +11,6 @@ import ClubCard from "./ClubCard";
 import Pagination from "../common/Pagination";
 import Spin from "../common/Spin";
 
-const url = "http://modgo.loca.lt";
-
 const Main = () => {
   const [clubs, setClubs] = useState();
   const [sortBy, setSortBy] = useState("createdAt");
@@ -27,8 +25,6 @@ const Main = () => {
 
   // const history = useHistory();
 
-  const url = "https://modgo.loca.lt";
-
   useEffect(() => {
     fetchData();
     setLoading(false);
@@ -38,10 +34,7 @@ const Main = () => {
     const sendTags = selectedTags.join(", ");
 
     try {
-
-
-      const res = await axios.get(url + "/clubs", {
-
+      const res = await axios.get(process.env.REACT_APP_API_URL + "/clubs", {
         params: {
           sortBy: sortBy,
           tags: sendTags,
@@ -55,13 +48,14 @@ const Main = () => {
       setTotal(res.data.totalCount);
 
       if (userId) {
-
-        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-
-          params: {
-            userId: userId,
-          },
-        });
+        const likedClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/likedClubs/ids",
+          {
+            params: {
+              userId: userId,
+            },
+          }
+        );
         setLikedClubs(likedClubRes.data.likedClubIdList);
       }
     } catch (err) {
@@ -90,9 +84,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-
-      await axios.post(url + "/likedClubs", {
-
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -103,9 +95,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-
-      axios.delete(url + "/likedClubs", {
-
+      axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {

@@ -21,9 +21,6 @@ import netflixCover from "../../../../images/netflixCover.png";
 import watchaCover from "../../../../images/watchaCover.png";
 import disneyplusCover from "../../../../images/disneyplusCover.png";
 import wavveCover from "../../../../images/wavveCover.png";
-const url = "http://modgo.loca.lt";
-
-
 
 const RegisterForm = ({ ...props }) => {
   const [registerForm] = Form.useForm();
@@ -115,7 +112,6 @@ const RegisterForm = ({ ...props }) => {
       return;
     }
 
-
     const data = {
       userId: userId,
       title: values.title,
@@ -130,7 +126,7 @@ const RegisterForm = ({ ...props }) => {
 
     try {
       const res = await axios
-        .post(url + "/clubs", JSON.stringify(data), {
+        .post(process.env.REACT_APP_API_URL + "/clubs", JSON.stringify(data), {
           headers: {
             "Content-Type": `application/json`,
           },

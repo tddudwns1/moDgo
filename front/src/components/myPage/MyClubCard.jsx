@@ -8,8 +8,6 @@ import SmallTag from "../common/SmallTag";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-const url = "http://modgo.loca.lt";
-
 const MyClubCard = ({ ...props }) => {
   const history = useHistory();
   return (
