@@ -35,7 +35,8 @@ const Main = (props) => {
         const res = await axios.get(url + `/clubs/${clubId}`);
 
         setClub(res.data);
-        console.log(res.data);
+        console.log("setclub(res.data)");
+        console.log(res.data); //
 
         if (userId) {
           // const likedClubRes = await axios.get(url + "/likedClubs/ids", {
@@ -50,6 +51,9 @@ const Main = (props) => {
             params: { userId: userId },
           });
           setApply(applyRes.data.joiningClubIdList);
+
+          console.log("joiningClubIdList");
+          console.log(applyRes.data.joiningClubIdList); //
         }
 
         setLoading(false);
@@ -87,9 +91,9 @@ const Main = (props) => {
 
     try {
       const res = await axios.post(url + "/comments", data);
-
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 등록되었습니다.");
+        message.success("댓글이 등록되었습니다.");
+        console.log(res.data);
       } else {
         message.error("댓글 등록에 실패했습니다.");
       }
@@ -108,9 +112,8 @@ const Main = (props) => {
 
     try {
       const res = await axios.put(url + `/comments/${id}`, data);
-
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 수정되었습니다.");
+        message.success("댓글이 수정되었습니다.");
       } else {
         message.error("댓글 수정에 실패했습니다.");
       }
@@ -126,7 +129,7 @@ const Main = (props) => {
       const res = await axios.delete(url + `/comments/${id}`);
 
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 삭제되었습니다.");
+        message.success("댓글이 삭제되었습니다.");
       } else {
         message.error("댓글 삭제에 실패했습니다.");
       }
@@ -185,12 +188,14 @@ const Main = (props) => {
     try {
       const data = { userId: userId, clubId: Number(id) };
       const res = await axios.post(url + "/members", data);
+
       if (res.status === 400) {
         message.error("이미 참여신청한 모임입니다.");
       }
       setApply([...apply, id]);
     } catch (err) {
       console.log(err);
+      console.log(apply);
     }
   };
 

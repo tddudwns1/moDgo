@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import NotFound from "../common/NotFound";
 import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
+import MyClubCard from "./MyClubCard";
 
 const url = "https://modgo.loca.lt";
 
@@ -24,23 +25,20 @@ const Main = () => {
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
-  // const [myComments, setMyComments] = useState(null);
   const [myPendingMembers, setMyPendingMembers] = useState();
   const [myPendingMembersTotal, setMyPendingMembersTotal] = useState(0);
   const [myPendingMembersPage, setMyPendingMembersPage] = useState(1);
   const [myMembers, setMyMembers] = useState();
   const [myMembersTotal, setMyMembersTotal] = useState(0);
   const [myMembersPage, setMyMembersPage] = useState(1);
-  // const [myCommentsTotal, setMyCommentsTotal] = useState(0);
-  // const [myCommentsPage, setMyCommentsPage] = useState(1);
   const [myLikedClubsTotal, setMyLikedClubsTotal] = useState(0);
   const [myLikedClubsPage, setMyLikedClubsPage] = useState(1);
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
-
   const history = useHistory();
+  const [visibility, setVisibility] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -50,49 +48,25 @@ const Main = () => {
     myJoinedClubsPage,
     myLikedClubsTotal,
     myLikedClubsPage,
-    // myCommentsPage,
   ]);
 
   const fetchData = async () => {
     try {
-      // const res = await axios.get(url + `/comments/users/${userId}`, {
-      //   params: { page: myCommentsPage },
-      // });
-
-      // setMyComments(res.data.commentList);
-      // setMyCommentsTotal(res.data.totalCount);
-
-      const likedClubsRes = await axios.get(
-        url + `/likedClubs/users/${userId}`,
-        {
-          params: {
-            page: myLikedClubsPage,
-          },
-        }
-      );
-
-      setMyLikedClubs(likedClubsRes.data.likedClubList);
-      setMyLikedClubsTotal(likedClubsRes.data.totalCount);
-
-      const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
-        params: {
-          page: myJoinedClubsPage,
-        },
-      });
-
-      setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
-      setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
-
       const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
+      console.log(myClubRes.data);
 
       if (myClubRes.data) {
+        console.log("get 시작 전");
+
         const pendingMembersRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
+            clubId: 3,
             approvalStatus: "WAITING",
             page: myPendingMembersPage,
           },
         });
+        console.log(pendingMembersRes);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
@@ -100,6 +74,7 @@ const Main = () => {
         const memberRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
+            clubId: 3,
             approvalStatus: "CONFIRMED",
             page: myMembersPage,
           },
@@ -108,7 +83,7 @@ const Main = () => {
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
       }
-
+      console.log("get 시작 후");
       setMyClub(myClubRes.data);
 
       const likedClubRes = await axios.get(url + "/likedClubs/ids", {
@@ -116,10 +91,10 @@ const Main = () => {
           userId: userId,
         },
       });
-
+      console.log(likedClubRes.data);
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
-      setLoading(true);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -132,28 +107,6 @@ const Main = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
-  // const handleDeleteClub = async () => {
-  //   try {
-  //     const res = await axios.get(url + `/clubs/users/${userId}`);
-
-  //     if (res.data) {
-  //       const deleteRes = await axios.delete(url + `/clubs/users/${userId}`);
-
-  //       if (deleteRes.status === 200) {
-  //         message.success("모임이 성공적으로 삭제되었습니다.");
-  //         handleCancel();
-  //         history.go(0);
-  //       } else {
-  //         message.error("모임 삭제에 실패하였습니다.");
-  //       }
-  //     } else {
-  //       message.error("현재 운영중인 독서모임이 존재하지 않습니다.");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const handleLikedClubs = (clubId) => {
     let index = likedClubs.indexOf(clubId);
@@ -232,26 +185,6 @@ const Main = () => {
     }
   };
 
-  // const handleMemberDelete = async (userId, clubId) => {
-  //   try {
-  //     const res = axios.delete(url + "/members", {
-  //       params: {
-  //         userId: userId,
-  //         clubId: Number(clubId),
-  //         delete: "OUT",
-  //       },
-  //     });
-
-  //     if (res.status === 200) {
-  //       message.warning("모임에서 내보내기 처리되었습니다.");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     fetchData();
-  //   }
-  // };
-
   return (
     <Wrapper>
       {loading ? (
@@ -261,29 +194,6 @@ const Main = () => {
       ) : (
         <>
           <StyledTabs defaultActiveKey="1">
-            {/* <TabPane tab="내 댓글" key="1">
-              {myCommentsTotal !== 0 ? (
-                <TabContainer gutter={[0, 102]}>
-                  <Row gutter={[0, 16]}>
-                    {myComments.map((comment) => (
-                      <Row key={comment.id}>
-                        <MyComment myComment={comment} />
-                      </Row>
-                    ))}
-                  </Row>
-                  <PaginationRow>
-                    <Pagination
-                      total={myCommentsTotal}
-                      pageSize={10}
-                      current={myCommentsPage}
-                      onChange={(page) => setMyCommentsPage(page)}
-                    />
-                  </PaginationRow>
-                </TabContainer>
-              ) : (
-                <NotFound>🚫 내 댓글이 존재하지 않습니다.🚫</NotFound>
-              )}
-            </TabPane> */}
             <TabPane tab="좋아요한 모임" key="1">
               {myLikedClubsTotal !== 0 ? (
                 <TabContainer>
@@ -343,6 +253,14 @@ const Main = () => {
             <TabPane tab="모임 관리" key="3">
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
+                  <CardRow>
+                    {myClub.clubList
+                      .filter((club, i) => i < 4)
+                      .map((club) => (
+                        <MyClubCard key={club.id} userId={userId} club={club} />
+                      ))}
+                  </CardRow>
+
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
                     <Text>승인 대기자</Text>

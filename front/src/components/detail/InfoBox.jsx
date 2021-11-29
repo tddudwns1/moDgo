@@ -56,10 +56,7 @@ const InfoBox = (props) => {
             </LikeIcon>
           </LikeIconContainer> */}
           {(() => {
-            console.log(props.club.clubStatus);
-            if (props.club.clubStatus === "ACTIVE") {
-              console.log(props.userId);
-              console.log(props.apply);
+            if (props.club.clubStatus == "ACTIVE") {
               if (props.userId && props.apply.includes(props.club.id))
                 return (
                   <>
