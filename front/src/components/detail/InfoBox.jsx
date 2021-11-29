@@ -9,7 +9,6 @@ import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
 const InfoBox = (props) => {
-
   const tags = props.club.tags.split(", ");
 
   return (
@@ -25,9 +24,11 @@ const InfoBox = (props) => {
         <Title>{props.club.title}</Title>
         <InfoRow>
           <SubTitle>참여 인원</SubTitle>{" "}
+
           <Text>
             {props.club.requiredPerson}인 
           </Text>
+
         </InfoRow>
         <InfoRow>
           <SubTitle>진행 기간</SubTitle>{" "}
@@ -59,7 +60,10 @@ const InfoBox = (props) => {
             </LikeIcon>
           </LikeIconContainer> */}
           {(() => {
-            if (props.club.clubStatus !== "EXPIRED") {
+            console.log(props.club.clubStatus);
+            if (props.club.clubStatus === "ACTIVE") {
+              console.log(props.userId);
+              console.log(props.apply);
               if (props.userId && props.apply.includes(props.club.id))
                 return (
                   <>
@@ -114,19 +118,19 @@ const InfoBox = (props) => {
                     </StyledModal>
                   </>
                 );
-            } else return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            } else {
+              return <ApplyBtn disabled>모집마감</ApplyBtn>;
+            }
           })()}
         </BtnRow>
       </ClubInfo>
     </InfoBoxContainer>
   );
-
 };
 
 export default InfoBox;
 
 const InfoBoxContainer = styled.div`
-
   width: 100%;
   height: 332px;
   border: 1.5px solid #e5e5e5;
@@ -150,14 +154,12 @@ const InfoBoxContainer = styled.div`
 `;
 
 const ClubThumbnail = styled.div`
-
   width: 493px;
   height: 100%;
   img {
     width: 100%;
     height: 100%;
     border-radius: 10px 0 0 10px;
-
 
     ${customMedia.lessThan("mobile")`
       border-radius: 10px 10px 0 0;
@@ -166,8 +168,6 @@ const ClubThumbnail = styled.div`
       border-radius: 10px 10px 0 0;
     `}
   }
-
-
 
   ${customMedia.lessThan("mobile")`
     width: 295px;
@@ -186,7 +186,6 @@ const ClubThumbnail = styled.div`
 `;
 
 const ClubInfo = styled.div`
-
   width: 50%;
   padding: 0 50px;
   display: flex;
@@ -208,7 +207,6 @@ const ClubInfo = styled.div`
 `;
 
 const InfoRow = styled.div`
-
   display: flex;
   align-items: center;
   gap: 20px;
@@ -218,7 +216,6 @@ const Title = styled.div`
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
-
 
   ${customMedia.lessThan("mobile")`
     font-size: 16px;
@@ -237,7 +234,6 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-
   font-size: 22px;
   font-weight: bold;
   color: #000000;
@@ -257,7 +253,6 @@ const SubTitle = styled.div`
 `;
 
 const Text = styled.div`
-
   font-size: 20px;
   ${customMedia.lessThan("mobile")`
 
@@ -275,7 +270,6 @@ const Text = styled.div`
 `;
 
 const TagContainer = styled.div`
-
   display: flex;
   gap: 10px;
   margin-top: 15px;
@@ -286,7 +280,6 @@ const TagContainer = styled.div`
 `;
 
 const Tag = styled(SmallTag)`
-
   & {
     font-size: 16px;
     padding: 7px 25px;
@@ -332,7 +325,6 @@ const BtnRow = styled.div`
 `;
 
 const LikeIconContainer = styled.div`
-
   width: 50px;
   height: 50px;
   border: 2px solid #e5e5e5;
@@ -356,36 +348,34 @@ const LikeIconContainer = styled.div`
   `}
 `;
 
-const LikeIcon = styled.div`
-
-  width: 32px;
-  height: 30px;
-  cursor: pointer;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  ${customMedia.lessThan("mobile")`
->>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
-    width: 24px;
-    height: 22px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-    width: 18px;
-    height: 16px;
-  `}
-	${customMedia.between("largeMobile", "tablet")`
-    width: 24px;
-    height: 22px;
-  `}
-	${customMedia.between("tablet", "desktop")`
-    width: 28px;
-    height: 26px;
-  `}
-`;
+// const LikeIcon = styled.div`
+//   width: 32px;
+//   height: 30px;
+//   cursor: pointer;
+//   img {
+//     width: 100%;
+//     height: 100%;
+//   }
+//   ${customMedia.lessThan("mobile")`
+// >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
+//     width: 24px;
+//     height: 22px;
+//   `}
+//   ${customMedia.between("mobile", "largeMobile")`
+//     width: 18px;
+//     height: 16px;
+//   `}
+// 	${customMedia.between("largeMobile", "tablet")`
+//     width: 24px;
+//     height: 22px;
+//   `}
+// 	${customMedia.between("tablet", "desktop")`
+//     width: 28px;
+//     height: 26px;
+//   `}
+// `;
 
 const ApplyBtn = styled(Button)`
-
   width: 300px;
   height: 50px;
   color: #ffffff;
@@ -423,7 +413,6 @@ const ApplyBtn = styled(Button)`
 `;
 
 const StyledModal = styled(Modal)`
-
   display: flex;
   justify-content: center;
   .ant-modal-content {
@@ -459,7 +448,6 @@ const ModalTitle = styled.div`
 `;
 
 const ButtonRow = styled(Row)`
-
   margin-top: 30px;
   display: flex;
   justify-content: center;
@@ -488,7 +476,6 @@ const SkeletonImg = styled(Skeleton.Image)`
     width: 493px;
     height: 332px;
 
-
     ${customMedia.lessThan("mobile")`
       width: 295px;
       height: 186px;
@@ -506,6 +493,4 @@ const SkeletonImg = styled(Skeleton.Image)`
       height: 293px;
     `}
   }
-
 `;
-

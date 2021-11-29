@@ -3,7 +3,6 @@ import { Divider } from "antd";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
 
-
 const DetailInfo = ({ ...props }) => {
   return (
     <DetailInfoContainer>
@@ -13,6 +12,7 @@ const DetailInfo = ({ ...props }) => {
         <Contents>{props.club.description}</Contents>
       </TextBox>
       <Divider />
+
       {/* <Title>모임</Title>
       <TextBox>
         <SubTitle>
@@ -36,15 +36,14 @@ const DetailInfo = ({ ...props }) => {
             : ""}
         </SubTitle>
       </TextBox> */}
+
     </DetailInfoContainer>
   );
-
 };
 
 export default DetailInfo;
 
 const DetailInfoContainer = styled.div`
-
   margin: 60px 0;
 `;
 
@@ -52,7 +51,6 @@ const Title = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 30px;
-
 
   ${customMedia.lessThan("mobile")`
     font-size: 18px;
@@ -69,11 +67,9 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 15px;
-
 
   ${customMedia.lessThan("mobile")`
     font-size: 16px;
@@ -90,7 +86,6 @@ const SubTitle = styled.div`
 `;
 
 const Contents = styled.div`
-
   font-size: 16px;
   white-space: pre-wrap;
 
@@ -109,14 +104,12 @@ const Contents = styled.div`
 `;
 
 const TextBox = styled.div`
-
   margin-bottom: 40px;
 `;
 
 const MapWrapper = styled.div`
   width: 996px;
   height: 250px;
-
 
   ${customMedia.lessThan("mobile")`
     width: 295px;
@@ -130,6 +123,4 @@ const MapWrapper = styled.div`
 	${customMedia.between("tablet", "desktop")`
     width: 880px;
   `}
-
 `;
-

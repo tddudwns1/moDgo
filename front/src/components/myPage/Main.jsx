@@ -17,9 +17,7 @@ import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 import MyClubCard from "./MyClubCard";
 
-
 const url = "https://modgo.loca.lt";
-
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -56,30 +54,33 @@ const Main = () => {
     myLikedClubsTotal,
     myLikedClubsPage,
     // myCommentsPage,
+    
   ]);
 
   const fetchData = async () => {
     try {
-
       // const res = await axios.get(url + `/comments/users/${userId}`, {
       //   params: { page: myCommentsPage },
       // });
 
-
       // setMyComments(res.data.commentList);
       // setMyCommentsTotal(res.data.totalCount);
 
-
-      const likedClubsRes = await axios.get(url + `/likedClubs/users/${userId}`, {
-          params: { 
+      const likedClubsRes = await axios.get(
+        url + `/likedClubs/users/${userId}`,
+        {
+          params: {
             page: myLikedClubsPage,
-           },
-        });
-        
-        
+
+          },
+        }
+      );
+
+
       setMyLikedClubs(likedClubsRes.data.likedClubList);
       setMyLikedClubsTotal(likedClubsRes.data.totalCount);
       
+
 
       // const joinedClubsRes = await axios.get(url + `/members/users/${userId}`, {
 
@@ -89,42 +90,50 @@ const Main = () => {
       // });
       
 
+
       // setMyJoinedClubs(joinedClubsRes.data.joiningClubList);
       // setMyJoinedClubsTotal(joinedClubsRes.data.totalCount);
       // console.log(joinedClubsRes.data);
+
+      
+
 
 
 
       const myClubRes = await axios.get(url + `/clubs/users/${userId}`,);
         console.log(myClubRes.data);
+
       
+
 
 
         if (myClubRes.data) {
           console.log("get 시작전");
 
-          // const pendingMembersRes = await axios.get(url + "/members", {
+
+          const pendingMembersRes = await axios.get(url + "/members", {
             
-          //   params: {
-          //     userId: userId,
-          //     clubId: 2,
-          //     approvalStatus: "WAITING",
-          //     page: myPendingMembersPage,
-          //   },
+            params: {
+              userId: userId,
+              clubId: 5,
+              approvalStatus: "WAITING",
+              page: myPendingMembersPage,
+            },
             
-          // });
+          });
           
           
 
-          // setMyPendingMembers(pendingMembersRes.data.memberList);
-          // setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+          setMyPendingMembers(pendingMembersRes.data.memberList);
+          setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+
 
 
           const memberRes = await axios.get(url + "/members", {
 
             params: {
               userId: userId,
-              clubId: 2,
+              clubId: 5,
               approvalStatus: "CONFIRMED",
               page: myMembersPage,
             },
@@ -141,9 +150,7 @@ const Main = () => {
       setMyClub(myClubRes.data);
       
 
-
       const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-
         params: {
           userId: userId,
         },
@@ -151,7 +158,9 @@ const Main = () => {
 
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
+
       setLoading(false);
+
 
     } catch (err) {
       console.log(err);
@@ -165,6 +174,7 @@ const Main = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
 
 
   const handleDeleteClub = async () => {
@@ -211,9 +221,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-
       await axios.post(url + "/likedClubs", {
-
         clubId: Number(clubId),
         userId: userId,
       });
@@ -226,9 +234,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-
       axios.delete(url + "/likedClubs", {
-
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -240,7 +246,6 @@ const Main = () => {
 
   const handleMemberApproval = async (memberId) => {
     try {
-
       const res = axios.put(url + "/members", { memberId: memberId });
 
       if (res.status === 200) {
@@ -255,9 +260,7 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-
       const res = axios.delete(url + "/members", {
-
         params: {
           userId: userId,
           clubId: clubId,
@@ -273,7 +276,6 @@ const Main = () => {
       fetchData();
     }
   };
-
 
   // const handleMemberDelete = async (userId, clubId) => {
   //   try {
@@ -294,7 +296,6 @@ const Main = () => {
   //     fetchData();
   //   }
   // };
-
 
   return (
     <Wrapper>
@@ -334,7 +335,7 @@ const Main = () => {
                 <TabContainer>
                   <CardRow>
                     {myLikedClubs.map((likedClub) => (
-                      <LikedClubCard
+                      <MyClubCard
                         key={likedClub.id}
                         userId={userId}
                         club={likedClub}
@@ -385,28 +386,29 @@ const Main = () => {
               )}
             </TabPane>
 
-            <TabPane tab="관리중인 모임" key="3">
+            <TabPane tab="모임 관리" key="3">
               {myClub ? (
                 <TabContainer gutter={[0, 100]}>
-                  <Box>
-                      <CardRow>
-                        {clubs != null
-                          ? clubs.map((club) => (
-                              <MyClubCard
-                                key={club.id}
-                                userId={userId}
-                                club={club}
-                                likedClubs={likedClubs}
-                                handleLikedClubs={handleLikedClubs}
-                              />
-                            ))
-                          : ""}
-                      </CardRow>
-                  </Box>
+                  
+                  <CardRow>
+                    {myClub.clubList
+                      .filter((club, i) => i < 4)
+                      .map((club) => (
+                        <LikedClubCard
+                          key={club.id}
+                          userId={userId}
+                          club={club}
+                         
+                          // handleLikeDelete={handleLikeDelete}
+                          like={club.clubId}
+                        />
+                      ))}
+                  </CardRow>
+                  
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
-                    {/* <Text>승인 대기자</Text>
-                    {myPendingMembers.length !== 0 ? (
+                      <Text>승인 대기자</Text>
+                      {myPendingMembers.length !== 0 ? (
                       <>
                         <Row gutter={[0, 16]}>
                           {myPendingMembers.map((member) => (
@@ -431,9 +433,9 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                         현재 대기중인 멤버가 없습니다. 
+                        현재 대기중인 멤버가 없습니다.
                       </MemberNotFound>
-                    )} */}
+                    )}
                     <Divider />
                     <Text>참여자 목록</Text>
                     {myMembers.length !== 0 ? (
@@ -456,7 +458,7 @@ const Main = () => {
                       </>
                     ) : (
                       <MemberNotFound>
-                         현재 참여중인 멤버가 없습니다. 
+                        현재 참여중인 멤버가 없습니다.
                       </MemberNotFound>
                     )}
                   </Box>
@@ -468,9 +470,7 @@ const Main = () => {
                   </Box>
                 </TabContainer>
               ) : (
-                <NotFound>
-                   현재 운영중인 모임이 존재하지 않습니다 
-                </NotFound>
+                <NotFound>현재 운영중인 모임이 존재하지 않습니다</NotFound>
               )}
             </TabPane>
           </StyledTabs>
@@ -768,7 +768,7 @@ const ButtonRow = styled(Row)`
 const FilledBtn = styled(Button)`
   & {
     color: #ffffff;
-    background-color: #ff6701;
+    background-color: #029400;
     border: none;
     border-radius: 6px;
     outline: none;
@@ -791,9 +791,9 @@ const FilledBtn = styled(Button)`
 
 const UnfilledBtn = styled(Button)`
   & {
-    color: #ff6701;
+    color: #029400;
     background-color: #ffffff;
-    border: 2px solid #ff6701;
+    border: 2px solid #029400;
     border-radius: 6px;
     cursor: pointer;
 

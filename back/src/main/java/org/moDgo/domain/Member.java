@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Entity
 public class Member {
     @Id
-    @Column(name = "memer_id")
+    @Column(name = "member_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -36,28 +37,25 @@ public class Member {
     private int evaluation_num;
 
     @JoinColumn(name = "club_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Club club;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @Builder
     public Member(User user
             , Club club
             ,ApprovalStatus approvalStatus
-            ,EvaluationStatus evaluationStatus
-            ,int bad_manner
-            ,int good_manner
-            ,int normal_manner) {
+            ) {
         this.user = user;
         this.club = club;
         this.approvalStatus = approvalStatus;
-        this.evaluationStatus = evaluationStatus;
-        this.bad_manner = bad_manner;
-        this.good_manner = good_manner;
-        this.normal_manner = normal_manner;
+        this.evaluationStatus = EvaluationStatus.NOTCLEAR;
+        this.bad_manner = 0;
+        this.good_manner = 0;
+        this.normal_manner = 0;
     }
 
     public void changeApprovalStatus(ApprovalStatus approvalStatus) {

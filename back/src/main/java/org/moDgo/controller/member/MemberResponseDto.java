@@ -1,9 +1,15 @@
 package org.moDgo.controller.member;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.moDgo.domain.ApprovalStatus;
 import org.moDgo.domain.Member;
 import org.springframework.beans.BeanUtils;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class MemberResponseDto {
     private Long id;
     private Long clubId;

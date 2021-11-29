@@ -56,8 +56,8 @@ public class ClubController {
 
     //사용자가 만든 모임들 조회(최대 4개)
     @GetMapping("/users/{userId}")
-    public ResponseEntity<ClubDetailResponseDto> getUserClub(
-            @PathVariable String userId,@RequestParam("page") int page
+    public ResponseEntity<ClubDetailPageResponseDto> getUserClub(
+            @PathVariable String userId,@RequestParam(value = "page",defaultValue = "1") int page
     ) {
         Page<Club> allClubsByUserId = clubService.findAllClubByUserId(userId, page);
         Long totalCount = allClubsByUserId.getTotalElements();

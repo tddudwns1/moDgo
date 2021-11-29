@@ -11,7 +11,6 @@ import ExpiredTag from "../common/ExpiredTag";
 
 const url = "http://modgo.loca.lt";
 
-
 const ClubCard = (props) => {
   const history = useHistory();
 
