@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="Comment Controller, Service 추가" />
+    <list default="true" id="86915ae1-8b9e-4ca5-9260-7a7a82806b06" name="Default Changelist" comment="Comment Controller, Service 추가">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,6 +168,10 @@
       <workItem from="1637114527588" duration="363000" />
       <workItem from="1637243913616" duration="7381000" />
       <workItem from="1637588454346" duration="5377000" />
+      <workItem from="1638020597040" duration="1000" />
+      <workItem from="1638159792477" duration="1111000" />
+      <workItem from="1638172992528" duration="1000" />
+      <workItem from="1638176214902" duration="4559000" />
     </task>
     <servers />
   </component>

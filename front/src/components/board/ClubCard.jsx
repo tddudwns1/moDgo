@@ -9,8 +9,6 @@ import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 import ExpiredTag from "../common/ExpiredTag";
 
-const url = "http://modgo.loca.lt";
-
 const ClubCard = (props) => {
   const history = useHistory();
 
