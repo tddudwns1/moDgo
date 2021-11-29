@@ -35,9 +35,10 @@ const Main = () => {
   const [myLikedClubsPage, setMyLikedClubsPage] = useState(1);
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
   const history = useHistory();
+  const [visibility, setVisibility] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -93,7 +94,7 @@ const Main = () => {
       console.log(likedClubRes.data);
       setLikedClubs(likedClubRes.data.likedClubIdList);
 
-      setLoading(true);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -251,82 +252,79 @@ const Main = () => {
 
             <TabPane tab="모임 관리" key="3">
               {myClub ? (
-                <TabContainer>
+                <TabContainer gutter={[0, 100]}>
                   <CardRow>
-                    {myClub.map((myClub) => (
-                      <MyClubCard
-                        key={myClub.id}
-                        userId={userId}
-                        club={myClub}
-                      />
-                    ))}
+                    {myClub.clubList
+                      .filter((club, i) => i < 4)
+                      .map((club) => (
+                        <MyClubCard key={club.id} userId={userId} club={club} />
+                      ))}
                   </CardRow>
+
+                  <Box>
+                    <MidTitle>참여자 관리</MidTitle>
+                    <Text>승인 대기자</Text>
+                    {myPendingMembers.length !== 0 ? (
+                      <>
+                        <Row gutter={[0, 16]}>
+                          {myPendingMembers.map((member) => (
+                            <Row key={member.id}>
+                              <PendingMember
+                                myPendingMember={member}
+                                handleMemberReject={handleMemberReject}
+                                handleMemberApproval={handleMemberApproval}
+                              />
+                            </Row>
+                          ))}
+                        </Row>
+                        <PaginationRow>
+                          <Pagination
+                            total={myPendingMembersTotal}
+                            pageSize={3}
+                            current={myPendingMembersPage}
+                            onChange={(page) => setMyPendingMembersPage(page)}
+                          />
+                        </PaginationRow>
+                      </>
+                    ) : (
+                      <MemberNotFound>
+                        현재 대기중인 멤버가 없습니다.
+                      </MemberNotFound>
+                    )}
+                    <Divider />
+                    <Text>참여자 목록</Text>
+                    {myMembers.length !== 0 ? (
+                      <>
+                        <Row gutter={[0, 16]}>
+                          {myMembers.map((member) => (
+                            <Row key={member.id}>
+                              <Member myMember={member} />
+                            </Row>
+                          ))}
+                        </Row>
+                        <PaginationRow>
+                          <Pagination
+                            total={myMembersTotal}
+                            pageSize={3}
+                            current={myMembersPage}
+                            onChange={(page) => setMyMembersPage(page)}
+                          />
+                        </PaginationRow>
+                      </>
+                    ) : (
+                      <MemberNotFound>
+                        현재 참여중인 멤버가 없습니다.
+                      </MemberNotFound>
+                    )}
+                  </Box>
+
+                  <Box>
+                    <MidTitle>정보 수정</MidTitle>
+                    <EditForm myClub={myClub} />
+                    <Divider />
+                  </Box>
                 </TabContainer>
               ) : (
-                // <TabContainer gutter={[0, 100]}>
-                //   <Box>
-                //     <MidTitle>참여자 관리</MidTitle>
-                //     <Text>승인 대기자</Text>
-                //     {myPendingMembers.length !== 0 ? (
-                //       <>
-                //         <Row gutter={[0, 16]}>
-                //           {myPendingMembers.map((member) => (
-                //             <Row key={member.id}>
-                //               <PendingMember
-                //                 myPendingMember={member}
-                //                 handleMemberReject={handleMemberReject}
-                //                 handleMemberApproval={handleMemberApproval}
-                //               />
-                //             </Row>
-                //           ))}
-                //         </Row>
-                //         <PaginationRow>
-                //           <Pagination
-                //             total={myPendingMembersTotal}
-                //             pageSize={3}
-                //             current={myPendingMembersPage}
-                //             onChange={(page) => setMyPendingMembersPage(page)}
-                //           />
-                //         </PaginationRow>
-                //       </>
-                //     ) : (
-                //       <MemberNotFound>
-                //         현재 대기중인 멤버가 없습니다.
-                //       </MemberNotFound>
-                //     )}
-                //     <Divider />
-                //     <Text>참여자 목록</Text>
-                //     {myMembers.length !== 0 ? (
-                //       <>
-                //         <Row gutter={[0, 16]}>
-                //           {myMembers.map((member) => (
-                //             <Row key={member.id}>
-                //               <Member myMember={member} />
-                //             </Row>
-                //           ))}
-                //         </Row>
-                //         <PaginationRow>
-                //           <Pagination
-                //             total={myMembersTotal}
-                //             pageSize={3}
-                //             current={myMembersPage}
-                //             onChange={(page) => setMyMembersPage(page)}
-                //           />
-                //         </PaginationRow>
-                //       </>
-                //     ) : (
-                //       <MemberNotFound>
-                //         현재 참여중인 멤버가 없습니다.
-                //       </MemberNotFound>
-                //     )}
-                //   </Box>
-
-                //   <Box>
-                //     <MidTitle>정보 수정</MidTitle>
-                //     <EditForm myClub={myClub} />
-                //     <Divider />
-                //   </Box>
-                // </TabContainer>
                 <NotFound>현재 운영중인 모임이 존재하지 않습니다</NotFound>
               )}
             </TabPane>
