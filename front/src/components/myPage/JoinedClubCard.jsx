@@ -40,23 +40,6 @@ const JoinedClubCard = (props) => {
           <ClubTag key={i}>{tag}</ClubTag>
         ))}
       </TagContainer>
-      <LikeIcon
-        onClick={(e) => {
-          e.stopPropagation();
-          if (props.userId) {
-            props.handleLikedClubs(props.club.clubId);
-          } else {
-            message.warning("로그인이 필요한 기능입니다.");
-          }
-        }}
-      >
-        {props.likedClubs.includes(props.club.clubId) ? (
-          <img src={filledHeart} alt="Filled like icon"></img>
-        ) : (
-          <img src={unfilledHeart} alt="Unfilled like icon" />
-        )}
-        <LikeNum>{props.club.likes}</LikeNum>
-      </LikeIcon>
     </StyledCard>
   );
 };

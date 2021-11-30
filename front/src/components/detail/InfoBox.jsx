@@ -433,7 +433,6 @@ const ModalTitle = styled.div`
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "tablet")`
->>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     font-size: 18px;
   `}
 `;

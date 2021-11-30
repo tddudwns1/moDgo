@@ -23,10 +23,10 @@ const Main = () => {
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
-  const [myPendingMembers, setMyPendingMembers] = useState();
+  const [myPendingMembers, setMyPendingMembers] = useState([]);
   const [myPendingMembersTotal, setMyPendingMembersTotal] = useState(0);
   const [myPendingMembersPage, setMyPendingMembersPage] = useState(1);
-  const [myMembers, setMyMembers] = useState();
+  const [myMembers, setMyMembers] = useState([]);
   const [myMembersTotal, setMyMembersTotal] = useState(0);
   const [myMembersPage, setMyMembersPage] = useState(1);
   const [myLikedClubsTotal, setMyLikedClubsTotal] = useState(0);
@@ -53,23 +53,14 @@ const Main = () => {
       const myClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
-      console.log(myClubRes.data);
 
       const clubId = myClubRes.data.clubList;
 
-      console.log(clubId);
-      console.log("length: " + myClubRes.data.clubList.length);
-
       for (let i = 0; i < clubId.length; i++) {
-        console.log(clubId[i]["id"]);
         clubIdArr.push(clubId[i]["id"]);
       }
-      console.log(clubIdArr);
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
 
       if (myClubRes.data) {
-        console.log("get 시작 전");
-
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + "/members",
           {
@@ -81,8 +72,6 @@ const Main = () => {
             },
           }
         );
-
-        console.log(pendingMembersRes);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
@@ -102,33 +91,32 @@ const Main = () => {
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
       }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
 
       const likedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + "/likedClubs/ids",
+        process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
         {
           params: {
             userId: userId,
+            page: myLikedClubsPage,
           },
         }
       );
-
-      console.log("likedClubRes: ");
-      console.log(likedClubRes.data);
-      setMyLikedClubs(likedClubRes.data.likedClubIdList);
+      setMyLikedClubs(likedClubRes.data.likedClubList);
+      setMyLikedClubsTotal(likedClubRes.data.totalCount);
 
       const joinedClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/members/users/${userId}`,
         {
           params: {
             userId: userId,
+            page: myJoinedClubsPage,
           },
         }
       );
-      console.log("joinedClubRes: ");
-      console.log(joinedClubRes.data);
-      setMyJoinedClubs(joinedClubRes.data);
+      setMyJoinedClubs(joinedClubRes.data.joiningClubList);
+      setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
+
+      setMyClubs(myClubRes.data.clubList);
 
       setLoading(false);
     } catch (err) {
@@ -138,16 +126,7 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const myClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
-      );
-      console.log(myClubRes.data);
-
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
-
-      if (myClubRes.data) {
-        console.log("get 시작 전");
-
+      if (selectedClub != 0) {
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + "/members",
           {
@@ -159,8 +138,6 @@ const Main = () => {
             },
           }
         );
-        console.log("PendingMemberRes: ");
-        console.log(pendingMembersRes.data);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
@@ -176,51 +153,27 @@ const Main = () => {
             },
           }
         );
-        console.log("memberRes: ");
-        console.log(memberRes.data);
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
       }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
 
       const likedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + "/likedClubs/ids",
+        process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
         {
           params: {
             userId: userId,
+            page: myLikedClubsPage,
           },
         }
       );
-      console.log("likedClubRes: ");
-      console.log(likedClubRes.data);
-      setMyLikedClubs(likedClubRes.data.likedClubIdList);
-
-      const joinedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + `/members/users/${userId}`,
-        {
-          params: {
-            userId: userId,
-          },
-        }
-      );
-      console.log("joinedClubRes: ");
-      console.log(joinedClubRes.data);
-      setMyJoinedClubs(joinedClubRes.data);
+      setMyLikedClubs(likedClubRes.data.likedClubList);
+      setMyLikedClubsTotal(likedClubRes.data.totalCount);
 
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
   };
 
   const handleLikedClubs = (clubId) => {
@@ -317,7 +270,7 @@ const Main = () => {
                   <CardRow>
                     {myLikedClubs.map((likedClub) => (
                       <LikedClubCard
-                        key={likedClub.id}
+                        key={likedClub.clubId}
                         userId={userId}
                         club={likedClub}
                         handleLikeDelete={handleLikeDelete}
@@ -371,7 +324,7 @@ const Main = () => {
               {myClubs ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
-                    {myClubs.map((club, i) => (
+                    {myClubs.map((club) => (
                       <MyClubCard
                         key={club.id}
                         userId={userId}

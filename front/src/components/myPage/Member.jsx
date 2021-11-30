@@ -16,6 +16,9 @@ const Member = (props) => {
       </MemberProfileIcon>
       <MemberUsername>{props.myMember.name}</MemberUsername>
       <MemberEmail>{props.myMember.email}</MemberEmail>
+      <MemberEmail></MemberEmail>
+      {/* props로 평가 정보 가져와서 출력하기 */}
+
       {/* <MemberBtn
         onClick={() =>
           props.handleMemberDelete(props.myMember.userId, props.myMember.clubId)

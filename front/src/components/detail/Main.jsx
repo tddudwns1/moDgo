@@ -12,6 +12,7 @@ import Pagination from "../common/Pagination";
 import profile from "../../images/icons/profile.png";
 
 const Main = (props) => {
+  const [isEvaluationVisible, setEvaluationVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [club, setClub] = useState();
   const [comments, setComments] = useState();
@@ -26,6 +27,7 @@ const Main = (props) => {
   const clubId = Number(props.match.params.id);
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
+  const [confirmedUser, setConfirmedUser] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +39,13 @@ const Main = (props) => {
         setClub(res.data);
         console.log("setclub(res.data)");
         console.log(res.data);
+
+        // const evaluationGetRes = await axios.get(
+        //   process.env.REACT_APP_API_URL + "/members/evaluation",
+        //   {
+        //     params: {},
+        //   }
+        // );
 
         if (userId) {
           const likedClubRes = await axios.get(
@@ -60,6 +69,21 @@ const Main = (props) => {
 
           console.log("joiningClubIdList");
           console.log(applyRes.data.joiningClubIdList);
+
+          const confirmedUserRes = await axios.get(
+            process.env.REACT_APP_API_URL + "/members",
+            {
+              params: {
+                userId: userId,
+                clubId: clubId,
+                approvalStatus: "CONFIRMED",
+                page: page,
+              },
+            }
+          );
+          console.log("confirmedUserRes: ");
+          console.log(confirmedUserRes.data);
+          setConfirmedUser(confirmedUserRes.data.memberList);
         }
 
         setLoading(false);
@@ -81,6 +105,36 @@ const Main = (props) => {
 
     setComments(res.data.commentList);
     setTotal(res.data.totalCount);
+  };
+
+  const handleEvaluation = async (evaluation, memberId) => {
+    const data = {
+      memberId: memberId,
+      EvaluationKind: evaluation,
+    };
+
+    console.log(JSON.stringify(data));
+
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_API_URL + "members/evaluation",
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(res);
+
+      if (res.status === 200) {
+        message.success("평가가 완료되었습니다.");
+      } else {
+        message.error("평가가 실패했습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const showModal = () => {
@@ -263,7 +317,11 @@ const Main = (props) => {
             showModal={showModal}
             handleCancel={handleCancel}
           />
-          <DetailInfo club={club} />
+          <DetailInfo
+            club={club}
+            confirmedUser={confirmedUser}
+            handleEvaluation={handleEvaluation}
+          />
           <TitleRow>
             <Title>댓글 ({total})</Title>
           </TitleRow>
