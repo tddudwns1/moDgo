@@ -3,6 +3,8 @@ import { Divider } from "antd";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
 
+const userId = localStorage.getItem("user_id");
+const userImg = localStorage.getItem("user_image");
 const DetailInfo = ({ ...props }) => {
   return (
     <DetailInfoContainer>
@@ -10,6 +12,14 @@ const DetailInfo = ({ ...props }) => {
       <TextBox>
         <SubTitle>{props.club.contents}</SubTitle>
         <Contents>{props.club.description}</Contents>
+      </TextBox>
+      <Title>참여 회원</Title>
+      <TextBox>
+        <SubTitle>
+          <NavProfile>
+            <img src={userImg} alt="User profile" />
+          </NavProfile>
+        </SubTitle>
       </TextBox>
       <Divider />
     </DetailInfoContainer>
@@ -97,5 +107,27 @@ const MapWrapper = styled.div`
   `}
 	${customMedia.between("tablet", "desktop")`
     width: 880px;
+  `}
+`;
+
+const NavProfile = styled.div`
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  ${customMedia.lessThan("mobile")`
+    width: 28px;
+    height: 28px;
+  `}
+  ${customMedia.between("mobile", "largeMobile")`
+    width: 30px;
+    height: 30px;
+  `}
+	${customMedia.between("largeMobile", "tablet")`
+    width: 32px;
+    height: 32px;
   `}
 `;
