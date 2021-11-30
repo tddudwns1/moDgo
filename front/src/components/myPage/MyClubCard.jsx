@@ -22,6 +22,10 @@ const MyClubCard = ({ ...props }) => {
           <SkeletonImg />
         )
       }
+      onClick={() => {
+        props.setSelectedClub(props.club.id);
+        console.log(props.selectedClub);
+      }}
       //   onClick={() => history.push(`/detail/${props.club.id}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
@@ -60,6 +64,7 @@ const StyledCard = styled(Card)`
     width: 212.5px;
     height: 250.5px;
   `}
+  
 	.ant-card-cover img {
     height: 160px;
 

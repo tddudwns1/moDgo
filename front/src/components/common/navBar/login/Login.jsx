@@ -12,8 +12,6 @@ const Login = ({ ...props }) => {
 
   const url = "https://modgo.loca.lt";
 
-
-
   const onSuccess = async (response) => {
     const {
       profileObj: { googleId, email, name, imageUrl },
@@ -32,7 +30,7 @@ const Login = ({ ...props }) => {
 
         await axios.post(url + "/users", user);
 
-        await axios.get(url + `users/${user.id}`);
+        await axios.get(url + `/users/${user.id}`);
 
         localStorage.setItem("user_id", user.id);
         localStorage.setItem("user_image", user.imgUrl);

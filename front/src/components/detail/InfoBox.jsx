@@ -38,7 +38,7 @@ const InfoBox = (props) => {
           ))}
         </TagContainer>
         <BtnRow>
-          {/* <LikeIconContainer>
+          <LikeIconContainer>
             <LikeIcon
               onClick={() => {
                 if (props.userId) {
@@ -54,7 +54,7 @@ const InfoBox = (props) => {
                 <img src={unfilledHeart} alt="Unfilled like icon" />
               )}
             </LikeIcon>
-          </LikeIconContainer> */}
+          </LikeIconContainer>
           {(() => {
             if (props.club.clubStatus == "ACTIVE") {
               if (props.userId && props.apply.includes(props.club.id))
@@ -339,32 +339,32 @@ const LikeIconContainer = styled.div`
   `}
 `;
 
-// const LikeIcon = styled.div`
-//   width: 32px;
-//   height: 30px;
-//   cursor: pointer;
-//   img {
-//     width: 100%;
-//     height: 100%;
-//   }
-//   ${customMedia.lessThan("mobile")`
-// >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
-//     width: 24px;
-//     height: 22px;
-//   `}
-//   ${customMedia.between("mobile", "largeMobile")`
-//     width: 18px;
-//     height: 16px;
-//   `}
-// 	${customMedia.between("largeMobile", "tablet")`
-//     width: 24px;
-//     height: 22px;
-//   `}
-// 	${customMedia.between("tablet", "desktop")`
-//     width: 28px;
-//     height: 26px;
-//   `}
-// `;
+const LikeIcon = styled.div`
+  width: 32px;
+  height: 30px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  ${customMedia.lessThan("mobile")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
+    width: 24px;
+    height: 22px;
+  `}
+  ${customMedia.between("mobile", "largeMobile")`
+    width: 18px;
+    height: 16px;
+  `}
+	${customMedia.between("largeMobile", "tablet")`
+    width: 24px;
+    height: 22px;
+  `}
+	${customMedia.between("tablet", "desktop")`
+    width: 28px;
+    height: 26px;
+  `}
+`;
 
 const ApplyBtn = styled(Button)`
   width: 300px;

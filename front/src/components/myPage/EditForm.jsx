@@ -29,7 +29,7 @@ const EditForm = ({ ...props }) => {
   const [selectedOttTags, setSelectedOttTags] = useState([]);
   // const [selectedRemainTags, setSelectedRemainTags] = useState([]);
   const [coverImg, setCoverImg] = useState(null);
-  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
+  // const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
   // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
@@ -38,32 +38,32 @@ const EditForm = ({ ...props }) => {
     setInputText(e.target.value);
   };
 
-  const handleSelectOttTags = (e) => {
-    let tagName = e.target.innerText;
-    let index = selectedOttTags.indexOf(tagName);
+  // const handleSelectOttTags = (e) => {
+  //   let tagName = e.target.innerText;
+  //   let index = selectedOttTags.indexOf(tagName);
 
-    if (selectedOttTags.includes(tagName)) {
-      selectedOttTags.splice(index, 1);
-      setSelectedOttTags([...selectedOttTags]);
-    } else if (selectedOttTags.length === 1) {
-      selectedOttTags.splice(index, 1);
-      message.error("태그는 1개만 선택 가능합니다!");
-    } else {
-      setSelectedOttTags([...selectedOttTags, tagName]);
-    }
+  //   if (selectedOttTags.includes(tagName)) {
+  //     selectedOttTags.splice(index, 1);
+  //     setSelectedOttTags([...selectedOttTags]);
+  //   } else if (selectedOttTags.length === 1) {
+  //     selectedOttTags.splice(index, 1);
+  //     message.error("태그는 1개만 선택 가능합니다!");
+  //   } else {
+  //     setSelectedOttTags([...selectedOttTags, tagName]);
+  //   }
 
-    if (tagName === "NETFLIX") {
-      setCoverImg(netflixCover);
-    } else if (tagName === "WATCHA") {
-      setCoverImg(watchaCover);
-    } else if (tagName === "DISNEY+") {
-      setCoverImg(disneyplusCover);
-    } else if (tagName === "WAVVE") {
-      setCoverImg(wavveCover);
-    } else {
-      setCoverImg(null);
-    }
-  };
+  //   if (tagName === "NETFLIX") {
+  //     setCoverImg(netflixCover);
+  //   } else if (tagName === "WATCHA") {
+  //     setCoverImg(watchaCover);
+  //   } else if (tagName === "DISNEY+") {
+  //     setCoverImg(disneyplusCover);
+  //   } else if (tagName === "WAVVE") {
+  //     setCoverImg(wavveCover);
+  //   } else {
+  //     setCoverImg(null);
+  //   }
+  // };
 
   // const handleSelectRemainTags = (e) => {
   //   let tagName = e.target.innerText;
@@ -83,18 +83,19 @@ const EditForm = ({ ...props }) => {
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    const sendOttTags = selectedOttTags.join(", ");
+    // const sendOttTags = selectedOttTags.join(", ");
     // const sendRemainTags = selectedRemainTags.join(", ");
 
+    console.log(props.selectedClub.title);
     if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
 
-    if (!sendOttTags) {
-      message.warning("태그를 선택해주세요.");
-      return;
-    }
+    // if (!sendOttTags) {
+    //   message.warning("태그를 선택해주세요.");
+    //   return;
+    // }
 
     // if (!sendRemainTags) {
     //   message.warning("기간 태그를 선택해주세요.");
@@ -118,14 +119,14 @@ const EditForm = ({ ...props }) => {
       imgUrl: coverImg,
       startDate: startDate,
       endDate: endDate,
-      tags: sendOttTags,
+      // tags: sendOttTags,
       // remainTags: sendRemainTags,
       requiredPerson: values.requiredPerson,
     };
 
     try {
       const res = await axios
-        .post(url + "/clubs", JSON.stringify(data), {
+        .put(url + "/clubs", JSON.stringify(data), {
           headers: {
             "Content-Type": `application/json`,
           },
@@ -172,7 +173,7 @@ const EditForm = ({ ...props }) => {
               name="title"
               rules={[{ required: true, message: "모임 이름을 입력하세요." }]}
             >
-              <StyledInput placeholder="모임 이름" />
+              <StyledInput placeholder="모임 이름"></StyledInput>
             </Form.Item>
             <Form.Item
               label="한 줄 소개"
@@ -184,7 +185,7 @@ const EditForm = ({ ...props }) => {
                 },
               ]}
             >
-              <StyledInput placeholder="한 줄 소개" />
+              <StyledInput placeholder="한 줄 소개"></StyledInput>
             </Form.Item>
             <Form.Item
               label="참여 인원"
@@ -215,11 +216,13 @@ const EditForm = ({ ...props }) => {
                 },
               ]}
             >
-              <StyledRangePicker disabledDate={disabledDate} />
+              <StyledRangePicker
+                disabledDate={disabledDate}
+              ></StyledRangePicker>
             </Form.Item>
           </Col>
         </Row>
-        <TagRow>
+        {/* <TagRow>
           <TagTitle>태그 (1개만 선택 가능)</TagTitle>
           <TagRow>
             <TagContainer>
@@ -236,7 +239,7 @@ const EditForm = ({ ...props }) => {
               ))}
             </TagContainer>
           </TagRow>
-        </TagRow>
+        </TagRow> */}
         {/* <TagRow>
           <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
           <TagRow>

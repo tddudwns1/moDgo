@@ -21,7 +21,7 @@ const url = "https://modgo.loca.lt";
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [myClub, setMyClub] = useState();
+  const [myClubs, setMyClubs] = useState([]);
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
@@ -39,21 +39,33 @@ const Main = () => {
   const userId = localStorage.getItem("user_id");
   const history = useHistory();
   const [visibility, setVisibility] = useState(false);
+  const [selectedClub, setSelectedClub] = useState(0);
+  const clubIdArr = [];
+
+  useEffect(() => {
+    fetchDataFirst();
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, [
-    myMembersPage,
-    myPendingMembersPage,
-    myJoinedClubsPage,
-    myLikedClubsTotal,
-    myLikedClubsPage,
-  ]);
+  }, [selectedClub]);
 
-  const fetchData = async () => {
+  const fetchDataFirst = async () => {
     try {
       const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
       console.log(myClubRes.data);
+
+      const clubId = myClubRes.data.clubList;
+
+      console.log(clubId);
+      console.log("length: " + myClubRes.data.clubList.length);
+
+      for (let i = 0; i < clubId.length; i++) {
+        console.log(clubId[i]["id"]);
+        clubIdArr.push(clubId[i]["id"]);
+      }
+      console.log(clubIdArr);
+      // 내가 만든 clubId 배열 생성함 = clubIdArr
 
       if (myClubRes.data) {
         console.log("get 시작 전");
@@ -61,7 +73,7 @@ const Main = () => {
         const pendingMembersRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
-            clubId: 3,
+            clubId: clubIdArr[0],
             approvalStatus: "WAITING",
             page: myPendingMembersPage,
           },
@@ -74,7 +86,7 @@ const Main = () => {
         const memberRes = await axios.get(url + "/members", {
           params: {
             userId: userId,
-            clubId: 3,
+            clubId: clubIdArr[0],
             approvalStatus: "CONFIRMED",
             page: myMembersPage,
           },
@@ -84,15 +96,90 @@ const Main = () => {
         setMyMembersTotal(memberRes.data.totalCount);
       }
       console.log("get 시작 후");
-      setMyClub(myClubRes.data);
+      setMyClubs(myClubRes.data.clubList);
 
       const likedClubRes = await axios.get(url + "/likedClubs/ids", {
         params: {
           userId: userId,
         },
       });
+      console.log("likedClubRes: ");
       console.log(likedClubRes.data);
-      setLikedClubs(likedClubRes.data.likedClubIdList);
+      setMyLikedClubs(likedClubRes.data.likedClubIdList);
+
+      const joinedClubRes = await axios.get(url + `/members/users/${userId}`, {
+        params: {
+          userId: userId,
+        },
+      });
+      console.log("joinedClubRes: ");
+      console.log(joinedClubRes.data);
+      setMyJoinedClubs(joinedClubRes.data);
+
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
+      console.log(myClubRes.data);
+
+      // 내가 만든 clubId 배열 생성함 = clubIdArr
+
+      if (myClubRes.data) {
+        console.log("get 시작 전");
+
+        const pendingMembersRes = await axios.get(url + "/members", {
+          params: {
+            userId: userId,
+            clubId: selectedClub,
+            approvalStatus: "WAITING",
+            page: myPendingMembersPage,
+          },
+        });
+        console.log("PendingMemberRes: ");
+        console.log(pendingMembersRes.data);
+
+        setMyPendingMembers(pendingMembersRes.data.memberList);
+        setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
+
+        const memberRes = await axios.get(url + "/members", {
+          params: {
+            userId: userId,
+            clubId: selectedClub,
+            approvalStatus: "CONFIRMED",
+            page: myMembersPage,
+          },
+        });
+        console.log("memberRes: ");
+        console.log(memberRes.data);
+
+        setMyMembers(memberRes.data.memberList);
+        setMyMembersTotal(memberRes.data.totalCount);
+      }
+      console.log("get 시작 후");
+      setMyClubs(myClubRes.data.clubList);
+
+      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
+        params: {
+          userId: userId,
+        },
+      });
+      console.log("likedClubRes: ");
+      console.log(likedClubRes.data);
+      setMyLikedClubs(likedClubRes.data.likedClubIdList);
+
+      const joinedClubRes = await axios.get(url + `/members/users/${userId}`, {
+        params: {
+          userId: userId,
+        },
+      });
+      console.log("joinedClubRes: ");
+      console.log(joinedClubRes.data);
+      setMyJoinedClubs(joinedClubRes.data);
 
       setLoading(false);
     } catch (err) {
@@ -251,14 +338,18 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="모임 관리" key="3">
-              {myClub ? (
+              {myClubs ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
-                    {myClub.clubList
-                      .filter((club, i) => i < 4)
-                      .map((club) => (
-                        <MyClubCard key={club.id} userId={userId} club={club} />
-                      ))}
+                    {myClubs.map((club, i) => (
+                      <MyClubCard
+                        key={club.id}
+                        userId={userId}
+                        club={club}
+                        selectedClub={selectedClub}
+                        setSelectedClub={setSelectedClub}
+                      />
+                    ))}
                   </CardRow>
 
                   <Box>
@@ -320,7 +411,11 @@ const Main = () => {
 
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
-                    <EditForm myClub={myClub} />
+                    <EditForm
+                      myClubs={myClubs}
+                      selectedClub={selectedClub}
+                      setSelectedClub={setSelectedClub}
+                    />
                     <Divider />
                   </Box>
                 </TabContainer>
