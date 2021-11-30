@@ -115,4 +115,18 @@ public class MemberController {
         return new ResponseEntity("평가하였습니다.", HttpStatus.OK);
     }
 
+    @GetMapping("/evaluation")
+    public ResponseEntity<MemberEvaluationResponseDto> getMemberScore(
+            @RequestParam("memberId") Long memberId
+    ) {
+        Member member = memberService.getMember(memberId);
+        MemberEvaluationResponseDto memberEvaluationResponseDto
+                = new MemberEvaluationResponseDto(
+                        member.getBad_manner(),
+                        member.getGood_manner(),
+                        member.getNormal_manner(),
+                        member.getEvaluationStatus());
+        return new ResponseEntity(memberEvaluationResponseDto, HttpStatus.OK);
+    }
+
 }
