@@ -20,7 +20,7 @@ const Main = (props) => {
   const [editable, setEditable] = useState();
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  // const [likedClubs, setLikedClubs] = useState([]);
+  const [likedClubs, setLikedClubs] = useState([]);
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
@@ -36,16 +36,19 @@ const Main = (props) => {
 
         setClub(res.data);
         console.log("setclub(res.data)");
-        console.log(res.data); //
+        console.log(res.data);
 
         if (userId) {
-          // const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-          //   params: {
-          //     userId: userId,
-          //   },
-          // });
+          const likedClubRes = await axios.get(
+            process.env.REACT_APP_API_URL + "/likedClubs/ids",
+            {
+              params: {
+                userId: userId,
+              },
+            }
+          );
 
-          // setLikedClubs(likedClubRes.data.likedClubIdList);
+          setLikedClubs(likedClubRes.data.likedClubIdList);
 
           const applyRes = await axios.get(
             process.env.REACT_APP_API_URL + "/members/ids",
@@ -56,7 +59,7 @@ const Main = (props) => {
           setApply(applyRes.data.joiningClubIdList);
 
           console.log("joiningClubIdList");
-          console.log(applyRes.data.joiningClubIdList); //
+          console.log(applyRes.data.joiningClubIdList);
         }
 
         setLoading(false);
@@ -121,7 +124,7 @@ const Main = (props) => {
 
     try {
       const res = await axios.put(
-        process.env.REACT_APP_API_URLrl + `/comments/${id}`,
+        process.env.REACT_APP_API_URL + `/comments/${id}`,
         data
       );
       if (res.status === 200) {
@@ -154,45 +157,45 @@ const Main = (props) => {
     }
   };
 
-  // const handleLikedClubs = (clubId) => {
-  //   let index = likedClubs.indexOf(clubId);
+  const handleLikedClubs = (clubId) => {
+    let index = likedClubs.indexOf(clubId);
 
-  //   try {
-  //     if (likedClubs.includes(clubId)) {
-  //       likedClubs.splice(index, 1);
-  //       setLikedClubs([...likedClubs]);
-  //       handleLikeDelete(clubId);
-  //     } else {
-  //       setLikedClubs([...likedClubs, clubId]);
-  //       handleLikePost(clubId);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+    try {
+      if (likedClubs.includes(clubId)) {
+        likedClubs.splice(index, 1);
+        setLikedClubs([...likedClubs]);
+        handleLikeDelete(clubId);
+      } else {
+        setLikedClubs([...likedClubs, clubId]);
+        handleLikePost(clubId);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  // const handleLikePost = async (clubId) => {
-  //   const data = {
-  //     clubId: Number(clubId),
-  //     userId: userId,
-  //   };
+  const handleLikePost = async (clubId) => {
+    const data = {
+      clubId: Number(clubId),
+      userId: userId,
+    };
 
-  //   try {
-  //     await axios.post(url + "/likedClubs", data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+    try {
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  // const handleLikeDelete = async (clubId) => {
-  //   try {
-  //     await axios.delete(url + "/likedClubs", {
-  //       params: { userId: userId, clubId: Number(clubId) },
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const handleLikeDelete = async (clubId) => {
+    try {
+      await axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
+        params: { userId: userId, clubId: Number(clubId) },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onReset = () => {
     setPostComment("");
@@ -251,8 +254,8 @@ const Main = (props) => {
           <InfoBox
             userId={userId}
             club={club}
-            // likedClubs={likedClubs}
-            // handleLikedClubs={handleLikedClubs}
+            likedClubs={likedClubs}
+            handleLikedClubs={handleLikedClubs}
             apply={apply}
             handlePostApply={handlePostApply}
             handleDeleteApply={handleDeleteApply}
