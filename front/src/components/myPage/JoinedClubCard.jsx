@@ -10,8 +10,6 @@ import WaitingTag from "../common/WaitingTag";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-const url = "http://modgo.loca.lt";
-
 const JoinedClubCard = (props) => {
   const history = useHistory();
 

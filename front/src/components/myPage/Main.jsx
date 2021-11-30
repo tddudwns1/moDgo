@@ -17,8 +17,6 @@ import Spin from "../common/Spin";
 import { useHistory } from "react-router-dom";
 import MyClubCard from "./MyClubCard";
 
-const url = "https://modgo.loca.lt";
-
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [myClubs, setMyClubs] = useState([]);
@@ -52,7 +50,9 @@ const Main = () => {
 
   const fetchDataFirst = async () => {
     try {
-      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
+      const myClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
+      );
       console.log(myClubRes.data);
 
       const clubId = myClubRes.data.clubList;
@@ -70,27 +70,34 @@ const Main = () => {
       if (myClubRes.data) {
         console.log("get 시작 전");
 
-        const pendingMembersRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: clubIdArr[0],
-            approvalStatus: "WAITING",
-            page: myPendingMembersPage,
-          },
-        });
+        const pendingMembersRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/members",
+          {
+            params: {
+              userId: userId,
+              clubId: clubIdArr[0],
+              approvalStatus: "WAITING",
+              page: myPendingMembersPage,
+            },
+          }
+        );
+
         console.log(pendingMembersRes);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-        const memberRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: clubIdArr[0],
-            approvalStatus: "CONFIRMED",
-            page: myMembersPage,
-          },
-        });
+        const memberRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/members",
+          {
+            params: {
+              userId: userId,
+              clubId: clubIdArr[0],
+              approvalStatus: "CONFIRMED",
+              page: myMembersPage,
+            },
+          }
+        );
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
@@ -98,11 +105,15 @@ const Main = () => {
       console.log("get 시작 후");
       setMyClubs(myClubRes.data.clubList);
 
-      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-        params: {
-          userId: userId,
-        },
-      });
+      const likedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + "/likedClubs/ids",
+        {
+          params: {
+            userId: userId,
+          },
+        }
+      );
+
       console.log("likedClubRes: ");
       console.log(likedClubRes.data);
       setMyLikedClubs(likedClubRes.data.likedClubIdList);
@@ -216,7 +227,7 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post(url + "/likedClubs", {
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
@@ -229,7 +240,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete(url + "/likedClubs", {
+      axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -241,7 +252,9 @@ const Main = () => {
 
   const handleMemberApproval = async (memberId) => {
     try {
-      const res = axios.put(url + "/members", { memberId: memberId });
+      const res = axios.put(process.env.REACT_APP_API_URL + "/members", {
+        memberId: memberId,
+      });
 
       if (res.status === 200) {
         message.success("모임 참여가 승인되었습니다.");
@@ -255,7 +268,7 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-      const res = axios.delete(url + "/members", {
+      const res = axios.delete(process.env.REACT_APP_API_URL + "/members", {
         params: {
           userId: userId,
           clubId: clubId,
