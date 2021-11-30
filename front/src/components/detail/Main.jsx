@@ -23,7 +23,7 @@ const Main = (props) => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
 
-  //const [likedClubs, setLikedClubs] = useState([]);
+  const [likedClubs, setLikedClubs] = useState([]);
 
 
   const [apply, setApply] = useState();
@@ -38,23 +38,27 @@ const Main = (props) => {
         const res = await axios.get(url + `/clubs/${clubId}`);
 
         setClub(res.data);
-        console.log(res.data);
+        console.log("setclub(res.data)");
+        console.log(res.data); //
 
         if (userId) {
 
-          // const likedClubRes = await axios.get(url + "/likedclubs/ids", {
+          const likedClubRes = await axios.get(url + "/likedclubs/ids", {
 
-          //   params: {
-          //     userId: userId,
-          //   },
-          // });
+            params: {
+              userId: userId,
+            },
+          });
 
-          // setLikedClubs(likedClubRes.data.likedClubIdList);
+          setLikedClubs(likedClubRes.data.likedClubIdList);
 
           const applyRes = await axios.get(url + "/members/ids", {
             params: { userId: userId },
           });
           setApply(applyRes.data.joiningClubIdList);
+
+          console.log("joiningClubIdList");
+          console.log(applyRes.data.joiningClubIdList); //
         }
 
         setLoading(false);
@@ -92,9 +96,9 @@ const Main = (props) => {
 
     try {
       const res = await axios.post(url + "/comments", data);
-
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 등록되었습니다.");
+        message.success("댓글이 등록되었습니다.");
+        console.log(res.data);
       } else {
         message.error("댓글 등록에 실패했습니다.");
       }
@@ -113,9 +117,8 @@ const Main = (props) => {
 
     try {
       const res = await axios.put(url + `/comments/${id}`, data);
-
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 수정되었습니다.");
+        message.success("댓글이 수정되었습니다.");
       } else {
         message.error("댓글 수정에 실패했습니다.");
       }
@@ -131,7 +134,7 @@ const Main = (props) => {
       const res = await axios.delete(url + `/comments/${id}`);
 
       if (res.status === 200) {
-        message.success("댓글이 성공적으로 삭제되었습니다.");
+        message.success("댓글이 삭제되었습니다.");
       } else {
         message.error("댓글 삭제에 실패했습니다.");
       }
@@ -142,49 +145,49 @@ const Main = (props) => {
     }
   };
 
-  // const handleLikedClubs = (clubId) => {
-  //   let index = likedClubs.indexOf(clubId);
+  const handleLikedClubs = (clubId) => {
+    let index = likedClubs.indexOf(clubId);
 
-  //   try {
-  //     if (likedClubs.includes(clubId)) {
-  //       likedClubs.splice(index, 1);
-  //       setLikedClubs([...likedClubs]);
-  //       handleLikeDelete(clubId);
-  //     } else {
-  //       setLikedClubs([...likedClubs, clubId]);
-  //       handleLikePost(clubId);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+    try {
+      if (likedClubs.includes(clubId)) {
+        likedClubs.splice(index, 1);
+        setLikedClubs([...likedClubs]);
+        handleLikeDelete(clubId);
+      } else {
+        setLikedClubs([...likedClubs, clubId]);
+        handleLikePost(clubId);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  // const handleLikePost = async (clubId) => {
-  //   const data = {
-  //     clubId: Number(clubId),
-  //     userId: userId,
-  //   };
+  const handleLikePost = async (clubId) => {
+    const data = {
+      clubId: Number(clubId),
+      userId: userId,
+    };
 
-  //   try {
+    try {
 
-  //     await axios.post(url + "/likedclubs", data);
+      await axios.post(url + "/likedclubs", data);
 
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  // const handleLikeDelete = async (clubId) => {
-  //   try {
+  const handleLikeDelete = async (clubId) => {
+    try {
 
-  //     await axios.delete(url + "/likedclubs", {
+      await axios.delete(url + "/likedclubs", {
 
-  //       params: { userId: userId, clubId: Number(clubId) },
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+        params: { userId: userId, clubId: Number(clubId) },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onReset = () => {
     setPostComment("");
@@ -194,12 +197,14 @@ const Main = (props) => {
     try {
       const data = { userId: userId, clubId: Number(id) };
       const res = await axios.post(url + "/members", data);
+
       if (res.status === 400) {
         message.error("이미 참여신청한 모임입니다.");
       }
       setApply([...apply, id]);
     } catch (err) {
       console.log(err);
+      console.log(apply);
     }
   };
 
@@ -236,8 +241,8 @@ const Main = (props) => {
             userId={userId}
             club={club}
 
-            //likedClubs={likedClubs}
-            //handleLikedClubs={handleLikedClubs}
+            likedClubs={likedClubs}
+            handleLikedClubs={handleLikedClubs}
 
             apply={apply}
             handlePostApply={handlePostApply}
