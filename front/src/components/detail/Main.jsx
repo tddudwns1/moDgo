@@ -39,11 +39,14 @@ const Main = (props) => {
         console.log(res.data);
 
         if (userId) {
-          const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-            params: {
-              userId: userId,
-            },
-          });
+          const likedClubRes = await axios.get(
+            process.env.REACT_APP_API_URL + "/likedClubs/ids",
+            {
+              params: {
+                userId: userId,
+              },
+            }
+          );
 
           setLikedClubs(likedClubRes.data.likedClubIdList);
 
@@ -121,7 +124,7 @@ const Main = (props) => {
 
     try {
       const res = await axios.put(
-        process.env.REACT_APP_API_URLrl + `/comments/${id}`,
+        process.env.REACT_APP_API_URL + `/comments/${id}`,
         data
       );
       if (res.status === 200) {
@@ -178,7 +181,7 @@ const Main = (props) => {
     };
 
     try {
-      await axios.post(url + "/likedClubs", data);
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", data);
     } catch (err) {
       console.log(err);
     }
@@ -186,7 +189,7 @@ const Main = (props) => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      await axios.delete(url + "/likedClubs", {
+      await axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {

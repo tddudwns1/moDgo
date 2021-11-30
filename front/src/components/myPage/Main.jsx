@@ -118,11 +118,14 @@ const Main = () => {
       console.log(likedClubRes.data);
       setMyLikedClubs(likedClubRes.data.likedClubIdList);
 
-      const joinedClubRes = await axios.get(url + `/members/users/${userId}`, {
-        params: {
-          userId: userId,
-        },
-      });
+      const joinedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/members/users/${userId}`,
+        {
+          params: {
+            userId: userId,
+          },
+        }
+      );
       console.log("joinedClubRes: ");
       console.log(joinedClubRes.data);
       setMyJoinedClubs(joinedClubRes.data);
@@ -135,7 +138,9 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
+      const myClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
+      );
       console.log(myClubRes.data);
 
       // 내가 만든 clubId 배열 생성함 = clubIdArr
@@ -143,28 +148,34 @@ const Main = () => {
       if (myClubRes.data) {
         console.log("get 시작 전");
 
-        const pendingMembersRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: selectedClub,
-            approvalStatus: "WAITING",
-            page: myPendingMembersPage,
-          },
-        });
+        const pendingMembersRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/members",
+          {
+            params: {
+              userId: userId,
+              clubId: selectedClub,
+              approvalStatus: "WAITING",
+              page: myPendingMembersPage,
+            },
+          }
+        );
         console.log("PendingMemberRes: ");
         console.log(pendingMembersRes.data);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-        const memberRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: selectedClub,
-            approvalStatus: "CONFIRMED",
-            page: myMembersPage,
-          },
-        });
+        const memberRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/members",
+          {
+            params: {
+              userId: userId,
+              clubId: selectedClub,
+              approvalStatus: "CONFIRMED",
+              page: myMembersPage,
+            },
+          }
+        );
         console.log("memberRes: ");
         console.log(memberRes.data);
 
@@ -174,20 +185,26 @@ const Main = () => {
       console.log("get 시작 후");
       setMyClubs(myClubRes.data.clubList);
 
-      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-        params: {
-          userId: userId,
-        },
-      });
+      const likedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + "/likedClubs/ids",
+        {
+          params: {
+            userId: userId,
+          },
+        }
+      );
       console.log("likedClubRes: ");
       console.log(likedClubRes.data);
       setMyLikedClubs(likedClubRes.data.likedClubIdList);
 
-      const joinedClubRes = await axios.get(url + `/members/users/${userId}`, {
-        params: {
-          userId: userId,
-        },
-      });
+      const joinedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/members/users/${userId}`,
+        {
+          params: {
+            userId: userId,
+          },
+        }
+      );
       console.log("joinedClubRes: ");
       console.log(joinedClubRes.data);
       setMyJoinedClubs(joinedClubRes.data);
