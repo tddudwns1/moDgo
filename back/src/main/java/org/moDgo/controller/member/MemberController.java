@@ -3,6 +3,7 @@ package org.moDgo.controller.member;
 
 import lombok.RequiredArgsConstructor;
 import org.moDgo.domain.ApprovalStatus;
+import org.moDgo.domain.EvaluationKind;
 import org.moDgo.domain.Member;
 import org.moDgo.service.MemberService;
 import org.springframework.data.domain.Page;
@@ -104,6 +105,28 @@ public class MemberController {
         JoiningClubIdListResponseDto responseDto = new JoiningClubIdListResponseDto(joiningClubIdList);
 
         return new ResponseEntity(responseDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/evaluation")
+    public ResponseEntity<MemberEvaluationRequestDto> memberEvaluation(
+        @RequestBody MemberEvaluationRequestDto memberEvaluationRequestDto
+        ) {
+        memberService.updateEvaluationScore(memberEvaluationRequestDto);
+        return new ResponseEntity("평가하였습니다.", HttpStatus.OK);
+    }
+
+    @GetMapping("/evaluation")
+    public ResponseEntity<MemberEvaluationResponseDto> getMemberScore(
+            @RequestParam("memberId") Long memberId
+    ) {
+        Member member = memberService.getMember(memberId);
+        MemberEvaluationResponseDto memberEvaluationResponseDto
+                = new MemberEvaluationResponseDto(
+                        member.getBad_manner(),
+                        member.getGood_manner(),
+                        member.getNormal_manner(),
+                        member.getEvaluationStatus());
+        return new ResponseEntity(memberEvaluationResponseDto, HttpStatus.OK);
     }
 
 }
