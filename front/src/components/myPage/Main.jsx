@@ -206,7 +206,7 @@ const Main = () => {
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
       }
 
-      setLoading(false);
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
