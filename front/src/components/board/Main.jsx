@@ -11,8 +11,6 @@ import ClubCard from "./ClubCard";
 import Pagination from "../common/Pagination";
 import Spin from "../common/Spin";
 
-const url = "http://modgo.loca.lt";
-
 const Main = () => {
   const [clubs, setClubs] = useState();
   const [sortBy, setSortBy] = useState("createdAt");
@@ -27,8 +25,6 @@ const Main = () => {
 
   // const history = useHistory();
 
-  const url = "https://modgo.loca.lt";
-
   useEffect(() => {
     fetchData();
     setLoading(false);
@@ -38,10 +34,7 @@ const Main = () => {
     const sendTags = selectedTags.join(", ");
 
     try {
-
-
-      const res = await axios.get(url + "/clubs", {
-
+      const res = await axios.get(process.env.REACT_APP_API_URL + "/clubs", {
         params: {
           sortBy: sortBy,
           tags: sendTags,
@@ -55,13 +48,14 @@ const Main = () => {
       setTotal(res.data.totalCount);
 
       if (userId) {
-
-        const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-
-          params: {
-            userId: userId,
-          },
-        });
+        const likedClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + "/likedClubs/ids",
+          {
+            params: {
+              userId: userId,
+            },
+          }
+        );
         setLikedClubs(likedClubRes.data.likedClubIdList);
       }
     } catch (err) {
@@ -91,7 +85,7 @@ const Main = () => {
   const handleLikePost = async (clubId) => {
     try {
 
-      await axios.post(url+ "/likedClubs", {
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
 
         clubId: Number(clubId),
         userId: userId,
@@ -104,9 +98,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-
-      axios.delete(url + "/likedClubs", {
-
+      axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -122,9 +114,9 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
-          <MainTitle onClick={() => document.location.reload()}>
+          {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
-          </MainTitle>
+          </MainTitle> */}
           <SearchBar keyword={keyword} setKeyword={setKeyword} />
           <TagFilter
             selectedTags={selectedTags}
@@ -132,21 +124,21 @@ const Main = () => {
           />
           <TitleRow>
             <Title>{total}개의 모임</Title>
-            <CheckboxFilter
+            {/* <CheckboxFilter
               onChange={(e) => {
                 setClubStatus(e.target.checked ? "ACTIVE" : "");
               }}
             >
               모집중
-            </CheckboxFilter>
-            <SortFilter
+            </CheckboxFilter> */}
+            {/* <SortFilter
               showSearch
               placeholder="정렬필터"
               onChange={(value) => setSortBy(value)}
             >
               <Option value="createdAt">최신순</Option>
               <Option value="likes">좋아요순</Option>
-            </SortFilter>
+            </SortFilter> */}
           </TitleRow>
           <CardRow>
             {clubs != null
@@ -157,6 +149,7 @@ const Main = () => {
                     club={club}
                     likedClubs={likedClubs}
                     handleLikedClubs={handleLikedClubs}
+                   
                   />
                 ))
               : ""}
@@ -181,7 +174,7 @@ const { Option } = Select;
 
 const Wrapper = styled.section`
   width: 1200px;
-  margin: 90px auto;
+  margin:   auto;
   padding-bottom: 60px;
   flex: 1;
   ${customMedia.lessThan("mobile")`

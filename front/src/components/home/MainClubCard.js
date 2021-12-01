@@ -8,8 +8,6 @@ import SmallTag from '../common/SmallTag';
 import unfilledHeart from '../../images/icons/unfilled_heart.png';
 import filledHeart from '../../images/icons/filled_heart.png';
 
-const url = "http://modgo.loca.lt";
-
 const MainClubCard = ({ ...props }) => {
   const history = useHistory();
   return (
@@ -26,9 +24,10 @@ const MainClubCard = ({ ...props }) => {
     >
       <Meta title={props.club.title} description={props.club.contents} />
       <TagContainer>
-        {props.club.tags.split(', ').map((tag, i) => (
-          <MainTag key={i}>{tag}</MainTag>
-        ))}
+        <Days>
+          {'D-'}
+          {props.club.remainDays}
+        </Days>
       </TagContainer>
       <LikeIcon
         onClick={(e) => {
@@ -276,5 +275,57 @@ const SkeletonImg = styled(Skeleton.Image)`
       width: 212.5px;
       height: 125.25px;
     `}
+  }
+`;
+
+const RemainDays = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  font-size: 17px;
+  right: 185px;
+  bottom: 25px;
+
+  ${customMedia.lessThan('mobile')`
+	  bottom: 15px;
+  `}
+  ${customMedia.between('mobile', 'largeMobile')`
+   bottom: 20px;
+	  gap: 5px;
+  `}
+	${customMedia.between('largeMobile', 'tablet')`
+    bottom: 15px;
+	  gap: 3px;
+  `}
+	${customMedia.between('tablet', 'desktop')`
+    bottom: 15px;
+	  gap: 3px;
+  `}
+`;
+
+const Days = styled(SmallTag)`
+  & {
+    font-size: 14px;
+    padding: 7px 13px;
+
+    ${customMedia.lessThan('mobile')`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+    ${customMedia.between('mobile', 'largeMobile')`
+   font-size: 14px;
+    padding: 5px 12px;
+  `}
+	${customMedia.between('largeMobile', 'tablet')`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+	${customMedia.between('tablet', 'desktop')`
+    font-size: 10px;
+    padding: 5px 10px;
+    
+  `}
   }
 `;

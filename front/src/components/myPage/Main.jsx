@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Tabs, Row, Divider, message, Modal } from "antd";
-import styled from "styled-components";
-import { customMedia } from "../../GlobalStyles";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Tabs, Row, Divider, message, Modal } from 'antd';
+import styled from 'styled-components';
+import { customMedia } from '../../GlobalStyles';
 
 // import MyComment from "./MyComment";
-import EditForm from "./EditForm";
-import LikedClubCard from "./LikedClubCard";
-import JoinedClubCard from "./JoinedClubCard";
-import Member from "./Member";
-import PendingMember from "./PendingMember";
-import Pagination from "../common/Pagination";
-import Button from "../common/Button";
-import NotFound from "../common/NotFound";
-import Spin from "../common/Spin";
-import { useHistory } from "react-router-dom";
-import MyClubCard from "./MyClubCard";
-
-const url = "https://modgo.loca.lt";
+import EditForm from './EditForm';
+import LikedClubCard from './LikedClubCard';
+import JoinedClubCard from './JoinedClubCard';
+import Member from './Member';
+import InfoBox from './InfoBox';
+import PendingMember from './PendingMember';
+import Pagination from '../common/Pagination';
+import Button from '../common/Button';
+import NotFound from '../common/NotFound';
+import Spin from '../common/Spin';
+import { useHistory } from 'react-router-dom';
+import MyClubCard from './MyClubCard';
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -25,10 +24,10 @@ const Main = () => {
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
-  const [myPendingMembers, setMyPendingMembers] = useState();
+  const [myPendingMembers, setMyPendingMembers] = useState([]);
   const [myPendingMembersTotal, setMyPendingMembersTotal] = useState(0);
   const [myPendingMembersPage, setMyPendingMembersPage] = useState(1);
-  const [myMembers, setMyMembers] = useState();
+  const [myMembers, setMyMembers] = useState([]);
   const [myMembersTotal, setMyMembersTotal] = useState(0);
   const [myMembersPage, setMyMembersPage] = useState(1);
   const [myLikedClubsTotal, setMyLikedClubsTotal] = useState(0);
@@ -36,10 +35,21 @@ const Main = () => {
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const userId = localStorage.getItem("user_id");
+  const userId = localStorage.getItem('user_id');
+  const userImg = localStorage.getItem('user_image');
   const history = useHistory();
   const [visibility, setVisibility] = useState(false);
-  const [selectedClub, setSelectedClub] = useState(0);
+  const [selectedClubId, setSelectedClubId] = useState(0);
+  const [selectedClubTitle, setSelectedClubTitle] = useState('');
+  const [selectedClubContents, setSelectedClubContents] = useState('');
+  const [selectedClubRequiredPerson, setSelectedClubRequiredPerson] =
+    useState(0);
+  const [selectedClubStartDate, setSelectedClubStartDate] = useState();
+  const [selectedClubEndDate, setSelectedClubEndDate] = useState();
+  // const [selectedClubStartDate, setSelectedClubStartDate] = useState();
+  // const [selectedClubEndDate, setSelectedClubEndDate] = useState();
+  const [userName, setMyName] = useState('');
+  const [userEmail, setMyEmail] = useState('');
   const clubIdArr = [];
 
   useEffect(() => {
@@ -48,63 +58,93 @@ const Main = () => {
 
   useEffect(() => {
     fetchData();
-  }, [selectedClub]);
+  }, [selectedClubId]);
 
   const fetchDataFirst = async () => {
     try {
-      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
-      console.log(myClubRes.data);
+      const user = await axios.get(
+        process.env.REACT_APP_API_URL + `/users/${userId}`
+      );
+      setMyName(user.data.name);
+      setMyEmail(user.data.email);
+
+      const myClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
+      );
 
       const clubId = myClubRes.data.clubList;
 
-      console.log(clubId);
-      console.log("length: " + myClubRes.data.clubList.length);
-
       for (let i = 0; i < clubId.length; i++) {
-        console.log(clubId[i]["id"]);
-        clubIdArr.push(clubId[i]["id"]);
+        clubIdArr.push(clubId[i]['id']);
       }
-      console.log(clubIdArr);
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
 
       if (myClubRes.data) {
-        console.log("get 시작 전");
-
-        const pendingMembersRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: clubIdArr[0],
-            approvalStatus: "WAITING",
-            page: myPendingMembersPage,
-          },
-        });
-        console.log(pendingMembersRes);
+        const pendingMembersRes = await axios.get(
+          process.env.REACT_APP_API_URL + '/members',
+          {
+            params: {
+              userId: userId,
+              clubId: clubIdArr[0],
+              approvalStatus: 'WAITING',
+              page: myPendingMembersPage,
+            },
+          }
+        );
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-        const memberRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: clubIdArr[0],
-            approvalStatus: "CONFIRMED",
-            page: myMembersPage,
-          },
-        });
+        const memberRes = await axios.get(
+          process.env.REACT_APP_API_URL + '/members',
+          {
+            params: {
+              userId: userId,
+              clubId: clubIdArr[0],
+              approvalStatus: 'CONFIRMED',
+              page: myMembersPage,
+            },
+          }
+        );
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
-      }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
 
-      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-        params: {
-          userId: userId,
-        },
-      });
-      console.log(likedClubRes.data);
-      setLikedClubs(likedClubRes.data.likedClubIdList);
+        const selectClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/clubs/${clubIdArr[0]}`
+        );
+
+        setSelectedClubTitle(selectClubRes.data.title);
+        setSelectedClubContents(selectClubRes.data.contents);
+        setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
+        setSelectedClubStartDate(selectClubRes.data.startDate);
+        setSelectedClubEndDate(selectClubRes.data.endDate);
+      }
+
+      const likedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
+        {
+          params: {
+            userId: userId,
+            page: myLikedClubsPage,
+          },
+        }
+      );
+      setMyLikedClubs(likedClubRes.data.likedClubList);
+      setMyLikedClubsTotal(likedClubRes.data.totalCount);
+
+      const joinedClubRes = await axios.get(
+        process.env.REACT_APP_API_URL + `/members/users/${userId}`,
+        {
+          params: {
+            userId: userId,
+            page: myJoinedClubsPage,
+          },
+        }
+      );
+      setMyJoinedClubs(joinedClubRes.data.joiningClubList);
+      setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
+
+      setMyClubs(myClubRes.data.clubList);
 
       setLoading(false);
     } catch (err) {
@@ -114,62 +154,63 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const myClubRes = await axios.get(url + `/clubs/users/${userId}`);
-      console.log(myClubRes.data);
-
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
-
-      if (myClubRes.data) {
-        console.log("get 시작 전");
-
-        const pendingMembersRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: selectedClub,
-            approvalStatus: "WAITING",
-            page: myPendingMembersPage,
-          },
-        });
-        console.log(pendingMembersRes);
+      if (selectedClubId != 0) {
+        const pendingMembersRes = await axios.get(
+          process.env.REACT_APP_API_URL + '/members',
+          {
+            params: {
+              userId: userId,
+              clubId: selectedClubId,
+              approvalStatus: 'WAITING',
+              page: myPendingMembersPage,
+            },
+          }
+        );
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
-        const memberRes = await axios.get(url + "/members", {
-          params: {
-            userId: userId,
-            clubId: selectedClub,
-            approvalStatus: "CONFIRMED",
-            page: myMembersPage,
-          },
-        });
+        const memberRes = await axios.get(
+          process.env.REACT_APP_API_URL + '/members',
+          {
+            params: {
+              userId: userId,
+              clubId: selectedClubId,
+              approvalStatus: 'CONFIRMED',
+              page: myMembersPage,
+            },
+          }
+        );
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
-      }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
 
-      const likedClubRes = await axios.get(url + "/likedClubs/ids", {
-        params: {
-          userId: userId,
-        },
-      });
-      console.log(likedClubRes.data);
-      setLikedClubs(likedClubRes.data.likedClubIdList);
+        const likedClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
+          {
+            params: {
+              userId: userId,
+              page: myLikedClubsPage,
+            },
+          }
+        );
+
+        setMyLikedClubs(likedClubRes.data.likedClubList);
+        setMyLikedClubsTotal(likedClubRes.data.totalCount);
+
+        const selectClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/clubs/${selectedClubId}`
+        );
+
+        setSelectedClubTitle(selectClubRes.data.title);
+        setSelectedClubContents(selectClubRes.data.contents);
+        setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
+      }
 
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
   };
 
   const handleLikedClubs = (clubId) => {
@@ -193,12 +234,12 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post(url + "/likedClubs", {
+      await axios.post(process.env.REACT_APP_API_URL + '/likedClubs', {
         clubId: Number(clubId),
         userId: userId,
       });
     } catch (err) {
-      message.error("이미 좋아요한 모임입니다.");
+      message.error('이미 좋아요한 모임입니다.');
     } finally {
       fetchData();
     }
@@ -206,7 +247,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete(url + "/likedClubs", {
+      axios.delete(process.env.REACT_APP_API_URL + '/likedClubs', {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -218,10 +259,12 @@ const Main = () => {
 
   const handleMemberApproval = async (memberId) => {
     try {
-      const res = axios.put(url + "/members", { memberId: memberId });
+      const res = axios.put(process.env.REACT_APP_API_URL + '/members', {
+        memberId: memberId,
+      });
 
       if (res.status === 200) {
-        message.success("모임 참여가 승인되었습니다.");
+        message.success('모임 참여가 승인되었습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -232,15 +275,15 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-      const res = axios.delete(url + "/members", {
+      const res = axios.delete(process.env.REACT_APP_API_URL + '/members', {
         params: {
           userId: userId,
           clubId: clubId,
-          delete: "NO",
+          delete: 'NO',
         },
       });
       if (res.status === 200) {
-        message.warning("모임 참여가 거절되었습니다.");
+        message.warning('모임 참여가 거절되었습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -248,7 +291,7 @@ const Main = () => {
       fetchData();
     }
   };
-
+  console.log('title : ' + selectedClubTitle);
   return (
     <Wrapper>
       {loading ? (
@@ -257,6 +300,13 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
+          <InfoBox
+            userImg={userImg}
+            userName={userName}
+            userEmail={userEmail}
+          />
+          <br />
+          <br />
           <StyledTabs defaultActiveKey="1">
             <TabPane tab="좋아요한 모임" key="1">
               {myLikedClubsTotal !== 0 ? (
@@ -264,7 +314,7 @@ const Main = () => {
                   <CardRow>
                     {myLikedClubs.map((likedClub) => (
                       <LikedClubCard
-                        key={likedClub.id}
+                        key={likedClub.clubId}
                         userId={userId}
                         club={likedClub}
                         handleLikeDelete={handleLikeDelete}
@@ -314,17 +364,17 @@ const Main = () => {
               )}
             </TabPane>
 
-            <TabPane tab="모임 관리" key="3">
+            <TabPane tab="운영중인 모임" key="3">
               {myClubs ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
-                    {myClubs.map((club, i) => (
+                    {myClubs.map((club) => (
                       <MyClubCard
                         key={club.id}
                         userId={userId}
                         club={club}
-                        selectedClub={selectedClub}
-                        setSelectedClub={setSelectedClub}
+                        selectedClubId={selectedClubId}
+                        setSelectedClubId={setSelectedClubId}
                       />
                     ))}
                   </CardRow>
@@ -389,9 +439,15 @@ const Main = () => {
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm
-                      myClubs={myClubs}
-                      selectedClub={selectedClub}
-                      setSelectedClub={setSelectedClub}
+                      abc={'dd'}
+                      // myClubs={myClubs}
+                      // selectedClub={selectedClub}
+                      // setSelectedClub={setSelectedClub}
+                      selectedClubTitle={selectedClubTitle}
+                      selectedClubContents={selectedClubContents}
+                      selectedClubRequiredPerson={selectedClubRequiredPerson}
+                      selectedClubStartDate={selectedClubStartDate}
+                      selectedClubEndDate={selectedClubEndDate}
                     />
                     <Divider />
                   </Box>
@@ -415,16 +471,16 @@ const Wrapper = styled.div`
   width: 1200px;
   margin: 0 auto;
   flex: 1;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 295px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 610px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 880px;
   `}
 `;
@@ -433,13 +489,13 @@ const TabContainer = styled(Row)`
   width: 100%;
   margin-top: 70px;
   padding-bottom: 60px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     margin-top: 40px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     margin-top: 40px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     margin-top: 40px;
   `}
 `;
@@ -448,30 +504,30 @@ const StyledTabs = styled(Tabs)`
   .ant-tabs-tab-btn {
     font-size: 22px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 14px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 16px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 16px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 18px;
     `}
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: #029400;
     font-weight: bold;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-weight: 500;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-weight: 500;
     `}
     
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-weight: 500;
     `}
   }
@@ -489,10 +545,13 @@ const CardRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 60px;
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('mobile', 'largeMobile')`
+    gap: 40px;
+  `}
+  ${customMedia.between('largeMobile', 'tablet')`
     gap: 20px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     gap: 20px;
   `}
 `;
@@ -501,16 +560,16 @@ const MidTitle = styled.div`
   width: 100%;
   font-size: 20px;
   margin-bottom: 10px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 14px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
   font-size: 14px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 16px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 18px;
   `}
 `;
@@ -519,16 +578,16 @@ const LargeText = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 12px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 12px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 14px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 18px;
   `}
 `;
@@ -537,16 +596,16 @@ const Text = styled.div`
   font-size: 16px;
   margin-bottom: 15px;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 14px;
   `}
 `;
@@ -565,21 +624,21 @@ const DeleteBtnContainer = styled.div`
   border-radius: 5px;
   padding: 25px;
   display: flex;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
     padding: 15px;
     flex-direction: column;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
     padding: 15px;
     flex-direction: column;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 14px;
   `}
   
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 18px;
   `}
 `;
@@ -595,21 +654,21 @@ const DeleteBtn = styled(Button)`
   border-radius: 6px;
   text-align: center;
   flex: 0.1;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
     padding: 5px 15px;
     align-self: center;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
     padding: 5px 15px;
     align-self: center;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     width: 80px;
     font-size: 12px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     width: 120px;
     font-size: 16px;
   `}
@@ -623,32 +682,32 @@ const StyledModal = styled(Modal)`
     display: flex;
     align-items: center;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       padding: 3px 7px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       padding: 5px 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       padding: 10px 25px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       padding: 30px 55px;
     `}
   }
   .ant-modal-body {
     text-align: center;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       padding: 30px 55px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       padding: 30px 55px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       padding: 30px 55px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       padding: 30px 55px;
     `}
   }
@@ -661,16 +720,16 @@ const ModalTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 14px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 16px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 18px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 20px;
   `}
 `;
@@ -681,13 +740,13 @@ const ButtonRow = styled(Row)`
   justify-content: center;
   gap: 50px;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     margin-top: 15px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     margin-top: 15px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     margin-top: 20px;
   `}
 `;
@@ -701,16 +760,16 @@ const FilledBtn = styled(Button)`
     outline: none;
     cursor: pointer;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 12px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 14px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
     `}
   }
@@ -724,16 +783,16 @@ const UnfilledBtn = styled(Button)`
     border-radius: 6px;
     cursor: pointer;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 12px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 14px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
     `}
   }
@@ -743,13 +802,13 @@ const PaginationRow = styled(Row)`
   width: 100%;
   margin: 30px auto;
   justify-content: center;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     margin: 20px auto;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     margin: 20px auto;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     margin: 20px auto;
   `}
 `;
@@ -760,13 +819,13 @@ const SpinContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     height: 40vh;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     height: 40vh;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     height: 40vh;
   `}
 `;
@@ -775,16 +834,16 @@ const MemberNotFound = styled(NotFound)`
   & {
     height: 100px;
     font-size: 16px;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 12px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 14px;
     `}
   }

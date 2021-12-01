@@ -20,6 +20,14 @@ const NavBar = () => {
   const userId = localStorage.getItem('user_id');
   const userImg = localStorage.getItem('user_image');
 
+  const refreshPage= () =>{
+    window.location.reload("/board");
+  }
+  const refreshPage2= () => {
+    window.location.reload("/myPage");
+  }
+
+
   useEffect(() => {
     if (userId) {
       setLoggedIn(true);
@@ -56,7 +64,7 @@ const NavBar = () => {
           </Link>
           <NavMenu>
             <NavLink to="/board" style={{ textDecoration: 'none' }}>
-              <NavText>모임 찾기</NavText>
+              <NavText  >모임 찾기</NavText>
             </NavLink>
             <NavIcon>
               <NavProfile onClick={showModal}>
@@ -82,11 +90,11 @@ const NavBar = () => {
           </Link>
           <NavMenu>
             <NavLink to="/board" style={{ textDecoration: 'none' }}>
-              <NavText>모임 찾기</NavText>
+              <NavText >모임 찾기</NavText>
             </NavLink>
 
             <NavRegister onClick={showModal}>
-              <NavText>모임 생성</NavText>
+              <NavText >모임 생성</NavText>
             </NavRegister>
             <StyledModal visible={isModalVisible} onCancel={handleCancel}>
               <RegisterForm onCancel={handleCancel} />
@@ -94,7 +102,7 @@ const NavBar = () => {
 
 
             <NavLink to="/myPage" style={{ textDecoration: "none" }}>
-              <NavText>마이페이지</NavText>
+              <NavText  >마이페이지</NavText>
             </NavLink>
             <NavLink onClick={handleLogout} style={{ textDecoration: "none" }}>
 

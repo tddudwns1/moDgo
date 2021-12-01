@@ -10,8 +10,6 @@ import WaitingTag from "../common/WaitingTag";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-const url = "http://modgo.loca.lt";
-
 const JoinedClubCard = (props) => {
   const history = useHistory();
 
@@ -33,132 +31,139 @@ const JoinedClubCard = (props) => {
       <>
         {(() => {
           if (props.club.clubStatus === "EXPIRED")
-            return <ClubExpiredTag>마감</ClubExpiredTag>;
-          else if (props.club.approvalStatus === "WAITING")
-            return <ClubWaitingTag>대기중</ClubWaitingTag>;
+              return <ClubExpiredTag>마감</ClubExpiredTag>;
+          else if (props.club.clubStatus ==="WAITING")
+              return <ClubWaitingTag>대기중</ClubWaitingTag>;
           else return "";
-        })()}
+        }) ()}
       </>
+      
       <TagContainer>
         {props.club.tags.split(", ").map((tag, i) => (
           <ClubTag key={i}>{tag}</ClubTag>
         ))}
       </TagContainer>
-      <LikeIcon
+      {/* <LikeIcon
         onClick={(e) => {
           e.stopPropagation();
           if (props.userId) {
-            props.handleLikedClubs(props.club.clubId);
+            props.handleLikeDelete(props.club.clubId);
           } else {
             message.warning("로그인이 필요한 기능입니다.");
           }
         }}
       >
-        {props.likedClubs.includes(props.club.clubId) ? (
+        {props.like === props.club.clubId ? (
           <img src={filledHeart} alt="Filled like icon"></img>
         ) : (
           <img src={unfilledHeart} alt="Unfilled like icon" />
         )}
-        <LikeNum>{props.club.likes}</LikeNum>
-      </LikeIcon>
+        
+        
+      </LikeIcon> */}
+      
     </StyledCard>
   );
 };
 
 export default JoinedClubCard;
 
+
 const { Meta } = Card;
 
 const StyledCard = styled(Card)`
-  width: 360px;
-  height: 385px;
+  width: 255px;
+  height: 320px;
   border: 2px solid #e5e5e5;
   border-radius: 10px;
-
-  ${customMedia.lessThan("mobile")`
+  position: relative;
+  ${customMedia.lessThan('mobile')`
     width: 295px;
-    height: 320px;
+    height: 333px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
-    height: 388px;
+    height: 401px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
-    width: 295px;
-    height: 320px;
+	${customMedia.between('largeMobile', 'tablet')`
+    width: 285px;
+    height: 323px;
   `}
-	${customMedia.between("tablet", "desktop")`
-    width: 280px;
-    height: 305px;
+	${customMedia.between('tablet', 'desktop')`
+    width: 212.5px;
+    height: 250.5px;
   `}
+  
 	.ant-card-cover img {
-    height: 192.5px;
+    height: 150px;
 
-    ${customMedia.lessThan("mobile")`
-      height: 160px;
+    ${customMedia.lessThan('mobile')`
+      height: 166.5px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
-      height: 194px;
+    ${customMedia.between('mobile', 'largeMobile')`
+      height: 200.5px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
-      height: 160px;
+    ${customMedia.between('largeMobile', 'tablet')`
+      height: 161.5px;
     `}
-    ${customMedia.between("tablet", "desktop")`
-      height: 152.5px;
+    ${customMedia.between('tablet', 'desktop')`
+    height: 125.25px;
     `}
   }
   .ant-card-body {
-    height: 190px;
+    height: 160px;
     padding: 20px;
     position: relative;
 
-    ${customMedia.lessThan("mobile")`
-      height: 160px;
-    `}
-    ${customMedia.between("mobile", "largeMobile")`
-      height: 194px;
+    ${customMedia.lessThan('mobile')`
+      height: 166.5px;
       padding: 20px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
-      height: 160px;
+    ${customMedia.between('mobile', 'largeMobile')`
+      height: 200.5px;
+      padding: 30px;
     `}
-    ${customMedia.between("tablet", "desktop")`
-      height: 152.5px;
+    ${customMedia.between('largeMobile', 'tablet')`
+      height: 161.5px;
+      padding: 20px;
+    `}
+    ${customMedia.between('tablet', 'desktop')`
+      height: 125.25px;
       padding: 15px;
     `}
   }
   .ant-card-meta-title {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
+      font-size: 18px;
+    `}
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 20px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
-      font-size: 22px;
+    ${customMedia.between('largeMobile', 'tablet')`
+      font-size: 18px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
-    font-size: 20px;
-    `}
-    ${customMedia.between("tablet", "desktop")`
-    font-size: 18px;
+    ${customMedia.between('tablet', 'desktop')`
+      font-size: 16px;
     `}
   }
   .ant-card-meta-description {
-    font-size: 16px;
+    font-size: 14px;
     color: black;
 
-    ${customMedia.lessThan("mobile")`
-      font-size: 16px;
-    `}
-    ${customMedia.between("mobile", "largeMobile")`
-      font-size: 18px;
-    `}
-    ${customMedia.between("largeMobile", "tablet")`
-      font-size: 16px;
-    `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.lessThan('mobile')`
       font-size: 14px;
+    `}
+    ${customMedia.between('mobile', 'largeMobile')`
+      font-size: 16px;
+    `}
+    ${customMedia.between('largeMobile', 'tablet')`
+      font-size: 14px;
+    `}
+    ${customMedia.between('tablet', 'desktop')`
+      font-size: 12px;
     `}
   }
 `;
@@ -167,46 +172,43 @@ const TagContainer = styled.div`
   display: flex;
   gap: 5px;
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
 
-  ${customMedia.lessThan("mobile")`
-    bottom: 15px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.lessThan('mobile')`
     bottom: 20px;
-    gap: 5px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
-    bottom: 15px;
-    gap: 3px;
+  ${customMedia.between('mobile', 'largeMobile')`
+    bottom: 25px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('largeMobile', 'tablet')`
+    bottom: 20px;
+  `}
+	${customMedia.between('tablet', 'desktop')`
     bottom: 15px;
-    gap: 3px;
   `}
 `;
 
 const ClubTag = styled(SmallTag)`
   & {
-    font-size: 14px;
-    padding: 7px 13px;
+    font-size: 12px;
+    padding: 5px 10px;
 
-    ${customMedia.lessThan("mobile")`
-      font-size: 12px;
-      padding: 5px 10px;
-    `}
-    ${customMedia.between("mobile", "largeMobile")`
-      font-size: 14px;
-      padding: 5px 12px;
-    `}
-    ${customMedia.between("largeMobile", "tablet")`
-      font-size: 12px;
-      padding: 5px 10px;
-    `}
-    ${customMedia.between("tablet", "desktop")`
-      font-size: 10px;
-      padding: 5px 10px;
-    `}
+    ${customMedia.lessThan('mobile')`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+    ${customMedia.between('mobile', 'largeMobile')`
+    font-size: 14px;
+    padding: 5px 13px;
+  `}
+  ${customMedia.between('largeMobile', 'tablet')`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+  ${customMedia.between('tablet', 'desktop')`
+    font-size: 10px;
+    padding: 3px 6px;
+  `}
   }
 `;
 
@@ -219,71 +221,71 @@ const LikeIcon = styled.div`
 	right: 20px;
   bottom: 25px;
   
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     bottom: 15px;  
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     bottom: 20px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     bottom: 15px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     bottom: 15px;
   `}
   img {
 		width: 24px;
     height: 22px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 22px;
     height: 20px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 24px;
     height: 22px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 20px;
     height: 18px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 20px;
     height: 18px;
   `}
 `;
 
 const LikeNum = styled.span`
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 14px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 16px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     font-size: 12px;
   `}
 `;
 
 const ClubExpiredTag = styled(ExpiredTag)`
   & {
-    font-size: 14px;
+    font-size: 13px;
     padding: 5px;
     position: absolute;
     top: 5%;
     right: 3%;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       top: 5%;
       right: 3%;
     `}
-    ${customMedia.between("mobile", "tablet")`
+    ${customMedia.between('mobile', 'tablet')`
       top: 5%;
       right: 3%;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 14px;
       padding: 3px;
       top: 7%;
@@ -294,25 +296,25 @@ const ClubExpiredTag = styled(ExpiredTag)`
 
 const ClubWaitingTag = styled(WaitingTag)`
   & {
-    font-size: 14px;
+    font-size: 13px;
     padding: 5px;
     position: absolute;
     top: 5%;
     right: 3%;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       top: 5%;
       right: 3%;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       top: 5%;
       right: 3%;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       top: 5%;
       right: 3%;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 14px;
       padding: 3px;
       top: 7%;
@@ -326,20 +328,20 @@ const SkeletonImg = styled(Skeleton.Image)`
     width: 360px;
     height: 192.5px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       width: 295px;
       height: 160px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       width: 363px;
       height: 194px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       width: 295px;
       height: 160px;
     `}
     
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       width: 280px;
       height: 152.5px;
     `}
