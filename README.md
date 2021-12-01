@@ -15,7 +15,8 @@
 > 2) 피드백은 3가지(좋음 보통 나쁨)으로 나누어집니다.
 > 3) 피드백은 모임내의 팀원들에게 1번씩 진행가능합니다. 즉 총 평가횟수는 (모임의 멤버수 -1)입니다. 
 
-
+## 웹사이트 주소
+- [바로가기](http://modgo.net)
 
 ## 🧩 기획 & 설계
 - ⚙[기능 명세서](https://www.notion.so/modigo/cd5fb686d627409586d186b60443f61e)
@@ -30,8 +31,9 @@
 
 ### BE
 - Java 11
-- Springboot
+- Springboot 2.5.6
 - Spring Data JPA
 - Gradle
 - MySQL
-- AWS(EC2,RDS,ROUTE53,S3)
+- AWS(EC2,RDS,ROUTE53)
+
