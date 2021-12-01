@@ -27,6 +27,12 @@ public class User {
     @Column(length = 500, nullable = false)
     private String imgUrl;
 
+    private int totalGoodNum;
+
+    private int totalBadNum;
+
+    private int totalNormalNum;
+
     @OneToMany(mappedBy = "user")//내가 만든 모임들
     private List<Club> clubs = new ArrayList<Club>();
 
@@ -39,5 +45,14 @@ public class User {
         this.email = email;
         this.name = name;
         this.imgUrl = imgUrl;
+        this.totalBadNum = 0;
+        this.totalGoodNum = 0;
+        this.totalNormalNum = 0;
+    }
+
+    public void changeTotalNum(int good,int bad,int normal) {
+        this.totalNormalNum = normal;
+        this.totalGoodNum = good;
+        this.totalBadNum = bad;
     }
 }

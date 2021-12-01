@@ -38,12 +38,9 @@ public class UserController {
             @PathVariable final String userId
     ) {
         User user = userService.searchUser(userId);
-        if (user != null) {
-            return ResponseEntity.ok(
-                    new UserResponseDto(user)
-            );
-        }else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        UserResponseDto userResponseDto = new UserResponseDto(
+            user,user.getTotalGoodNum(),user.getTotalBadNum(), user.getTotalNormalNum()
+        );
+        return new ResponseEntity(userResponseDto,HttpStatus.OK);
     }
 }

@@ -14,6 +14,17 @@ public class UserResponseDto {
     private String email;
     private String name;
     private String imgUrl;
+    private int goodScore;
+    private int badScore;
+    private int normalScore;
+
+    //Score Update용
+    public UserResponseDto(User user,int goodScore,int badScore,int normalScore) {
+        BeanUtils.copyProperties(user,this);
+        this.badScore = badScore;
+        this.goodScore = goodScore;
+        this.normalScore = normalScore;
+    }
 
     public UserResponseDto(User user) {
         BeanUtils.copyProperties(user,this);
