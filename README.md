@@ -19,10 +19,10 @@
 - [바로가기](http://modgo.net)
 
 ## 🧩 기획 & 설계
-- ⚙[기능 명세서](https://www.notion.so/modigo/cd5fb686d627409586d186b60443f61e)
-- 🖥[페이지 기획서](https://www.notion.so/modigo/922240b0880c48f58c27aaefe88524f2)
-- 🧬[DB 명세서](https://www.notion.so/modigo/DB-b8e98523c8694a5aa135811d0cf5d80b)
-- 🪴[API 명세서](https://www.notion.so/modigo/API-0c8f2f9474854b578618a2e60e3448c6)
+- ⚙[기능 명세서](https://modigo.notion.site/cd5fb686d627409586d186b60443f61e)
+- 🖥[페이지 기획서](https://modigo.notion.site/922240b0880c48f58c27aaefe88524f2)
+- 🧬[DB 명세서](https://modigo.notion.site/DB-b8e98523c8694a5aa135811d0cf5d80b)
+- 🪴[API 명세서](https://modigo.notion.site/API-0c8f2f9474854b578618a2e60e3448c6)
 
 ## 🚧 기술 스택
 ### FE
