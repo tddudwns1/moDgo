@@ -1,9 +1,35 @@
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
+import axios from "axios";
 
 import profile from "../../images/icons/profile.png";
 
 const PendingMember = (props) => {
+  const getUserEvaluation = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_API_URL + `/users/${props.myPendingMember.userId}`
+      );
+      console.log(res.data);
+      localStorage.setItem("pending_evaluation_good", res.data.goodScore);
+      localStorage.setItem("pending_evaluation_normal", res.data.normalScore);
+      localStorage.setItem("pending_evaluation_bad", res.data.badScore);
+
+      console.log(props.myMember.userId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  getUserEvaluation();
+
+  const pending_evaluation_good = localStorage.getItem(
+    "pending_evaluation_good"
+  );
+  const pending_evaluation_normal = localStorage.getItem(
+    "pending_evaluation_normal"
+  );
+  const pending_evaluation_bad = localStorage.getItem("pending_evaluation_bad");
+
   return (
     <PendingMemberBar>
       <PendingMemberProfileIcon>
@@ -17,6 +43,14 @@ const PendingMember = (props) => {
         {props.myPendingMember.name}
       </PendingMemberUsername>
       <PendingMemberEmail>{props.myPendingMember.email}</PendingMemberEmail>
+      <PendingMemberEmail>
+        😍
+        {pending_evaluation_good}
+        🙂
+        {pending_evaluation_normal}
+        🙁
+        {pending_evaluation_bad}
+      </PendingMemberEmail>
       <PendingMemberBtn
         onClick={() => props.handleMemberApproval(props.myPendingMember.id)}
       >

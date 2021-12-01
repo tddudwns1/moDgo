@@ -28,6 +28,9 @@ const Main = (props) => {
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
   const [confirmedUser, setConfirmedUser] = useState();
+  const [getEvaluation, setGetEvaluation] = useState();
+  const [confirmed, setConfirmed] = useState("x");
+  // const memberIdArr = [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,13 +42,6 @@ const Main = (props) => {
         setClub(res.data);
         console.log("setclub(res.data)");
         console.log(res.data);
-
-        // const evaluationGetRes = await axios.get(
-        //   process.env.REACT_APP_API_URL + "/members/evaluation",
-        //   {
-        //     params: {},
-        //   }
-        // );
 
         if (userId) {
           const likedClubRes = await axios.get(
@@ -83,7 +79,22 @@ const Main = (props) => {
           );
           console.log("confirmedUserRes: ");
           console.log(confirmedUserRes.data);
+
           setConfirmedUser(confirmedUserRes.data.memberList);
+
+          console.log("confirmedUserRes.data.memberList: ");
+          console.log(confirmedUserRes.data.memberList);
+
+          const memberId = confirmedUserRes.data.memberList;
+
+          for (let i = 0; i < memberId.length; i++) {
+            if (memberId[i]["userId"] == userId) setConfirmed("o");
+
+            // memberIdArr.push(memberId[i]['userId']);
+            // if(memberIdArr[i] == userId)
+
+            // console.log('memberIdArr ' + i + ' : ' + memberIdArr[i]);
+          }
         }
 
         setLoading(false);
@@ -110,14 +121,14 @@ const Main = (props) => {
   const handleEvaluation = async (evaluation, memberId) => {
     const data = {
       memberId: memberId,
-      EvaluationKind: evaluation,
+      evaluationKind: evaluation,
     };
 
     console.log(JSON.stringify(data));
 
     try {
       const res = await axios.post(
-        process.env.REACT_APP_API_URL + "members/evaluation",
+        process.env.REACT_APP_API_URL + "/members/evaluation",
         JSON.stringify(data),
         {
           headers: {
@@ -135,6 +146,18 @@ const Main = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleGetEvaluation = async (memberId) => {
+    const res = await axios.get(
+      process.env.REACT_APP_API_URL + `/members/evaluation`,
+      {
+        params: { memberId: memberId },
+      }
+    );
+
+    setGetEvaluation(res.data);
+    console.log(res.data);
   };
 
   const showModal = () => {
@@ -316,61 +339,78 @@ const Main = (props) => {
             isModalVisible={isModalVisible}
             showModal={showModal}
             handleCancel={handleCancel}
+            confirmedUser={confirmedUser}
+            // memberIdArr={memberIdArr}
+            confirmed={confirmed}
           />
           <DetailInfo
             club={club}
             confirmedUser={confirmedUser}
             handleEvaluation={handleEvaluation}
+            handleGetEvaluation={handleGetEvaluation}
+            getEvaluation={getEvaluation}
           />
           <TitleRow>
             <Title>댓글 ({total})</Title>
           </TitleRow>
-          <CmtContainer>
-            <InputBox>
-              <ProfileIcon>
-                {userImg ? (
-                  <img src={userImg} alt="User profile" />
-                ) : (
-                  <img src={profile} alt="User profile icon" />
-                )}
-              </ProfileIcon>
-              <StyledInput
-                value={postComment}
-                placeholder="댓글을 입력하세요..."
-                onChange={(e) => {
-                  setPostComment(e.target.value);
-                }}
-              />
-              <CmtPost
-                onClick={() => {
-                  if (userId) {
-                    handlePostComment();
-                    onReset();
-                  } else {
-                    message.warning("로그인이 필요한 기능입니다.");
-                  }
-                }}
-              >
-                등록
-              </CmtPost>
-            </InputBox>
-            <ListRow>
-              {comments
-                ? comments.map((comment) => (
-                    <Comment
-                      key={comment.id}
-                      comment={comment}
-                      userId={userId}
-                      setUpdateComment={setUpdateComment}
-                      editable={editable}
-                      setEditable={setEditable}
-                      handleUpdateComment={handleUpdateComment}
-                      handleDeleteComment={handleDeleteComment}
-                    />
-                  ))
-                : ""}
-            </ListRow>
-          </CmtContainer>
+
+          {(() => {
+            if (confirmed == "o") {
+              return (
+                <>
+                  <CmtContainer>
+                    <InputBox>
+                      <ProfileIcon>
+                        {userImg ? (
+                          <img src={userImg} alt="User profile" />
+                        ) : (
+                          <img src={profile} alt="User profile icon" />
+                        )}
+                      </ProfileIcon>
+                      <StyledInput
+                        value={postComment}
+                        placeholder="댓글을 입력하세요..."
+                        onChange={(e) => {
+                          setPostComment(e.target.value);
+                        }}
+                      />
+                      <CmtPost
+                        onClick={() => {
+                          if (userId) {
+                            handlePostComment();
+                            onReset();
+                          } else {
+                            message.warning("로그인이 필요한 기능입니다.");
+                          }
+                        }}
+                      >
+                        등록
+                      </CmtPost>
+                    </InputBox>
+                    <ListRow>
+                      {comments
+                        ? comments.map((comment) => (
+                            <Comment
+                              key={comment.id}
+                              comment={comment}
+                              userId={userId}
+                              setUpdateComment={setUpdateComment}
+                              editable={editable}
+                              setEditable={setEditable}
+                              handleUpdateComment={handleUpdateComment}
+                              handleDeleteComment={handleDeleteComment}
+                            />
+                          ))
+                        : ""}
+                    </ListRow>
+                  </CmtContainer>
+                </>
+              );
+            } else {
+              return <TitleRow>참여전에는 댓글 확인이 불가능합니다.</TitleRow>;
+            }
+          })()}
+
           <PaginationRow>
             <Pagination
               total={total}

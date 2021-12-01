@@ -111,9 +111,9 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
-          <MainTitle onClick={() => document.location.reload()}>
+          {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
-          </MainTitle>
+          </MainTitle> */}
           {/* <SearchBar keyword={keyword} setKeyword={setKeyword} /> */}
           <TagFilter
             selectedTags={selectedTags}

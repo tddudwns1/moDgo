@@ -50,7 +50,8 @@ const TagFilter = (props) => {
 export default TagFilter;
 const TagContainer = styled.div`
   width: 850px;
-  margin: 80px auto;
+  margin: auto;
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   gap: 40px;

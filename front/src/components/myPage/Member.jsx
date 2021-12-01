@@ -1,10 +1,36 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
+import axios from "axios";
 
 import Button from "../common/Button";
 import profile from "../../images/icons/profile.png";
 
 const Member = (props) => {
+  const [userEvaluation, setUserEvaluation] = useState();
+
+  const getUserEvaluation = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_API_URL + `/users/${props.myMember.userId}`
+      );
+      console.log(res.data);
+      localStorage.setItem("evaluation_good", res.data.goodScore);
+      localStorage.setItem("evaluation_normal", res.data.normalScore);
+      localStorage.setItem("evaluation_bad", res.data.badScore);
+      setUserEvaluation(res.data);
+      // console.log(userEvaluation);
+      console.log(props.myMember.userId);
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+  getUserEvaluation();
+
+  const evaluation_good = localStorage.getItem("evaluation_good");
+  const evaluation_normal = localStorage.getItem("evaluation_normal");
+  const evaluation_bad = localStorage.getItem("evaluation_bad");
+
   return (
     <MemberBar>
       <MemberProfileIcon>
@@ -16,8 +42,14 @@ const Member = (props) => {
       </MemberProfileIcon>
       <MemberUsername>{props.myMember.name}</MemberUsername>
       <MemberEmail>{props.myMember.email}</MemberEmail>
-      <MemberEmail></MemberEmail>
-      {/* props로 평가 정보 가져와서 출력하기 */}
+      <MemberEmail>
+        😍
+        {evaluation_good}
+        🙂
+        {evaluation_normal}
+        🙁
+        {evaluation_bad}
+      </MemberEmail>
 
       {/* <MemberBtn
         onClick={() =>

@@ -30,11 +30,12 @@ const ClubCard = (props) => {
       ) : (
         ""
       )}
-      <TagContainer>
-        {props.club.tags.split(", ").map((tag, i) => (
+      {/* <TagContainer>
+        {props.club.tags.split(', ').map((tag, i) => (
           <ClubTag key={i}>{tag}</ClubTag>
         ))}
-      </TagContainer>
+      </TagContainer> */}
+
       <LikeIcon
         onClick={(e) => {
           e.stopPropagation();
@@ -52,6 +53,13 @@ const ClubCard = (props) => {
         )}
         <LikeNum>{props.club.likes}</LikeNum>
       </LikeIcon>
+
+      <TagContainer>
+        <Days>
+          {"D-"}
+          {props.club.remainDays}
+        </Days>
+      </TagContainer>
     </StyledCard>
   );
 };
@@ -155,30 +163,7 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const TagContainer = styled.div`
-  display: flex;
-  gap: 5px;
-  position: absolute;
-  bottom: 25px;
-
-  ${customMedia.lessThan("mobile")`
-	  bottom: 15px;
-  `}
-  ${customMedia.between("mobile", "largeMobile")`
-   bottom: 20px;
-	  gap: 5px;
-  `}
-	${customMedia.between("largeMobile", "tablet")`
-    bottom: 15px;
-	  gap: 3px;
-  `}
-	${customMedia.between("tablet", "desktop")`
-    bottom: 15px;
-	  gap: 3px;
-  `}
-`;
-
-const ClubTag = styled(SmallTag)`
+const Days = styled(SmallTag)`
   & {
     font-size: 14px;
     padding: 7px 13px;
@@ -201,6 +186,29 @@ const ClubTag = styled(SmallTag)`
     
   `}
   }
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  bottom: 25px;
+
+  ${customMedia.lessThan("mobile")`
+	  bottom: 15px;
+  `}
+  ${customMedia.between("mobile", "largeMobile")`
+   bottom: 20px;
+	  gap: 5px;
+  `}
+	${customMedia.between("largeMobile", "tablet")`
+    bottom: 15px;
+	  gap: 3px;
+  `}
+	${customMedia.between("tablet", "desktop")`
+    bottom: 15px;
+	  gap: 3px;
+  `}
 `;
 
 const LikeIcon = styled.div`

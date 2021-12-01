@@ -56,61 +56,65 @@ const InfoBox = (props) => {
             </LikeIcon>
           </LikeIconContainer>
           {(() => {
-            if (props.club.clubStatus == "ACTIVE") {
-              if (props.userId && props.apply.includes(props.club.id))
-                return (
-                  <>
-                    <ApplyBtn
-                      onClick={() => {
-                        props.handleDeleteApply(props.club.id);
-                        props.showModal();
-                      }}
-                    >
-                      참여취소
-                    </ApplyBtn>
-                    <StyledModal
-                      visible={props.isModalVisible}
-                      onCancel={() => props.handleCancel()}
-                    >
-                      <ModalTitle>참여신청이 완료되었습니다.</ModalTitle>
-                      <ButtonRow>
-                        <FilledBtn onClick={() => props.handleCancel()}>
-                          확인
-                        </FilledBtn>
-                      </ButtonRow>
-                    </StyledModal>
-                  </>
-                );
-              else
-                return (
-                  <>
-                    <ApplyBtn
-                      onClick={() => {
-                        if (props.userId) {
-                          props.handlePostApply(props.club.id);
+            if (props.confirmed == "x") {
+              if (props.club.clubStatus == "ACTIVE") {
+                if (props.userId && props.apply.includes(props.club.id))
+                  return (
+                    <>
+                      <ApplyBtn
+                        onClick={() => {
+                          props.handleDeleteApply(props.club.id);
                           props.showModal();
-                        } else {
-                          message.warning("로그인이 필요한 기능입니다.");
-                        }
-                      }}
-                    >
-                      참여신청
-                    </ApplyBtn>
-                    <StyledModal
-                      visible={props.isModalVisible}
-                      onCancel={() => props.handleCancel()}
-                    >
-                      <ModalTitle>참여신청이 취소되었습니다.</ModalTitle>
-                      <ButtonRow>
-                        <FilledBtn onClick={() => props.handleCancel()}>
-                          확인
-                        </FilledBtn>
-                      </ButtonRow>
-                    </StyledModal>
-                  </>
-                );
+                        }}
+                      >
+                        참여취소
+                      </ApplyBtn>
+                      <StyledModal
+                        visible={props.isModalVisible}
+                        onCancel={() => props.handleCancel()}
+                      >
+                        <ModalTitle>참여신청이 완료되었습니다.</ModalTitle>
+                        <ButtonRow>
+                          <FilledBtn onClick={() => props.handleCancel()}>
+                            확인
+                          </FilledBtn>
+                        </ButtonRow>
+                      </StyledModal>
+                    </>
+                  );
+                else
+                  return (
+                    <>
+                      <ApplyBtn
+                        onClick={() => {
+                          if (props.userId) {
+                            props.handlePostApply(props.club.id);
+                            props.showModal();
+                          } else {
+                            message.warning("로그인이 필요한 기능입니다.");
+                          }
+                        }}
+                      >
+                        참여신청
+                      </ApplyBtn>
+                      <StyledModal
+                        visible={props.isModalVisible}
+                        onCancel={() => props.handleCancel()}
+                      >
+                        <ModalTitle>참여신청이 취소되었습니다.</ModalTitle>
+                        <ButtonRow>
+                          <FilledBtn onClick={() => props.handleCancel()}>
+                            확인
+                          </FilledBtn>
+                        </ButtonRow>
+                      </StyledModal>
+                    </>
+                  );
+              } else {
+                return <ApplyBtn disabled>모집마감</ApplyBtn>;
+              }
             } else {
-              return <ApplyBtn disabled>모집마감</ApplyBtn>;
+              return <ApplyBtn disabled>참여완료</ApplyBtn>;
             }
           })()}
         </BtnRow>
@@ -433,6 +437,7 @@ const ModalTitle = styled.div`
     font-size: 14px;
   `}
   ${customMedia.between("mobile", "tablet")`
+>>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
     font-size: 18px;
   `}
 `;

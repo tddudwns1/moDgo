@@ -7,7 +7,9 @@ import { customMedia } from "../../GlobalStyles";
 const DetailInfo = ({ ...props }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [memberId, setMemberId] = useState();
+  const [memberName, setMemberName] = useState("");
   const [voteCount, setVoteCount] = useState(0);
+  const [evaluation, setEvaluation] = useState();
   const userId = localStorage.getItem("user_id");
   const confirmedIdArr = [];
 
@@ -38,8 +40,13 @@ const DetailInfo = ({ ...props }) => {
               src={props.confirmedUser[i].imgUrl}
               alt="User profile"
               onClick={() => {
+                setMemberId(props.confirmedUser[i].id);
+                setMemberName(props.confirmedUser[i].name);
+                props.handleGetEvaluation(memberId);
+                setEvaluation(props.getEvaluation);
+                console.log("evaluation");
+                console.log(evaluation);
                 showModal();
-                setMemberId(props.confirmedUser[i].userId);
               }}
             />
           ))}
@@ -48,12 +55,11 @@ const DetailInfo = ({ ...props }) => {
           voteCount !== 1 ? (
             <StyledModal visible={isModalVisible} onCancel={handleCancel}>
               <Title>
-                <strong>회원 평가</strong>
+                <strong>{memberName}님 회원 평가</strong>
                 <hr />
                 <h1
                   onClick={() => {
                     props.handleEvaluation("GOOD", memberId);
-                    // setVoteCount(1);
                   }}
                 >
                   😍
@@ -61,7 +67,6 @@ const DetailInfo = ({ ...props }) => {
                 <h1
                   onClick={() => {
                     props.handleEvaluation("NORMAL", memberId);
-                    // setVoteCount(1);
                   }}
                 >
                   🙂
@@ -69,7 +74,6 @@ const DetailInfo = ({ ...props }) => {
                 <h1
                   onClick={() => {
                     props.handleEvaluation("BAD", memberId);
-                    // setVoteCount(1);
                   }}
                 >
                   🙁
@@ -163,6 +167,10 @@ const Title = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 30px;
+  h1 {
+    display: flex;
+    margin: auto;
+  }
 
   ${customMedia.lessThan("mobile")`
     font-size: 18px;
