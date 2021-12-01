@@ -111,17 +111,17 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
-          <MainTitle onClick={() => document.location.reload()}>
+          {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
-          </MainTitle>
-          <SearchBar keyword={keyword} setKeyword={setKeyword} />
+          </MainTitle> */}
+          {/* <SearchBar keyword={keyword} setKeyword={setKeyword} /> */}
           <TagFilter
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
           />
           <TitleRow>
             <Title>{total}개의 모임</Title>
-            <CheckboxFilter
+            {/* <CheckboxFilter
               onChange={(e) => {
                 setClubStatus(e.target.checked ? "ACTIVE" : "");
               }}
@@ -135,7 +135,7 @@ const Main = () => {
             >
               <Option value="createdAt">최신순</Option>
               <Option value="likes">좋아요순</Option>
-            </SortFilter>
+            </SortFilter> */}
           </TitleRow>
           <CardRow>
             {clubs != null

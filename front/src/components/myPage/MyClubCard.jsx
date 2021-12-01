@@ -21,16 +21,16 @@ const MyClubCard = ({ ...props }) => {
         )
       }
       onClick={() => {
-        props.setSelectedClub(props.club.id);
-        console.log(props.selectedClub);
+        props.setSelectedClubId(props.club.id);
       }}
       //   onClick={() => history.push(`/detail/${props.club.id}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
       <TagContainer>
-        {props.club.tags.split(", ").map((tag, i) => (
-          <MainTag key={i}>{tag}</MainTag>
-        ))}
+        <Days>
+          {"D-"}
+          {props.club.remainDays}
+        </Days>
       </TagContainer>
     </StyledCard>
   );
@@ -41,7 +41,7 @@ export default MyClubCard;
 const { Meta } = Card;
 
 const StyledCard = styled(Card)`
-  width: 282px;
+  width: 255px;
   height: 320px;
   border: 2px solid #e5e5e5;
   border-radius: 10px;
@@ -64,7 +64,7 @@ const StyledCard = styled(Card)`
   `}
   
 	.ant-card-cover img {
-    height: 160px;
+    height: 150px;
 
     ${customMedia.lessThan("mobile")`
       height: 166.5px;
@@ -155,6 +155,31 @@ const TagContainer = styled.div`
 	${customMedia.between("tablet", "desktop")`
     bottom: 15px;
   `}
+`;
+
+const Days = styled(SmallTag)`
+  & {
+    font-size: 14px;
+    padding: 7px 13px;
+
+    ${customMedia.lessThan("mobile")`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+    ${customMedia.between("mobile", "largeMobile")`
+   font-size: 14px;
+    padding: 5px 12px;
+  `}
+	${customMedia.between("largeMobile", "tablet")`
+    font-size: 12px;
+    padding: 5px 10px;
+  `}
+	${customMedia.between("tablet", "desktop")`
+    font-size: 10px;
+    padding: 5px 10px;
+    
+  `}
+  }
 `;
 
 const MainTag = styled(SmallTag)`

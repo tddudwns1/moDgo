@@ -25,9 +25,9 @@ const EditForm = ({ ...props }) => {
   const [editForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
   const [selectedOttTags, setSelectedOttTags] = useState([]);
-  // const [selectedRemainTags, setSelectedRemainTags] = useState([]);
+  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
   const [coverImg, setCoverImg] = useState(null);
-  // const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
+  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
   // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
@@ -168,6 +168,11 @@ const EditForm = ({ ...props }) => {
         <Row gutter={32}>
           <Col span={16}>
             <Form.Item
+              initialValue={props.selectedClubTitle}
+              onChange={() => {
+                // console.log('title : ' + props.abc);
+                // console.log('title : ' + props.selectedClubTitle);
+              }}
               label="이름"
               name="title"
               rules={[{ required: true, message: "모임 이름을 입력하세요." }]}
@@ -175,6 +180,7 @@ const EditForm = ({ ...props }) => {
               <StyledInput placeholder="모임 이름"></StyledInput>
             </Form.Item>
             <Form.Item
+              initialValue={props.selectedClubContents}
               label="한 줄 소개"
               name="contents"
               rules={[
@@ -197,7 +203,10 @@ const EditForm = ({ ...props }) => {
             >
               <Row>
                 <PersonnelRow>
-                  <Form.Item name="requiredPerson">
+                  <Form.Item
+                    name="requiredPerson"
+                    initialValue={props.selectedClubRequiredPerson}
+                  >
                     <StyledInputNumber min={2} max={4} placeholder={2} />
                   </Form.Item>
                   <StyledSpan>인</StyledSpan>
@@ -205,6 +214,10 @@ const EditForm = ({ ...props }) => {
               </Row>
             </Form.Item>
             <Form.Item
+              initialValue={[
+                moment(props.selectedClubStartDate),
+                moment(props.selectedClubEndDate),
+              ]}
               label="진행 기간"
               name="date"
               rules={[

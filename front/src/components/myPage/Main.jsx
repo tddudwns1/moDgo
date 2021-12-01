@@ -9,6 +9,7 @@ import EditForm from "./EditForm";
 import LikedClubCard from "./LikedClubCard";
 import JoinedClubCard from "./JoinedClubCard";
 import Member from "./Member";
+import InfoBox from "./InfoBox";
 import PendingMember from "./PendingMember";
 import Pagination from "../common/Pagination";
 import Button from "../common/Button";
@@ -23,10 +24,10 @@ const Main = () => {
   const [likedClubs, setLikedClubs] = useState([]);
   const [myLikedClubs, setMyLikedClubs] = useState([]);
   const [myJoinedClubs, setMyJoinedClubs] = useState([]);
-  const [myPendingMembers, setMyPendingMembers] = useState();
+  const [myPendingMembers, setMyPendingMembers] = useState([]);
   const [myPendingMembersTotal, setMyPendingMembersTotal] = useState(0);
   const [myPendingMembersPage, setMyPendingMembersPage] = useState(1);
-  const [myMembers, setMyMembers] = useState();
+  const [myMembers, setMyMembers] = useState([]);
   const [myMembersTotal, setMyMembersTotal] = useState(0);
   const [myMembersPage, setMyMembersPage] = useState(1);
   const [myLikedClubsTotal, setMyLikedClubsTotal] = useState(0);
@@ -35,9 +36,19 @@ const Main = () => {
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
-  const history = useHistory();
-  const [visibility, setVisibility] = useState(false);
-  const [selectedClub, setSelectedClub] = useState(0);
+  const userImg = localStorage.getItem("user_image");
+  const [selectedClubId, setSelectedClubId] = useState(0);
+  const [selectedClubTitle, setSelectedClubTitle] = useState("");
+  const [selectedClubContents, setSelectedClubContents] = useState("");
+  const [selectedClubRequiredPerson, setSelectedClubRequiredPerson] =
+    useState(0);
+  const [selectedClubStartDate, setSelectedClubStartDate] = useState();
+  const [selectedClubEndDate, setSelectedClubEndDate] = useState();
+  // const [selectedClubStartDate, setSelectedClubStartDate] = useState();
+  // const [selectedClubEndDate, setSelectedClubEndDate] = useState();
+  const [userName, setMyName] = useState("");
+  const [userEmail, setMyEmail] = useState("");
+
   const clubIdArr = [];
 
   useEffect(() => {
@@ -46,30 +57,27 @@ const Main = () => {
 
   useEffect(() => {
     fetchData();
-  }, [selectedClub]);
+  }, [selectedClubId]);
 
   const fetchDataFirst = async () => {
     try {
+      const user = await axios.get(
+        process.env.REACT_APP_API_URL + `/users/${userId}`
+      );
+      setMyName(user.data.name);
+      setMyEmail(user.data.email);
+
       const myClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
-      console.log(myClubRes.data);
 
       const clubId = myClubRes.data.clubList;
 
-      console.log(clubId);
-      console.log("length: " + myClubRes.data.clubList.length);
-
       for (let i = 0; i < clubId.length; i++) {
-        console.log(clubId[i]["id"]);
         clubIdArr.push(clubId[i]["id"]);
       }
-      console.log(clubIdArr);
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
 
       if (myClubRes.data) {
-        console.log("get 시작 전");
-
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + "/members",
           {
@@ -81,8 +89,6 @@ const Main = () => {
             },
           }
         );
-
-        console.log(pendingMembersRes);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
@@ -101,34 +107,43 @@ const Main = () => {
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
+
+        const selectClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/clubs/${clubIdArr[0]}`
+        );
+
+        setSelectedClubTitle(selectClubRes.data.title);
+        setSelectedClubContents(selectClubRes.data.contents);
+        setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
+        setSelectedClubStartDate(selectClubRes.data.startDate);
+        setSelectedClubEndDate(selectClubRes.data.endDate);
       }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
 
       const likedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + "/likedClubs/ids",
+        process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
         {
           params: {
             userId: userId,
+            page: myLikedClubsPage,
           },
         }
       );
-
-      console.log("likedClubRes: ");
-      console.log(likedClubRes.data);
-      setMyLikedClubs(likedClubRes.data.likedClubIdList);
+      setMyLikedClubs(likedClubRes.data.likedClubList);
+      setMyLikedClubsTotal(likedClubRes.data.totalCount);
 
       const joinedClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/members/users/${userId}`,
         {
           params: {
             userId: userId,
+            page: myJoinedClubsPage,
           },
         }
       );
-      console.log("joinedClubRes: ");
-      console.log(joinedClubRes.data);
-      setMyJoinedClubs(joinedClubRes.data);
+      setMyJoinedClubs(joinedClubRes.data.joiningClubList);
+      setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
+
+      setMyClubs(myClubRes.data.clubList);
 
       setLoading(false);
     } catch (err) {
@@ -138,29 +153,18 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      const myClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
-      );
-      console.log(myClubRes.data);
-
-      // 내가 만든 clubId 배열 생성함 = clubIdArr
-
-      if (myClubRes.data) {
-        console.log("get 시작 전");
-
+      if (selectedClubId != 0) {
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + "/members",
           {
             params: {
               userId: userId,
-              clubId: selectedClub,
+              clubId: selectedClubId,
               approvalStatus: "WAITING",
               page: myPendingMembersPage,
             },
           }
         );
-        console.log("PendingMemberRes: ");
-        console.log(pendingMembersRes.data);
 
         setMyPendingMembers(pendingMembersRes.data.memberList);
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
@@ -170,57 +174,42 @@ const Main = () => {
           {
             params: {
               userId: userId,
-              clubId: selectedClub,
+              clubId: selectedClubId,
               approvalStatus: "CONFIRMED",
               page: myMembersPage,
             },
           }
         );
-        console.log("memberRes: ");
-        console.log(memberRes.data);
 
         setMyMembers(memberRes.data.memberList);
         setMyMembersTotal(memberRes.data.totalCount);
+
+        const likedClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
+          {
+            params: {
+              userId: userId,
+              page: myLikedClubsPage,
+            },
+          }
+        );
+
+        setMyLikedClubs(likedClubRes.data.likedClubList);
+        setMyLikedClubsTotal(likedClubRes.data.totalCount);
+
+        const selectClubRes = await axios.get(
+          process.env.REACT_APP_API_URL + `/clubs/${selectedClubId}`
+        );
+
+        setSelectedClubTitle(selectClubRes.data.title);
+        setSelectedClubContents(selectClubRes.data.contents);
+        setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
       }
-      console.log("get 시작 후");
-      setMyClubs(myClubRes.data.clubList);
-
-      const likedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + "/likedClubs/ids",
-        {
-          params: {
-            userId: userId,
-          },
-        }
-      );
-      console.log("likedClubRes: ");
-      console.log(likedClubRes.data);
-      setMyLikedClubs(likedClubRes.data.likedClubIdList);
-
-      const joinedClubRes = await axios.get(
-        process.env.REACT_APP_API_URL + `/members/users/${userId}`,
-        {
-          params: {
-            userId: userId,
-          },
-        }
-      );
-      console.log("joinedClubRes: ");
-      console.log(joinedClubRes.data);
-      setMyJoinedClubs(joinedClubRes.data);
 
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
   };
 
   const handleLikedClubs = (clubId) => {
@@ -301,7 +290,7 @@ const Main = () => {
       fetchData();
     }
   };
-
+  // console.log("title : " + selectedClubTitle);
   return (
     <Wrapper>
       {loading ? (
@@ -310,6 +299,13 @@ const Main = () => {
         </SpinContainer>
       ) : (
         <>
+          <InfoBox
+            userImg={userImg}
+            userName={userName}
+            userEmail={userEmail}
+          />
+          <br />
+          <br />
           <StyledTabs defaultActiveKey="1">
             <TabPane tab="좋아요한 모임" key="1">
               {myLikedClubsTotal !== 0 ? (
@@ -317,7 +313,7 @@ const Main = () => {
                   <CardRow>
                     {myLikedClubs.map((likedClub) => (
                       <LikedClubCard
-                        key={likedClub.id}
+                        key={likedClub.clubId}
                         userId={userId}
                         club={likedClub}
                         handleLikeDelete={handleLikeDelete}
@@ -367,17 +363,17 @@ const Main = () => {
               )}
             </TabPane>
 
-            <TabPane tab="모임 관리" key="3">
+            <TabPane tab="운영중인 모임" key="3">
               {myClubs ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
-                    {myClubs.map((club, i) => (
+                    {myClubs.map((club) => (
                       <MyClubCard
                         key={club.id}
                         userId={userId}
                         club={club}
-                        selectedClub={selectedClub}
-                        setSelectedClub={setSelectedClub}
+                        selectedClubId={selectedClubId}
+                        setSelectedClubId={setSelectedClubId}
                       />
                     ))}
                   </CardRow>
@@ -394,6 +390,9 @@ const Main = () => {
                                 myPendingMember={member}
                                 handleMemberReject={handleMemberReject}
                                 handleMemberApproval={handleMemberApproval}
+                                // getUserEvaluation={getUserEvaluation}
+                                // setUserEvaluation={setUserEvaluation}
+                                // userEvaluation={userEvaluation}
                               />
                             </Row>
                           ))}
@@ -419,7 +418,12 @@ const Main = () => {
                         <Row gutter={[0, 16]}>
                           {myMembers.map((member) => (
                             <Row key={member.id}>
-                              <Member myMember={member} />
+                              <Member
+                                myMember={member}
+                                // getUserEvaluation={getUserEvaluation}
+                                // setUserEvaluation={setUserEvaluation}
+                                // userEvaluation={userEvaluation}
+                              />
                             </Row>
                           ))}
                         </Row>
@@ -442,9 +446,15 @@ const Main = () => {
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm
-                      myClubs={myClubs}
-                      selectedClub={selectedClub}
-                      setSelectedClub={setSelectedClub}
+                      abc={"dd"}
+                      // myClubs={myClubs}
+                      // selectedClub={selectedClub}
+                      // setSelectedClub={setSelectedClub}
+                      selectedClubTitle={selectedClubTitle}
+                      selectedClubContents={selectedClubContents}
+                      selectedClubRequiredPerson={selectedClubRequiredPerson}
+                      selectedClubStartDate={selectedClubStartDate}
+                      selectedClubEndDate={selectedClubEndDate}
                     />
                     <Divider />
                   </Box>
@@ -542,10 +552,13 @@ const CardRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 60px;
+  ${customMedia.between("mobile", "largeMobile")`
+    gap: 40px;
+  `}
   ${customMedia.between("largeMobile", "tablet")`
     gap: 20px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+	${customMedia.between("tablet", "desktop")`
     gap: 20px;
   `}
 `;
