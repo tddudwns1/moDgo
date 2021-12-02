@@ -37,7 +37,7 @@ public class Member {
     private int evaluation_num;
 
     @JoinColumn(name = "club_id")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Club club;
 
     @JoinColumn(name = "user_id")
@@ -45,9 +45,7 @@ public class Member {
     private User user;
 
     @Builder
-    public Member(User user
-            , Club club
-            ,ApprovalStatus approvalStatus
+    public Member(User user, Club club, ApprovalStatus approvalStatus
             ) {
         this.user = user;
         this.club = club;
