@@ -14,6 +14,10 @@ public class MemberEvaluationResponseDto {
     int normalScore;
     EvaluationStatus evaluationStatus;
 
+    /*
+    * fix : BeanUtils.copyProperties()로 변경하기
+    * */
+
     MemberEvaluationResponseDto(int badScore, int goodScore, int normalScore, EvaluationStatus evaluationStatus) {
         this.badScore = badScore;
         this.evaluationStatus = evaluationStatus;

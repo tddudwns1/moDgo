@@ -18,18 +18,19 @@ public class UserController {
     public ResponseEntity<UserResponseDto> createUser(
             @RequestBody final UserCreateRequestDto userCreateRequestDto
     ) {
-        final User user = userService.searchUser(userCreateRequestDto.toEntity().getId());
+        User user = userService.searchUser(userCreateRequestDto.toEntity().getId());
 
-        //유저 정보가 등록되어 있다면
-        if (user != null) {
+        //유저 정보가 등록되어 있지 않으면
+        if (user == null) {
+            User newUser = userService.createUser(userCreateRequestDto.toEntity());
+            System.out.println("newUser = " + newUser.getTotalBadScore());
             return ResponseEntity.ok(
-                    new UserResponseDto(user)
+                    new UserResponseDto(newUser)
             );
         }
-        //유저 정보가 등록되어 있지 않다면
+        //유저 정보가 등록되어 있으면
         return ResponseEntity.ok(
-                new UserResponseDto(userService.createUser(userCreateRequestDto.toEntity()))
-        );
+                new UserResponseDto(userCreateRequestDto.toEntity()));
     }
 
     //유저 정보 상세 조회
@@ -38,6 +39,7 @@ public class UserController {
             @PathVariable final String userId
     ) {
         User user = userService.searchUser(userId);
+        userService.updateTotalScore(userId);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         return new ResponseEntity(userResponseDto,HttpStatus.OK);
     }

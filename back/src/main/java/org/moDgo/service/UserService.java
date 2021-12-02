@@ -23,15 +23,16 @@ public class UserService {
 
     @Transactional
     public User createUser(User user) {
+        System.out.println("user.getTotalBadScore() = " + user.getTotalBadScore());
         return userRepository.save(user);
     }
 
     @Transactional
     public User searchUser(String userId) {
-        updateTotalScore(userId);
         return userRepository.findById(userId).orElse(null);
     }
 
+    @Transactional
     public void updateTotalScore(String userId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         List<Member> memberList = memberRepository.findAllByUser(user);

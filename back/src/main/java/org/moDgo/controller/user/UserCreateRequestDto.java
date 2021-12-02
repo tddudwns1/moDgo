@@ -23,6 +23,9 @@ public class UserCreateRequestDto {
                 .name(name)
                 .email(email)
                 .imgUrl(imgUrl)
+                .totalBadScore(0)
+                .totalNormalScore(0)
+                .totalGoodScore(0)
                 .build();
     }
 }
