@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Card, Skeleton, message } from "antd";
 import styled from "styled-components";
@@ -10,8 +10,34 @@ import filledHeart from "../../images/icons/filled_heart.png";
 
 const MyClubCard = ({ ...props }) => {
   const history = useHistory();
-  return (
+  const [onClicked, setClicked] = useState(false);
+
+  return !onClicked ? (
     <StyledCard
+      hoverable
+      cover={
+        props.club.imgUrl ? (
+          <img src={props.club.imgUrl} alt="Clubcard thumbnail" />
+        ) : (
+          <SkeletonImg />
+        )
+      }
+      onClick={() => {
+        props.setSelectedClubId(props.club.id);
+        setClicked(true);
+      }}
+      //   onClick={() => history.push(`/detail/${props.club.id}`)}
+    >
+      <Meta title={props.club.title} description={props.club.contents} />
+      <TagContainer>
+        <Days>
+          {"D-"}
+          {props.club.remainDays}
+        </Days>
+      </TagContainer>
+    </StyledCard>
+  ) : (
+    <SelectedStyledCard
       hoverable
       cover={
         props.club.imgUrl ? (
@@ -32,13 +58,110 @@ const MyClubCard = ({ ...props }) => {
           {props.club.remainDays}
         </Days>
       </TagContainer>
-    </StyledCard>
+    </SelectedStyledCard>
   );
 };
 
 export default MyClubCard;
 
 const { Meta } = Card;
+
+const SelectedStyledCard = styled(Card)`
+  width: 255px;
+  height: 320px;
+  border: 1px solid #029400;
+  border-radius: 10px;
+  position: relative;
+  ${customMedia.lessThan("mobile")`
+    width: 295px;
+    height: 333px;
+  `}
+  ${customMedia.between("mobile", "largeMobile")`
+    width: 363px;
+    height: 401px;
+  `}
+	${customMedia.between("largeMobile", "tablet")`
+    width: 285px;
+    height: 323px;
+  `}
+	${customMedia.between("tablet", "desktop")`
+    width: 212.5px;
+    height: 250.5px;
+  `}
+  
+	.ant-card-cover img {
+    height: 150px;
+
+    ${customMedia.lessThan("mobile")`
+      height: 166.5px;
+    `}
+    ${customMedia.between("mobile", "largeMobile")`
+      height: 200.5px;
+    `}
+    ${customMedia.between("largeMobile", "tablet")`
+      height: 161.5px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+    height: 125.25px;
+    `}
+  }
+  .ant-card-body {
+    height: 160px;
+    padding: 20px;
+    position: relative;
+
+    ${customMedia.lessThan("mobile")`
+      height: 166.5px;
+      padding: 20px;
+    `}
+    ${customMedia.between("mobile", "largeMobile")`
+      height: 200.5px;
+      padding: 30px;
+    `}
+    ${customMedia.between("largeMobile", "tablet")`
+      height: 161.5px;
+      padding: 20px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      height: 125.25px;
+      padding: 15px;
+    `}
+  }
+  .ant-card-meta-title {
+    font-weight: bold;
+    font-size: 20px;
+
+    ${customMedia.lessThan("mobile")`
+      font-size: 18px;
+    `}
+    ${customMedia.between("mobile", "largeMobile")`
+      font-size: 20px;
+    `}
+    ${customMedia.between("largeMobile", "tablet")`
+      font-size: 18px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      font-size: 16px;
+    `}
+  }
+  .ant-card-meta-description {
+    font-size: 14px;
+    color: black;
+
+    ${customMedia.lessThan("mobile")`
+      font-size: 14px;
+    `}
+    ${customMedia.between("mobile", "largeMobile")`
+      font-size: 16px;
+    `}
+    ${customMedia.between("largeMobile", "tablet")`
+      font-size: 14px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      font-size: 12px;
+    `}
+  }
+`;
 
 const StyledCard = styled(Card)`
   width: 255px;
