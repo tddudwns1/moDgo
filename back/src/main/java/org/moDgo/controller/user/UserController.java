@@ -20,17 +20,15 @@ public class UserController {
     ) {
         User user = userService.searchUser(userCreateRequestDto.toEntity().getId());
 
-        //유저 정보가 등록되어 있지 않으면
-        if (user == null) {
-            User newUser = userService.createUser(userCreateRequestDto.toEntity());
-            System.out.println("newUser = " + newUser.getTotalBadScore());
+        //유저 정보가 등록되어 있으면
+        if (user != null) {
             return ResponseEntity.ok(
-                    new UserResponseDto(newUser)
+                    new UserResponseDto(userService.searchUser(userCreateRequestDto.toEntity().getId()))
             );
         }
         //유저 정보가 등록되어 있으면
         return ResponseEntity.ok(
-                new UserResponseDto(userCreateRequestDto.toEntity()));
+                new UserResponseDto(userService.createUser(userCreateRequestDto.toEntity())));
     }
 
     //유저 정보 상세 조회
@@ -39,8 +37,13 @@ public class UserController {
             @PathVariable final String userId
     ) {
         User user = userService.searchUser(userId);
-        userService.updateTotalScore(userId);
-        UserResponseDto userResponseDto = new UserResponseDto(user);
-        return new ResponseEntity(userResponseDto,HttpStatus.OK);
+        if (user != null) {
+            userService.updateTotalScore(userId);
+            return ResponseEntity.ok(
+                    new UserResponseDto(userService.searchUser(userId))
+            );
+        }else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }
