@@ -6,11 +6,9 @@ import org.moDgo.common.error.ClubDuplicatedException;
 import org.moDgo.common.error.ClubNotFoundException;
 import org.moDgo.common.error.UserNotFoundException;
 import org.moDgo.controller.club.ClubCreateRequestDto;
+import org.moDgo.controller.club.ClubResponseDto;
 import org.moDgo.controller.club.ClubUpdateRequestDto;
-import org.moDgo.domain.Club;
-import org.moDgo.domain.ClubKind;
-import org.moDgo.domain.ClubStatus;
-import org.moDgo.domain.User;
+import org.moDgo.domain.*;
 import org.moDgo.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +48,15 @@ public class ClubService {
         LocalDate startDate = LocalDate.parse(stringStartDate, DateTimeFormatter.ISO_LOCAL_DATE);
         LocalDate endDate = LocalDate.parse(stringEndDate, DateTimeFormatter.ISO_LOCAL_DATE);
         final Club newClub = convertToNewClub(club, requestDto.getUserId(), startDate, endDate);
+        applyMemberAsOwner(newClub);
         return clubRepository.save(newClub);
+    }
+
+    public void applyMemberAsOwner(Club club) {
+        String userId = club.getUser().getId();
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        Member build = Member.builder().user(user).club(club).approvalStatus(ApprovalStatus.CONFIRMED).build();
+        memberRepository.save(build);
     }
 
     // Tags 에서 플랫폼 태그는 무조건 하나만 선택하도록 Front 단에서 예외 처리
