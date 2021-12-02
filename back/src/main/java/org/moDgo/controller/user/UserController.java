@@ -38,9 +38,7 @@ public class UserController {
             @PathVariable final String userId
     ) {
         User user = userService.searchUser(userId);
-        UserResponseDto userResponseDto = new UserResponseDto(
-            user,user.getTotalGoodNum(),user.getTotalBadNum(), user.getTotalNormalNum()
-        );
+        UserResponseDto userResponseDto = new UserResponseDto(user);
         return new ResponseEntity(userResponseDto,HttpStatus.OK);
     }
 }

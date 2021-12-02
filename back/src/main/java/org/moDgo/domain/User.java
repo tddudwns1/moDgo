@@ -3,7 +3,6 @@ package org.moDgo.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,11 +26,11 @@ public class User {
     @Column(length = 500, nullable = false)
     private String imgUrl;
 
-    private int totalGoodNum;
+    private int totalGoodScore;
 
-    private int totalBadNum;
+    private int totalBadScore;
 
-    private int totalNormalNum;
+    private int totalNormalScore;
 
     @OneToMany(mappedBy = "user")//내가 만든 모임들
     private List<Club> clubs = new ArrayList<Club>();
@@ -45,14 +44,14 @@ public class User {
         this.email = email;
         this.name = name;
         this.imgUrl = imgUrl;
-        this.totalBadNum = 0;
-        this.totalGoodNum = 0;
-        this.totalNormalNum = 0;
+        this.totalBadScore = 0;
+        this.totalGoodScore = 0;
+        this.totalNormalScore = 0;
     }
 
     public void changeTotalNum(int good,int bad,int normal) {
-        this.totalNormalNum = normal;
-        this.totalGoodNum = good;
-        this.totalBadNum = bad;
+        this.totalNormalScore = normal;
+        this.totalGoodScore = good;
+        this.totalBadScore = bad;
     }
 }
