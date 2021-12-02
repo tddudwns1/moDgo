@@ -25,11 +25,13 @@ const Main = (props) => {
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
-  const userId = localStorage.getItem('user_id');
-  const userImg = localStorage.getItem('user_image');
+
+  const userId = localStorage.getItem("user_id");
+  const userImg = localStorage.getItem("user_image");
   const [confirmedUser, setConfirmedUser] = useState();
   const [getEvaluation, setGetEvaluation] = useState();
-  const [confirmed, setConfirmed] = useState('x');
+  const [confirmed, setConfirmed] = useState("x");
+
   // const memberIdArr = [];
 
   useEffect(() => {
@@ -67,28 +69,38 @@ const Main = (props) => {
           console.log(applyRes.data.joiningClubIdList);
 
           const confirmedUserRes = await axios.get(
-            process.env.REACT_APP_API_URL + '/members',
+
+            process.env.REACT_APP_API_URL + "/members",
+
             {
               params: {
                 userId: userId,
                 clubId: clubId,
-                approvalStatus: 'CONFIRMED',
+
+                approvalStatus: "CONFIRMED",
+
                 page: page,
               },
             }
           );
-          console.log('confirmedUserRes: ');
+
+          console.log("confirmedUserRes: ");
+
           console.log(confirmedUserRes.data);
 
           setConfirmedUser(confirmedUserRes.data.memberList);
 
-          console.log('confirmedUserRes.data.memberList: ');
+
+          console.log("confirmedUserRes.data.memberList: ");
+
           console.log(confirmedUserRes.data.memberList);
 
           const memberId = confirmedUserRes.data.memberList;
 
           for (let i = 0; i < memberId.length; i++) {
-            if (memberId[i]['userId'] == userId) setConfirmed('o');
+
+            if (memberId[i]["userId"] == userId) setConfirmed("o");
+
 
             // memberIdArr.push(memberId[i]['userId']);
             // if(memberIdArr[i] == userId)
@@ -128,20 +140,24 @@ const Main = (props) => {
 
     try {
       const res = await axios.post(
-        process.env.REACT_APP_API_URL + '/members/evaluation',
+
+        process.env.REACT_APP_API_URL + "/members/evaluation",
         JSON.stringify(data),
         {
           headers: {
-            'Content-Type': `application/json`,
+            "Content-Type": `application/json`,
+
           },
         }
       );
       console.log(res);
 
       if (res.status === 200) {
-        message.success('평가가 완료되었습니다.');
+
+        message.success("평가가 완료되었습니다.");
       } else {
-        message.error('평가가 실패했습니다.');
+        message.error("평가가 실패했습니다.");
+
       }
     } catch (err) {
       console.log(err);
@@ -355,7 +371,9 @@ const Main = (props) => {
           </TitleRow>
 
           {(() => {
-            if (confirmed == 'o') {
+
+            if (confirmed == "o") {
+
               return (
                 <>
                   <CmtContainer>
@@ -380,7 +398,9 @@ const Main = (props) => {
                             handlePostComment();
                             onReset();
                           } else {
-                            message.warning('로그인이 필요한 기능입니다.');
+
+                            message.warning("로그인이 필요한 기능입니다.");
+
                           }
                         }}
                       >
@@ -401,7 +421,9 @@ const Main = (props) => {
                               handleDeleteComment={handleDeleteComment}
                             />
                           ))
-                        : ''}
+
+                        : ""}
+
                     </ListRow>
                   </CmtContainer>
                 </>

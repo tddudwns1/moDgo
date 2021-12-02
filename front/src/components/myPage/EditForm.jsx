@@ -27,7 +27,9 @@ const EditForm = ({ ...props }) => {
   const [selectedOttTags, setSelectedOttTags] = useState([]);
   const [selectedRemainTags, setSelectedRemainTags] = useState([]);
   const [coverImg, setCoverImg] = useState(null);
-  const tags = ['NETFLIX', 'WATCHA', 'DISNEY+', 'WAVVE'];
+
+  const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
+
   // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem('user_id');

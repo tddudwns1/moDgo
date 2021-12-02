@@ -56,8 +56,10 @@ const InfoBox = (props) => {
             </LikeIcon>
           </LikeIconContainer>
           {(() => {
-            if (props.confirmed == 'x') {
-              if (props.club.clubStatus == 'ACTIVE') {
+
+            if (props.confirmed == 'x') { //x
+              if (props.club.clubStatus == "ACTIVE") {
+
                 if (props.userId && props.apply.includes(props.club.id))
                   return (
                     <>
@@ -91,7 +93,9 @@ const InfoBox = (props) => {
                             props.handlePostApply(props.club.id);
                             props.showModal();
                           } else {
-                            message.warning('로그인이 필요한 기능입니다.');
+
+                            message.warning("로그인이 필요한 기능입니다.");
+
                           }
                         }}
                       >

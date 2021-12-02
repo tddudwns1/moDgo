@@ -15,13 +15,14 @@
 > 2) 피드백은 3가지(좋음 보통 나쁨)으로 나누어집니다.
 > 3) 피드백은 모임내의 팀원들에게 1번씩 진행가능합니다. 즉 총 평가횟수는 (모임의 멤버수 -1)입니다. 
 
-
+## 웹사이트 주소
+- [바로가기](http://modgo.net)
 
 ## 🧩 기획 & 설계
-- ⚙[기능 명세서](https://www.notion.so/modigo/cd5fb686d627409586d186b60443f61e)
-- 🖥[페이지 기획서](https://www.notion.so/modigo/922240b0880c48f58c27aaefe88524f2)
-- 🧬[DB 명세서](https://www.notion.so/modigo/DB-b8e98523c8694a5aa135811d0cf5d80b)
-- 🪴[API 명세서](https://www.notion.so/modigo/API-0c8f2f9474854b578618a2e60e3448c6)
+- ⚙[기능 명세서](https://modigo.notion.site/cd5fb686d627409586d186b60443f61e)
+- 🖥[페이지 기획서](https://modigo.notion.site/922240b0880c48f58c27aaefe88524f2)
+- 🧬[DB 명세서](https://modigo.notion.site/DB-b8e98523c8694a5aa135811d0cf5d80b)
+- 🪴[API 명세서](https://modigo.notion.site/API-0c8f2f9474854b578618a2e60e3448c6)
 
 ## 🚧 기술 스택
 ### FE
@@ -30,8 +31,24 @@
 
 ### BE
 - Java 11
-- Springboot
+- Springboot 2.5.6
 - Spring Data JPA
 - Gradle
 - MySQL
-- AWS(EC2,RDS,ROUTE53,S3)
+- AWS(EC2,RDS,ROUTE53)
+
+## 🛒 분담
+### FE
+ - 성영준
+ - 신세란
+ - 정혜린
+
+### BE
+ - 오수빈
+ - 홍창섭
+
+### CI & CD
+- 홍창섭
+
+
+

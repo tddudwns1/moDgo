@@ -54,7 +54,8 @@ const LikedClubCard = ({ ...props }) => {
         ) : (
           <img src={unfilledHeart} alt="Unfilled like icon" />
         )}
-        
+
+
       </LikeIcon>
     </StyledCard>
   );
@@ -66,10 +67,12 @@ const { Meta } = Card;
 const StyledCard = styled(Card)`
   width: 255px;
   height: 320px;
-  border: 2px solid #E5E5E5;
+
+  border: 2px solid #e5e5e5;
   border-radius: 10px;
   position: relative;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
+
     width: 295px;
     height: 333px;
   `}
@@ -77,26 +80,30 @@ const StyledCard = styled(Card)`
     width: 363px;
     height: 401px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+
+  ${customMedia.between("largeMobile", "tablet")`
     width: 285px;
     height: 323px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     width: 212.5px;
     height: 250.5px;
   `}
   .ant-card-cover img {
     height: 150px;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       height: 166.5px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       height: 200.5px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       height: 161.5px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
+
     height: 125.25px;
     `}
   }
@@ -104,19 +111,21 @@ const StyledCard = styled(Card)`
     height: 160px;
     padding: 20px;
     position: relative;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       height: 166.5px;
       padding: 20px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       height: 200.5px;
       padding: 30px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       height: 161.5px;
       padding: 20px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
+
       height: 125.25px;
       padding: 15px;
     `}
@@ -124,14 +133,19 @@ const StyledCard = styled(Card)`
   .ant-card-meta-title {
     font-weight: bold;
     font-size: 20px;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       font-size: 18px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 20px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 18px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      font-size: 16px;
+
     `}
     ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
@@ -140,14 +154,19 @@ const StyledCard = styled(Card)`
   .ant-card-meta-description {
     font-size: 14px;
     color: black;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 16px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 14px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      font-size: 12px;
+
     `}
     ${customMedia.between('tablet', 'desktop')`
       font-size: 12px;
@@ -159,16 +178,18 @@ const TagContainer = styled.div`
   gap: 5px;
   position: absolute;
   bottom: 20px;
-  ${customMedia.lessThan('mobile')`
+
+  ${customMedia.lessThan("mobile")`
     bottom: 20px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     bottom: 25px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     bottom: 20px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     bottom: 15px;
   `}
 `;
@@ -176,19 +197,21 @@ const ClubTag = styled(SmallTag)`
   & {
     font-size: 12px;
     padding: 5px 10px;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
     font-size: 12px;
     padding: 5px 10px;
   `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
     font-size: 14px;
     padding: 5px 13px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 12px;
     padding: 5px 10px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     font-size: 10px;
     padding: 3px 6px;
   `}
@@ -202,16 +225,20 @@ const LikeIcon = styled.div`
   position: absolute;
   right: 20px;
   bottom: 25px;
-  ${customMedia.lessThan('mobile')`
+
+  ${customMedia.lessThan("mobile")`
+
     bottom: 15px;  
   `}
   ${customMedia.between('mobile', 'largeMobile')`
     bottom: 20px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+
+  ${customMedia.between("largeMobile", "tablet")`
     bottom: 15px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     bottom: 15px;
   `}
   img {
@@ -242,10 +269,12 @@ const LikeNum = styled.span`
   ${customMedia.between('mobile', 'largeMobile')`
     font-size: 16px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 12px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     font-size: 12px;
   `}
 `;
@@ -262,7 +291,9 @@ const SkeletonImg = styled(Skeleton.Image)`
   .ant-skeleton-image {
     width: 360px;
     height: 192.5px;
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
+
     width: 195px;
     height: 160px;
     `}

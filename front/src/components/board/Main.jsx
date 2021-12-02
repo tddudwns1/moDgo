@@ -117,7 +117,9 @@ const Main = () => {
           {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
           </MainTitle> */}
-          <SearchBar keyword={keyword} setKeyword={setKeyword} />
+
+          {/* <SearchBar keyword={keyword} setKeyword={setKeyword} /> */}
+
           <TagFilter
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}

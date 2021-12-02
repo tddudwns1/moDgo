@@ -23,7 +23,7 @@ const NavBar = () => {
   const refreshPage= () =>{
     window.location.reload("/board");
   }
-  const refreshPage2= () => {
+  const refreshPagetwo= () => {
     window.location.reload("/myPage");
   }
 

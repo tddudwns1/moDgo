@@ -56,7 +56,9 @@ const ClubCard = (props) => {
 
       <TagContainer>
         <Days>
-          {'D-'}
+
+          {"D-"}
+
           {props.club.remainDays}
         </Days>
       </TagContainer>
@@ -194,18 +196,20 @@ const TagContainer = styled.div`
   position: absolute;
   bottom: 25px;
 
-  ${customMedia.lessThan('mobile')`
+
+  ${customMedia.lessThan("mobile")`
 	  bottom: 15px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
    bottom: 20px;
 	  gap: 5px;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+	${customMedia.between("largeMobile", "tablet")`
     bottom: 15px;
 	  gap: 3px;
   `}
-	${customMedia.between('tablet', 'desktop')`
+	${customMedia.between("tablet", "desktop")`
+
     bottom: 15px;
 	  gap: 3px;
   `}

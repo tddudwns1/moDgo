@@ -43,25 +43,8 @@ const JoinedClubCard = (props) => {
           <ClubTag key={i}>{tag}</ClubTag>
         ))}
       </TagContainer>
-      {/* <LikeIcon
-        onClick={(e) => {
-          e.stopPropagation();
-          if (props.userId) {
-            props.handleLikeDelete(props.club.clubId);
-          } else {
-            message.warning("로그인이 필요한 기능입니다.");
-          }
-        }}
-      >
-        {props.like === props.club.clubId ? (
-          <img src={filledHeart} alt="Filled like icon"></img>
-        ) : (
-          <img src={unfilledHeart} alt="Unfilled like icon" />
-        )}
-        
-        
-      </LikeIcon> */}
-      
+
+
     </StyledCard>
   );
 };
@@ -77,7 +60,9 @@ const StyledCard = styled(Card)`
   border: 2px solid #e5e5e5;
   border-radius: 10px;
   position: relative;
-  ${customMedia.lessThan('mobile')`
+
+  ${customMedia.lessThan("mobile")`
+
     width: 295px;
     height: 333px;
   `}
@@ -85,11 +70,13 @@ const StyledCard = styled(Card)`
     width: 363px;
     height: 401px;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+
+	${customMedia.between("largeMobile", "tablet")`
     width: 285px;
     height: 323px;
   `}
-	${customMedia.between('tablet', 'desktop')`
+	${customMedia.between("tablet", "desktop")`
+
     width: 212.5px;
     height: 250.5px;
   `}
@@ -97,16 +84,18 @@ const StyledCard = styled(Card)`
 	.ant-card-cover img {
     height: 150px;
 
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       height: 166.5px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       height: 200.5px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       height: 161.5px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
+
     height: 125.25px;
     `}
   }
@@ -115,19 +104,21 @@ const StyledCard = styled(Card)`
     padding: 20px;
     position: relative;
 
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       height: 166.5px;
       padding: 20px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       height: 200.5px;
       padding: 30px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       height: 161.5px;
       padding: 20px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
+
       height: 125.25px;
       padding: 15px;
     `}
@@ -136,16 +127,18 @@ const StyledCard = styled(Card)`
     font-weight: bold;
     font-size: 20px;
 
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       font-size: 18px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 20px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 18px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
+
       font-size: 16px;
     `}
   }
@@ -153,14 +146,19 @@ const StyledCard = styled(Card)`
     font-size: 14px;
     color: black;
 
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 16px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 14px;
+    `}
+    ${customMedia.between("tablet", "desktop")`
+      font-size: 12px;
+
     `}
     ${customMedia.between('tablet', 'desktop')`
       font-size: 12px;
@@ -174,13 +172,15 @@ const TagContainer = styled.div`
   position: absolute;
   bottom: 20px;
 
-  ${customMedia.lessThan('mobile')`
+
+  ${customMedia.lessThan("mobile")`
     bottom: 20px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     bottom: 25px;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+	${customMedia.between("largeMobile", "tablet")`
+
     bottom: 20px;
   `}
 	${customMedia.between('tablet', 'desktop')`
@@ -193,19 +193,21 @@ const ClubTag = styled(SmallTag)`
     font-size: 12px;
     padding: 5px 10px;
 
-    ${customMedia.lessThan('mobile')`
+
+    ${customMedia.lessThan("mobile")`
     font-size: 12px;
     padding: 5px 10px;
   `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
     font-size: 14px;
     padding: 5px 13px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 12px;
     padding: 5px 10px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
+
     font-size: 10px;
     padding: 3px 6px;
   `}

@@ -4,14 +4,13 @@ import javassist.runtime.Desc;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.moDgo.common.error.ClubNotFoundException;
+import org.moDgo.common.error.EvaluationClearException;
 import org.moDgo.common.error.MemberNotFoundException;
 import org.moDgo.common.error.UserNotFoundException;
 import org.moDgo.controller.member.MemberApproveRequestDto;
 import org.moDgo.controller.member.MemberCreateRequestDto;
-import org.moDgo.domain.ApprovalStatus;
-import org.moDgo.domain.Club;
-import org.moDgo.domain.Member;
-import org.moDgo.domain.User;
+import org.moDgo.controller.member.MemberEvaluationRequestDto;
+import org.moDgo.domain.*;
 import org.moDgo.repository.ClubRepository;
 import org.moDgo.repository.MemberRepository;
 import org.moDgo.repository.UserRepository;
@@ -92,7 +91,32 @@ public class MemberService {
         return joiningClubIdList;
     }
 
+    @Transactional
+    public void updateEvaluationScore(MemberEvaluationRequestDto memberEvaluationRequestDto) {
+        Long memberId = memberEvaluationRequestDto.getMemberId();
+        EvaluationKind evaluationKind = memberEvaluationRequestDto.getEvaluationKind();
+        Member member = getMember(memberId);
+        Club club = member.getClub();
+        int requiredNum = club.getRequiredPerson() - 1;
+        if (member.getEvaluationStatus().equals(EvaluationStatus.CLEAR)) {
+            throw new EvaluationClearException();
+        }
+        if (evaluationKind.equals(EvaluationKind.NORMAL)) {
+            member.changeNormalMannerScore(1);
+        } else if (evaluationKind.equals(EvaluationKind.GOOD)) {
+            member.changeGoodMannerScore(1);
+        } else if (evaluationKind.equals(EvaluationKind.BAD)) {
+            member.changeBadMannerScore(1);
+        }
+        if (member.getEvaluation_num() == requiredNum) {
+            member.changeEvaluationStatus(EvaluationStatus.CLEAR);
+        }
+    }
 
+
+    public Member getMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
+    }
 /*    public Page<Member> getMemberList(String userId,String approvalStatus, int page) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Club club = clubRepository.findByUser(user).orElseThrow(ClubNotFoundException::new);
@@ -115,5 +139,6 @@ public class MemberService {
         return memberRepository.findByClubAndApprovalStatus(club, status, pageRequest);
 
     }*/
+
 
 }

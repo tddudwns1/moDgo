@@ -11,9 +11,14 @@ const PendingMember = (props) => {
         process.env.REACT_APP_API_URL + `/users/${props.myPendingMember.userId}`
       );
       console.log(res.data);
-      localStorage.setItem("pending_evaluation_good", res.data.goodScore);
-      localStorage.setItem("pending_evaluation_normal", res.data.normalScore);
-      localStorage.setItem("pending_evaluation_bad", res.data.badScore);
+
+      localStorage.setItem("pending_evaluation_good", res.data.totalGoodScore);
+      localStorage.setItem(
+        "pending_evaluation_normal",
+        res.data.totalNormalScore
+      );
+      localStorage.setItem("pending_evaluation_bad", res.data.totalBadScore);
+
 
       console.log(props.myMember.userId);
     } catch (err) {

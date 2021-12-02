@@ -58,6 +58,19 @@ public class Member {
         this.normal_manner = 0;
     }
 
+    public void changeBadMannerScore(int score) {
+        this.bad_manner += score;
+        this.evaluation_num++;
+    }
+
+    public void changeGoodMannerScore(int score) {
+        this.good_manner += score;
+        this.evaluation_num++;
+    }
+    public void changeNormalMannerScore(int score) {
+        this.normal_manner += score;
+        this.evaluation_num++;
+    }
     public void changeApprovalStatus(ApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
     }

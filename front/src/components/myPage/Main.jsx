@@ -51,6 +51,7 @@ const Main = () => {
   const [userName, setMyName] = useState('');
   const [userEmail, setMyEmail] = useState('');
   const clubIdArr = [];
+  const [Approval,setAppropval]=useState(0);
 
   useEffect(() => {
     fetchDataFirst();
@@ -72,13 +73,19 @@ const Main = () => {
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
 
-      const clubId = myClubRes.data.clubList;
+      // const clubId = myClubRes.data.clubList;
 
-      for (let i = 0; i < clubId.length; i++) {
-        clubIdArr.push(clubId[i]['id']);
-      }
+      // for (let i = 0; i < clubId.length; i++) {
+      //   clubIdArr.push(clubId[i]['id']);
+      // }
 
       if (myClubRes.data) {
+
+        const clubId = myClubRes.data.clubList;
+
+        for (let i = 0; i < clubId.length; i++) {
+          clubIdArr.push(clubId[i]['id']);
+        }
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + '/members',
           {
@@ -118,7 +125,12 @@ const Main = () => {
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
         setSelectedClubStartDate(selectClubRes.data.startDate);
         setSelectedClubEndDate(selectClubRes.data.endDate);
+
+        setMyClubs(myClubRes.data.clubList);
+
+        
       }
+      
 
       const likedClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
@@ -144,7 +156,7 @@ const Main = () => {
       setMyJoinedClubs(joinedClubRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
 
-      setMyClubs(myClubRes.data.clubList);
+      //setMyClubs(myClubRes.data.clubList);
 
       setLoading(false);
     } catch (err) {
@@ -205,6 +217,8 @@ const Main = () => {
         setSelectedClubTitle(selectClubRes.data.title);
         setSelectedClubContents(selectClubRes.data.contents);
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
+      }else{
+
       }
 
       setLoading(false);
@@ -257,6 +271,9 @@ const Main = () => {
     }
   };
 
+  console.log('Approval');
+  console.log(Approval);
+
   const handleMemberApproval = async (memberId) => {
     try {
       const res = axios.put(process.env.REACT_APP_API_URL + '/members', {
@@ -266,6 +283,10 @@ const Main = () => {
       if (res.status === 200) {
         message.success('모임 참여가 승인되었습니다.');
       }
+      console.log('변경');
+
+      setAppropval(1);
+      console.log(Approval);
     } catch (err) {
       console.log(err);
     } finally {
@@ -365,20 +386,20 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="운영중인 모임" key="3">
-              {myClubs ? (
+            
+              {myClubs.length !==0  ? (
                 <TabContainer gutter={[0, 100]}>
-                  <CardRow>
-                    {myClubs.map((club) => (
-                      <MyClubCard
-                        key={club.id}
-                        userId={userId}
-                        club={club}
-                        selectedClubId={selectedClubId}
-                        setSelectedClubId={setSelectedClubId}
-                      />
-                    ))}
-                  </CardRow>
-
+                    <CardRow >
+                      {myClubs.map((club) => (
+                        <MyClubCard
+                          key={club.id}
+                          userId={userId}
+                          club={club}
+                          selectedClubId={selectedClubId}
+                          setSelectedClubId={setSelectedClubId}
+                        />
+                      ))}
+                    </CardRow>
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
                     <Text>승인 대기자</Text>

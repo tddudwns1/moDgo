@@ -9,4 +9,5 @@ public class Messages {
     public static final String NO_CLUB_MESSAGE = "존재하지 않는 클럽입니다.";
     public static final String NO_COMMENT_MESSAGE = "존재하지 않는 댓글입니다.";
     public static final String NO_MEMBER_MESSAGE = "해당 멤버는 존재하지 않습니다.";
+    public static final String EVALUATION_CLEAR_MESSAGE = "이미 평가를 완료하였습니다.";
 }
