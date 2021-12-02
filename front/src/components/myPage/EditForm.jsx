@@ -14,21 +14,11 @@ import moment from "moment";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
 import Button from "../common/Button.jsx";
-import Tag from "../common/Tag.jsx";
-
-import netflixCover from "../../images/netflixCover.png";
-import watchaCover from "../../images/watchaCover.png";
-import disneyplusCover from "../../images/disneyplusCover.png";
-import wavveCover from "../../images/wavveCover.png";
 
 const EditForm = ({ ...props }) => {
   const [editForm] = Form.useForm();
   const [inputText, setInputText] = useState("");
-  const [selectedOttTags, setSelectedOttTags] = useState([]);
-  const [selectedRemainTags, setSelectedRemainTags] = useState([]);
-  const [coverImg, setCoverImg] = useState(null);
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
-  // const remainTags = ["30일 이하", "50일 이하", "100일 이하", "100일 이상"];
 
   const userId = localStorage.getItem("user_id");
   const ref = useRef();
@@ -36,69 +26,14 @@ const EditForm = ({ ...props }) => {
     setInputText(e.target.value);
   };
 
-  // const handleSelectOttTags = (e) => {
-  //   let tagName = e.target.innerText;
-  //   let index = selectedOttTags.indexOf(tagName);
-
-  //   if (selectedOttTags.includes(tagName)) {
-  //     selectedOttTags.splice(index, 1);
-  //     setSelectedOttTags([...selectedOttTags]);
-  //   } else if (selectedOttTags.length === 1) {
-  //     selectedOttTags.splice(index, 1);
-  //     message.error("태그는 1개만 선택 가능합니다!");
-  //   } else {
-  //     setSelectedOttTags([...selectedOttTags, tagName]);
-  //   }
-
-  //   if (tagName === "NETFLIX") {
-  //     setCoverImg(netflixCover);
-  //   } else if (tagName === "WATCHA") {
-  //     setCoverImg(watchaCover);
-  //   } else if (tagName === "DISNEY+") {
-  //     setCoverImg(disneyplusCover);
-  //   } else if (tagName === "WAVVE") {
-  //     setCoverImg(wavveCover);
-  //   } else {
-  //     setCoverImg(null);
-  //   }
-  // };
-
-  // const handleSelectRemainTags = (e) => {
-  //   let tagName = e.target.innerText;
-  //   let index = selectedRemainTags.indexOf(tagName);
-
-  //   if (selectedRemainTags.includes(tagName)) {
-  //     selectedRemainTags.splice(index, 1);
-  //     setSelectedRemainTags([...selectedRemainTags]);
-  //   } else if (selectedRemainTags.length === 1) {
-  //     selectedRemainTags.splice(index, 1);
-  //     message.error("태그는 1개만 선택 가능합니다!");
-  //   } else {
-  //     setSelectedRemainTags([...selectedRemainTags, tagName]);
-  //   }
-  // };
-
   const sendData = async (values) => {
     const startDate = values.date[0]._d.toISOString().substring(0, 10);
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
-    // const sendOttTags = selectedOttTags.join(", ");
-    // const sendRemainTags = selectedRemainTags.join(", ");
 
-    console.log(props.selectedClub.title);
     if (!values.requiredPerson) {
       message.error("참여인원을 입력해주세요.");
       return;
     }
-
-    // if (!sendOttTags) {
-    //   message.warning("태그를 선택해주세요.");
-    //   return;
-    // }
-
-    // if (!sendRemainTags) {
-    //   message.warning("기간 태그를 선택해주세요.");
-    //   return;
-    // }
 
     if (values.title.length > 10) {
       message.warning("이름은 10자까지 입력 가능합니다.");
@@ -111,25 +46,26 @@ const EditForm = ({ ...props }) => {
     }
 
     const data = {
-      userId: userId,
       title: values.title,
       contents: values.contents,
-      imgUrl: coverImg,
+      requiredPerson: values.requiredPerson,
       startDate: startDate,
       endDate: endDate,
-      // tags: sendOttTags,
-      // remainTags: sendRemainTags,
-      requiredPerson: values.requiredPerson,
     };
 
     try {
       const res = await axios
 
-        .put(process.env.REACT_APP_API_URL + "/clubs", JSON.stringify(data), {
-          headers: {
-            "Content-Type": `application/json`,
-          },
-        })
+        .put(
+          process.env.REACT_APP_API_URL +
+            `/clubs/users/${props.selectedClubId}`,
+          JSON.stringify(data),
+          {
+            headers: {
+              "Content-Type": `application/json`,
+            },
+          }
+        )
         .then((res) => {
           if (res.status === 200) {
             editForm.resetFields();
@@ -234,42 +170,7 @@ const EditForm = ({ ...props }) => {
             </Form.Item>
           </Col>
         </Row>
-        {/* <TagRow>
-          <TagTitle>태그 (1개만 선택 가능)</TagTitle>
-          <TagRow>
-            <TagContainer>
-              {tags.map((tag, i) => (
-                <Tag
-                  type="button"
-                  key={i}
-                  value={i}
-                  onClick={handleSelectOttTags}
-                  selected={selectedOttTags.includes(tag) ? true : false}
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </TagContainer>
-          </TagRow>
-        </TagRow> */}
-        {/* <TagRow>
-          <TagTitle>기간 태그 (1개만 선택 가능)</TagTitle>
-          <TagRow>
-            <TagContainer>
-              {remainTags.map((tag, i) => (
-                <Tag
-                  type="button"
-                  key={i}
-                  value={i}
-                  onClick={handleSelectRemainTags}
-                  selected={selectedRemainTags.includes(tag) ? true : false}
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </TagContainer>
-          </TagRow>
-        </TagRow> */}
+
         <ButtonRow>
           <FilledBtn>수정</FilledBtn>
         </ButtonRow>

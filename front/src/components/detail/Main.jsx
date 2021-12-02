@@ -124,6 +124,7 @@ const Main = (props) => {
       evaluationKind: evaluation,
     };
 
+    handleGetEvaluation(memberId);
     console.log(JSON.stringify(data));
 
     try {
