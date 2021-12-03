@@ -37,7 +37,6 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
-
   const history = useHistory();
   const [visibility, setVisibility] = useState(false);
   const [selectedClubId, setSelectedClubId] = useState(0);
@@ -49,7 +48,6 @@ const Main = () => {
   const [selectedClubEndDate, setSelectedClubEndDate] = useState();
   // const [selectedClubStartDate, setSelectedClubStartDate] = useState();
   // const [selectedClubEndDate, setSelectedClubEndDate] = useState();
-
   const [userName, setMyName] = useState("");
   const [userEmail, setMyEmail] = useState("");
   const clubIdArr = [];
@@ -265,7 +263,6 @@ const Main = () => {
   };
 
   console.log("Approval");
-
   console.log(Approval);
 
   const handleMemberApproval = async (memberId) => {
@@ -306,9 +303,7 @@ const Main = () => {
       fetchData();
     }
   };
-
   console.log("title : " + selectedClubTitle);
-
   return (
     <Wrapper>
       {loading ? (
@@ -395,7 +390,6 @@ const Main = () => {
                       />
                     ))}
                   </CardRow>
-
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
                     <Text>승인 대기자</Text>
@@ -491,12 +485,10 @@ const Wrapper = styled.div`
   ${customMedia.between("mobile", "largeMobile")`
     width: 363px;
   `}
-
-	${customMedia.between("largeMobile", "tablet")`
+   ${customMedia.between("largeMobile", "tablet")`
     width: 610px;
   `}
-	${customMedia.between("tablet", "desktop")`
-
+   ${customMedia.between("tablet", "desktop")`
     width: 880px;
   `}
 `;
@@ -511,9 +503,7 @@ const TabContainer = styled(Row)`
   ${customMedia.between("mobile", "largeMobile")`
     margin-top: 40px;
   `}
-
-	${customMedia.between("largeMobile", "tablet")`
-
+   ${customMedia.between("largeMobile", "tablet")`
     margin-top: 40px;
   `}
 `;
@@ -569,9 +559,7 @@ const CardRow = styled.div`
   ${customMedia.between("largeMobile", "tablet")`
     gap: 20px;
   `}
-
    ${customMedia.between("tablet", "desktop")`
-
     gap: 20px;
   `}
 `;
@@ -828,9 +816,7 @@ const PaginationRow = styled(Row)`
   ${customMedia.between("mobile", "largeMobile")`
     margin: 20px auto;
   `}
-
-	${customMedia.between("largeMobile", "tablet")`
-
+   ${customMedia.between("largeMobile", "tablet")`
     margin: 20px auto;
   `}
 `;
@@ -847,10 +833,7 @@ const SpinContainer = styled.div`
   ${customMedia.between("mobile", "largeMobile")`
     height: 40vh;
   `}
-
    ${customMedia.between("largeMobile", "tablet")`
-
-
     height: 40vh;
   `}
 `;
