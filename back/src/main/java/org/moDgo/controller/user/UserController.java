@@ -23,27 +23,35 @@ public class UserController {
         //유저 정보가 등록되어 있으면
         if (user != null) {
             return ResponseEntity.ok(
-                    new UserResponseDto(userService.searchUser(userCreateRequestDto.toEntity().getId()))
+                    new UserResponseDto(user)
             );
         }
-        //유저 정보가 등록되어 있으면
+        //유저 정보가 등록 안 되어 있으면
         return ResponseEntity.ok(
                 new UserResponseDto(userService.createUser(userCreateRequestDto.toEntity())));
     }
 
     //유저 정보 상세 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponseDto> searchUser(
+    public ResponseEntity<UserResponseDto> getUserInfo(
             @PathVariable final String userId
     ) {
         User user = userService.searchUser(userId);
         if (user != null) {
             userService.updateTotalScore(userId);
             return ResponseEntity.ok(
-                    new UserResponseDto(userService.searchUser(userId))
+                    new UserResponseDto(user)
             );
         }else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable String userId
+    ) {
+        userService.deleteUser(userId);
+        return new ResponseEntity("유저 삭제가 완료되었습니다.", HttpStatus.OK);
     }
 }

@@ -13,9 +13,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/controller/user/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/controller/user/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/controller/user/UserResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/controller/user/UserResponseDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/moDgo/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/member/MemberEvaluationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/member/MemberEvaluationResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/controller/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/moDgo/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/moDgo/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +145,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="23c05023-3e28-44c3-b134-302c98765fd8" name="Changes" comment="" />
       <created>1635732628775</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -182,7 +183,10 @@
       <workItem from="1638176214902" duration="24972000" />
       <workItem from="1638324262069" duration="14765000" />
       <workItem from="1638417524732" duration="2781000" />
-      <workItem from="1638441154234" duration="14309000" />
+      <workItem from="1638441154234" duration="20567000" />
+      <workItem from="1638494340041" duration="2721000" />
+      <workItem from="1638503918184" duration="3511000" />
+      <workItem from="1638519784526" duration="5848000" />
     </task>
     <servers />
   </component>

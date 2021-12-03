@@ -109,9 +109,8 @@ public class ClubService {
     }
 
     //모든 클럽에 대해서 만료 처리 메서드
-    private void changeAllClubStatus() {
-        List<Club> all = clubRepository.findAll();
-        for (Club club : all) {
+    private void changeAllClubStatus(List<Club> clubs) {
+        for (Club club : clubs) {
             changeClubStatus(club);
         }
     }
@@ -138,10 +137,10 @@ public class ClubService {
 
     //모임 조회 -> tags or status
     public List<Club> findAllClubs(String tags,String clubStatus) {
-        //Club 만료 여부 갱신
-        changeAllClubStatus();
 
         List<Club> clubs = clubRepository.findAll();
+        //Club 만료 여부 갱신
+        changeAllClubStatus(clubs);
 
         //모집 중 필터링 => ClubStatus == Active or Null
         if (clubStatus.isEmpty() && tags.isEmpty()) {
