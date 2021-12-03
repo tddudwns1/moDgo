@@ -73,19 +73,15 @@ const Main = () => {
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
 
-      // const clubId = myClubRes.data.clubList;
-
-      // for (let i = 0; i < clubId.length; i++) {
-      //   clubIdArr.push(clubId[i]['id']);
-      // }
 
       if (myClubRes.data) {
-
         const clubId = myClubRes.data.clubList;
 
         for (let i = 0; i < clubId.length; i++) {
-          clubIdArr.push(clubId[i]['id']);
+          clubIdArr.push(clubId[i]["id"]);
         }
+
+
         const pendingMembersRes = await axios.get(
           process.env.REACT_APP_API_URL + '/members',
           {
@@ -120,15 +116,17 @@ const Main = () => {
           process.env.REACT_APP_API_URL + `/clubs/${clubIdArr[0]}`
         );
 
+        console.log(selectClubRes);
         setSelectedClubTitle(selectClubRes.data.title);
         setSelectedClubContents(selectClubRes.data.contents);
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
         setSelectedClubStartDate(selectClubRes.data.startDate);
         setSelectedClubEndDate(selectClubRes.data.endDate);
 
+        setSelectedClubId(selectClubRes.data.id);
+
         setMyClubs(myClubRes.data.clubList);
 
-        
       }
       
 
@@ -156,7 +154,7 @@ const Main = () => {
       setMyJoinedClubs(joinedClubRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
 
-      //setMyClubs(myClubRes.data.clubList);
+
 
       setLoading(false);
     } catch (err) {
@@ -386,8 +384,9 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="운영중인 모임" key="3">
-            
-              {myClubs.length !==0  ? (
+
+              {myClubs.length ? (
+
                 <TabContainer gutter={[0, 100]}>
                     <CardRow >
                       {myClubs.map((club) => (
@@ -460,10 +459,9 @@ const Main = () => {
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm
-                      abc={'dd'}
-                      // myClubs={myClubs}
-                      // selectedClub={selectedClub}
-                      // setSelectedClub={setSelectedClub}
+
+                      selectedClubId={selectedClubId}
+
                       selectedClubTitle={selectedClubTitle}
                       selectedClubContents={selectedClubContents}
                       selectedClubRequiredPerson={selectedClubRequiredPerson}

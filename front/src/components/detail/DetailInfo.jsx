@@ -1,19 +1,80 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import { useState } from "react";
-import { Divider, Button, Modal } from "antd";
+import { Divider, Button, Modal, message } from "antd";
 import styled from "styled-components";
 import { customMedia } from "../../GlobalStyles";
 
 const DetailInfo = ({ ...props }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [memberId, setMemberId] = useState();
+
+  const [memberId, setMemberId] = useState(0);
 
   const [memberName, setMemberName] = useState("");
 
   const [voteCount, setVoteCount] = useState(0);
-  const [evaluation, setEvaluation] = useState();
   const userId = localStorage.getItem("user_id");
   const confirmedIdArr = [];
+  const [getEvaluation, setGetEvaluation] = useState();
+  let evaluationStatus = "";
+  let memberIdStorage = 0;
+
+  useEffect(() => {
+    getData(1);
+    handleGetEvaluation(1);
+  }, []);
+
+  const getData = async (id) => {
+    const res = await axios
+      .get(process.env.REACT_APP_API_URL + `/members/evaluation`, {
+        params: { memberId: id },
+      })
+      .then((res) => {
+        setGetEvaluation(res.data);
+        console.log(getEvaluation);
+      });
+  };
+
+  const handleEvaluation = async (evaluation, id) => {
+    const data = {
+      memberId: id,
+      evaluationKind: evaluation,
+    };
+
+    console.log(JSON.stringify(data));
+
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_API_URL + "/members/evaluation",
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(res);
+
+      if (res.status === 200) {
+        message.success("평가가 완료되었습니다.");
+      } else {
+        message.error("평가가 실패했습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleGetEvaluation = async (id) => {
+    const res = await axios
+      .get(process.env.REACT_APP_API_URL + `/members/evaluation`, {
+        params: { memberId: id },
+      })
+      .then((res) => {
+        setGetEvaluation(res.data);
+        console.log(getEvaluation);
+      });
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -41,70 +102,95 @@ const DetailInfo = ({ ...props }) => {
             <img
               src={props.confirmedUser[i].imgUrl}
               alt="User profile"
+              key={i}
               onClick={() => {
                 setMemberId(props.confirmedUser[i].id);
 
                 setMemberName(props.confirmedUser[i].name);
 
-                props.handleGetEvaluation(memberId);
-                setEvaluation(props.getEvaluation);
-                console.log("evaluation");
-                console.log(evaluation);
+                console.log(memberId);
+                console.log(i);
+                console.log(props.confirmedUser[i].id);
+                console.log(props.confirmedUser[i].name);
+
+                // handleGetEvaluation(memberId);
+
+                // console.log(getEvaluation);
+                // console.log("handleGetEvaluation");
+                // console.log(getEvaluation);
+
+                // console.log("evaluation");
+                // console.log(getEvaluation);
+                // console.log(props.getEvaluation.evaluationStatus);
 
                 showModal();
 
               }}
             />
           ))}
+
+          {confirmedIdArr.includes(userId) ? (
+            voteCount !== 1 ? (
+              <StyledModal visible={isModalVisible} onCancel={handleCancel}>
+                <Title>
+                  <strong>{memberName}님 회원 평가</strong>
+                  <hr />
+                  <h1
+                    onClick={() => {
+                      getData(memberId);
+                      handleGetEvaluation(memberId);
+                      if (getEvaluation.evaluationStatus !== "CLEAR") {
+                        handleEvaluation("GOOD", memberId);
+                        handleGetEvaluation(memberId);
+                        handleCancel();
+                      } else message.warning("이미 평가 완료했습니다.");
+                      handleGetEvaluation(memberId);
+                    }}
+                  >
+                    😍
+                  </h1>
+
+                  <h1
+                    onClick={() => {
+                      getData(memberId);
+                      handleGetEvaluation(memberId);
+                      if (getEvaluation.evaluationStatus !== "CLEAR") {
+                        handleEvaluation("NORMAL", memberId);
+                        handleGetEvaluation(memberId);
+                        handleCancel();
+                      } else message.warning("이미 평가 완료했습니다.");
+                      handleGetEvaluation(memberId);
+                    }}
+                  >
+                    🙂
+                  </h1>
+
+                  <h1
+                    onClick={() => {
+                      getData(memberId);
+                      handleGetEvaluation(memberId);
+                      if (getEvaluation.evaluationStatus !== "CLEAR") {
+                        handleEvaluation("BAD", memberId);
+                        handleGetEvaluation(memberId);
+                        handleCancel();
+                      } else message.warning("이미 평가 완료했습니다.");
+                    }}
+                  >
+                    🙁
+                  </h1>
+                </Title>
+                <SubmitButton
+                  onClick={() => {
+                    handleCancel();
+
+                  }}
+                >
+                  확인
+                </SubmitButton>
+              </StyledModal>
+            ) : null
+          ) : null}
         </Contents>
-        {confirmedIdArr.includes(userId) ? (
-          voteCount !== 1 ? (
-            <StyledModal visible={isModalVisible} onCancel={handleCancel}>
-              <Title>
-
-                <strong>회원 평가</strong>
-
-                <strong>{memberName}님 회원 평가</strong>
-
-                <hr />
-                <h1
-                  onClick={() => {
-                    props.handleEvaluation("GOOD", memberId);
-
-
-                  }}
-                >
-                  😍
-                </h1>
-                <h1
-                  onClick={() => {
-                    props.handleEvaluation("NORMAL", memberId);
-
-
-                  }}
-                >
-                  🙂
-                </h1>
-                <h1
-                  onClick={() => {
-                    props.handleEvaluation("BAD", memberId);
-
-
-                  }}
-                >
-                  🙁
-                </h1>
-              </Title>
-              <SubmitButton
-                onClick={() => {
-                  handleCancel();
-                }}
-              >
-                확인
-              </SubmitButton>
-            </StyledModal>
-          ) : null
-        ) : null}
       </TextBox>
       <Divider />
     </DetailInfoContainer>
