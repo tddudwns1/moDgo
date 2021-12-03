@@ -1,13 +1,13 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Card, Skeleton, message } from "antd";
-import styled from "styled-components";
-import { customMedia } from "../../GlobalStyles";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Card, Skeleton, message } from 'antd';
+import styled from 'styled-components';
+import { customMedia } from '../../GlobalStyles';
 
-import SmallTag from "../common/SmallTag";
-import unfilledHeart from "../../images/icons/unfilled_heart.png";
-import filledHeart from "../../images/icons/filled_heart.png";
-import ExpiredTag from "../common/ExpiredTag";
+import SmallTag from '../common/SmallTag';
+import unfilledHeart from '../../images/icons/unfilled_heart.png';
+import filledHeart from '../../images/icons/filled_heart.png';
+import ExpiredTag from '../common/ExpiredTag';
 
 const ClubCard = (props) => {
   const history = useHistory();
@@ -25,10 +25,10 @@ const ClubCard = (props) => {
       onClick={() => history.push(`/detail/${props.club.id}`)}
     >
       <Meta title={props.club.title} description={props.club.contents} />
-      {props.club.clubStatus === "EXPIRED" ? (
+      {props.club.clubStatus === 'EXPIRED' ? (
         <ClubExpiredTag>마감</ClubExpiredTag>
       ) : (
-        ""
+        ''
       )}
       {/* <TagContainer>
         {props.club.tags.split(', ').map((tag, i) => (
@@ -42,7 +42,7 @@ const ClubCard = (props) => {
           if (props.userId) {
             props.handleLikedClubs(props.club.id);
           } else {
-            message.warning("로그인이 필요한 기능입니다.");
+            message.warning('로그인이 필요한 기능입니다.');
           }
         }}
       >
@@ -56,7 +56,9 @@ const ClubCard = (props) => {
 
       <TagContainer>
         <Days>
+
           {"D-"}
+
           {props.club.remainDays}
         </Days>
       </TagContainer>
@@ -74,35 +76,35 @@ const StyledCard = styled(Card)`
   border: 2px solid #e5e5e5;
   border-radius: 10px;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
    	width: 295px;
 	  height: 320px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
     height: 388px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
    	width: 295px;
 	  height: 320px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
    	width: 280px;
 	  height: 305px;
   `}
 	.ant-card-cover img {
     height: 192.5px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
 	    height: 160px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       height: 194px;
     `}
-  	${customMedia.between("largeMobile", "tablet")`
+  	${customMedia.between('largeMobile', 'tablet')`
 	    height: 160px;
     `}
-	  ${customMedia.between("tablet", "desktop")`
+	  ${customMedia.between('tablet', 'desktop')`
 	    height: 152.5px;
     `}
   }
@@ -111,17 +113,17 @@ const StyledCard = styled(Card)`
     padding: 20px;
     position: relative;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
 	    height: 160px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       height: 194px;
       padding: 20px;
     `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
 	  height: 160px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     height: 152.5px;
 		padding: 15px;
   `}
@@ -130,16 +132,16 @@ const StyledCard = styled(Card)`
     font-weight: bold;
     font-size: 22px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
 	  font-size: 20px;
   `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
     font-size: 22px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
 	 font-size: 20px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
 	 font-size: 18px;
   `}
   }
@@ -148,16 +150,16 @@ const StyledCard = styled(Card)`
     color: black;
     position: relative;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
 	  font-size: 16px;
   `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
     font-size: 18px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
 	  font-size: 16px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
 	  font-size: 14px;
   `}
   }
@@ -168,19 +170,19 @@ const Days = styled(SmallTag)`
     font-size: 14px;
     padding: 7px 13px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
     font-size: 12px;
     padding: 5px 10px;
   `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
    font-size: 14px;
     padding: 5px 12px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
     padding: 5px 10px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     font-size: 10px;
     padding: 5px 10px;
     
@@ -194,6 +196,7 @@ const TagContainer = styled.div`
   position: absolute;
   bottom: 25px;
 
+
   ${customMedia.lessThan("mobile")`
 	  bottom: 15px;
   `}
@@ -206,6 +209,7 @@ const TagContainer = styled.div`
 	  gap: 3px;
   `}
 	${customMedia.between("tablet", "desktop")`
+
     bottom: 15px;
 	  gap: 3px;
   `}
@@ -220,35 +224,35 @@ const LikeIcon = styled.div`
   right: 20px;
   bottom: 25px;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     bottom: 15px;  
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     bottom: 20px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
 	  bottom: 15px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
 	  bottom: 15px;
   `}
 	img {
     width: 24px;
     height: 22px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
 	  width: 22px;
     height: 20px;
   `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
     width: 24px;
     height: 22px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
 	  width: 20px;
     height: 18px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
 	  width: 20px;
     height: 18px;
   `}
@@ -256,16 +260,16 @@ const LikeIcon = styled.div`
 `;
 
 const LikeNum = styled.span`
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
   font-size: 14px;
 `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
   font-size: 16px;
 `}
-${customMedia.between("largeMobile", "tablet")`
+${customMedia.between('largeMobile', 'tablet')`
   font-size: 12px;
 `}
-${customMedia.between("tablet", "desktop")`
+${customMedia.between('tablet', 'desktop')`
   font-size: 12px;
 `}
 `;
@@ -285,19 +289,19 @@ const SkeletonImg = styled(Skeleton.Image)`
     width: 360px;
     height: 192.5px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
     width: 295px;
 	  height: 160px;
   `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
     height: 194px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     width: 295px;
 	  height: 160px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     width: 280px;
     height: 152.5px;
   `}
