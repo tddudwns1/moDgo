@@ -376,7 +376,7 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="운영중인 모임" key="3">
-              {myClubs.length ? (
+              {myClubs.length !== 0 ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
                     {myClubs.map((club) => (
