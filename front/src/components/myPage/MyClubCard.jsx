@@ -24,7 +24,9 @@ const MyClubCard = ({ ...props }) => {
       }
       onClick={() => {
         props.setSelectedClubId(props.club.id);
-        setClicked(true);
+        message.success(props.club.title + "을(를) 선택했습니다.");
+        // setClicked(true);
+        // setClicked(false);
       }}
       //   onClick={() => history.push(`/detail/${props.club.id}`)}
     >

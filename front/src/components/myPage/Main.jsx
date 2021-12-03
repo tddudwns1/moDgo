@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Tabs, Row, Divider, message, Modal } from 'antd';
-import styled from 'styled-components';
-import { customMedia } from '../../GlobalStyles';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Tabs, Row, Divider, message, Modal } from "antd";
+import styled from "styled-components";
+import { customMedia } from "../../GlobalStyles";
 
 // import MyComment from "./MyComment";
-import EditForm from './EditForm';
-import LikedClubCard from './LikedClubCard';
-import JoinedClubCard from './JoinedClubCard';
-import Member from './Member';
-import InfoBox from './InfoBox';
-import PendingMember from './PendingMember';
-import Pagination from '../common/Pagination';
-import Button from '../common/Button';
-import NotFound from '../common/NotFound';
-import Spin from '../common/Spin';
-import { useHistory } from 'react-router-dom';
-import MyClubCard from './MyClubCard';
+import EditForm from "./EditForm";
+import LikedClubCard from "./LikedClubCard";
+import JoinedClubCard from "./JoinedClubCard";
+import Member from "./Member";
+import InfoBox from "./InfoBox";
+import PendingMember from "./PendingMember";
+import Pagination from "../common/Pagination";
+import Button from "../common/Button";
+import NotFound from "../common/NotFound";
+import Spin from "../common/Spin";
+import { useHistory } from "react-router-dom";
+import MyClubCard from "./MyClubCard";
 
 const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,23 +35,23 @@ const Main = () => {
   const [myJoinedClubsTotal, setMyJoinedClubsTotal] = useState(0);
   const [myJoinedClubsPage, setMyJoinedClubsPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const userId = localStorage.getItem('user_id');
-  const userImg = localStorage.getItem('user_image');
+  const userId = localStorage.getItem("user_id");
+  const userImg = localStorage.getItem("user_image");
   const history = useHistory();
   const [visibility, setVisibility] = useState(false);
   const [selectedClubId, setSelectedClubId] = useState(0);
-  const [selectedClubTitle, setSelectedClubTitle] = useState('');
-  const [selectedClubContents, setSelectedClubContents] = useState('');
+  const [selectedClubTitle, setSelectedClubTitle] = useState("");
+  const [selectedClubContents, setSelectedClubContents] = useState("");
   const [selectedClubRequiredPerson, setSelectedClubRequiredPerson] =
     useState(0);
   const [selectedClubStartDate, setSelectedClubStartDate] = useState();
   const [selectedClubEndDate, setSelectedClubEndDate] = useState();
   // const [selectedClubStartDate, setSelectedClubStartDate] = useState();
   // const [selectedClubEndDate, setSelectedClubEndDate] = useState();
-  const [userName, setMyName] = useState('');
-  const [userEmail, setMyEmail] = useState('');
+  const [userName, setMyName] = useState("");
+  const [userEmail, setMyEmail] = useState("");
   const clubIdArr = [];
-  const [Approval,setAppropval]=useState(0);
+  const [Approval, setAppropval] = useState(0);
 
   useEffect(() => {
     fetchDataFirst();
@@ -73,7 +73,6 @@ const Main = () => {
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
 
-
       if (myClubRes.data) {
         const clubId = myClubRes.data.clubList;
 
@@ -81,14 +80,13 @@ const Main = () => {
           clubIdArr.push(clubId[i]["id"]);
         }
 
-
         const pendingMembersRes = await axios.get(
-          process.env.REACT_APP_API_URL + '/members',
+          process.env.REACT_APP_API_URL + "/members",
           {
             params: {
               userId: userId,
               clubId: clubIdArr[0],
-              approvalStatus: 'WAITING',
+              approvalStatus: "WAITING",
               page: myPendingMembersPage,
             },
           }
@@ -98,12 +96,12 @@ const Main = () => {
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
         const memberRes = await axios.get(
-          process.env.REACT_APP_API_URL + '/members',
+          process.env.REACT_APP_API_URL + "/members",
           {
             params: {
               userId: userId,
               clubId: clubIdArr[0],
-              approvalStatus: 'CONFIRMED',
+              approvalStatus: "CONFIRMED",
               page: myMembersPage,
             },
           }
@@ -126,9 +124,7 @@ const Main = () => {
         setSelectedClubId(selectClubRes.data.id);
 
         setMyClubs(myClubRes.data.clubList);
-
       }
-      
 
       const likedClubRes = await axios.get(
         process.env.REACT_APP_API_URL + `/likedClubs/users/${userId}`,
@@ -154,8 +150,6 @@ const Main = () => {
       setMyJoinedClubs(joinedClubRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
 
-
-
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -166,12 +160,12 @@ const Main = () => {
     try {
       if (selectedClubId != 0) {
         const pendingMembersRes = await axios.get(
-          process.env.REACT_APP_API_URL + '/members',
+          process.env.REACT_APP_API_URL + "/members",
           {
             params: {
               userId: userId,
               clubId: selectedClubId,
-              approvalStatus: 'WAITING',
+              approvalStatus: "WAITING",
               page: myPendingMembersPage,
             },
           }
@@ -181,12 +175,12 @@ const Main = () => {
         setMyPendingMembersTotal(pendingMembersRes.data.totalCount);
 
         const memberRes = await axios.get(
-          process.env.REACT_APP_API_URL + '/members',
+          process.env.REACT_APP_API_URL + "/members",
           {
             params: {
               userId: userId,
               clubId: selectedClubId,
-              approvalStatus: 'CONFIRMED',
+              approvalStatus: "CONFIRMED",
               page: myMembersPage,
             },
           }
@@ -215,11 +209,10 @@ const Main = () => {
         setSelectedClubTitle(selectClubRes.data.title);
         setSelectedClubContents(selectClubRes.data.contents);
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
-      }else{
-
+      } else {
       }
 
-      //setLoading(false);
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -246,12 +239,12 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-      await axios.post(process.env.REACT_APP_API_URL + '/likedClubs', {
+      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
         clubId: Number(clubId),
         userId: userId,
       });
     } catch (err) {
-      message.error('이미 좋아요한 모임입니다.');
+      message.error("이미 좋아요한 모임입니다.");
     } finally {
       fetchData();
     }
@@ -259,7 +252,7 @@ const Main = () => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      axios.delete(process.env.REACT_APP_API_URL + '/likedClubs', {
+      axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -269,19 +262,19 @@ const Main = () => {
     }
   };
 
-  console.log('Approval');
+  console.log("Approval");
   console.log(Approval);
 
   const handleMemberApproval = async (memberId) => {
     try {
-      const res = axios.put(process.env.REACT_APP_API_URL + '/members', {
+      const res = axios.put(process.env.REACT_APP_API_URL + "/members", {
         memberId: memberId,
       });
 
       if (res.status === 200) {
-        message.success('모임 참여가 승인되었습니다.');
+        message.success("모임 참여가 승인되었습니다.");
       }
-      console.log('변경');
+      console.log("변경");
 
       setAppropval(1);
       console.log(Approval);
@@ -294,15 +287,15 @@ const Main = () => {
 
   const handleMemberReject = async (userId, clubId) => {
     try {
-      const res = axios.delete(process.env.REACT_APP_API_URL + '/members', {
+      const res = axios.delete(process.env.REACT_APP_API_URL + "/members", {
         params: {
           userId: userId,
           clubId: clubId,
-          delete: 'NO',
+          delete: "NO",
         },
       });
       if (res.status === 200) {
-        message.warning('모임 참여가 거절되었습니다.');
+        message.warning("모임 참여가 거절되었습니다.");
       }
     } catch (err) {
       console.log(err);
@@ -310,7 +303,7 @@ const Main = () => {
       fetchData();
     }
   };
-  console.log('title : ' + selectedClubTitle);
+  console.log("title : " + selectedClubTitle);
   return (
     <Wrapper>
       {loading ? (
@@ -384,21 +377,19 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="운영중인 모임" key="3">
-
               {myClubs.length ? (
-
                 <TabContainer gutter={[0, 100]}>
-                    <CardRow >
-                      {myClubs.map((club) => (
-                        <MyClubCard
-                          key={club.id}
-                          userId={userId}
-                          club={club}
-                          selectedClubId={selectedClubId}
-                          setSelectedClubId={setSelectedClubId}
-                        />
-                      ))}
-                    </CardRow>
+                  <CardRow>
+                    {myClubs.map((club) => (
+                      <MyClubCard
+                        key={club.id}
+                        userId={userId}
+                        club={club}
+                        selectedClubId={selectedClubId}
+                        setSelectedClubId={setSelectedClubId}
+                      />
+                    ))}
+                  </CardRow>
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
                     <Text>승인 대기자</Text>
@@ -459,9 +450,7 @@ const Main = () => {
                   <Box>
                     <MidTitle>정보 수정</MidTitle>
                     <EditForm
-
                       selectedClubId={selectedClubId}
-
                       selectedClubTitle={selectedClubTitle}
                       selectedClubContents={selectedClubContents}
                       selectedClubRequiredPerson={selectedClubRequiredPerson}
@@ -490,16 +479,16 @@ const Wrapper = styled.div`
   width: 1200px;
   margin: 0 auto;
   flex: 1;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     width: 295px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     width: 363px;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+   ${customMedia.between("largeMobile", "tablet")`
     width: 610px;
   `}
-	${customMedia.between('tablet', 'desktop')`
+   ${customMedia.between("tablet", "desktop")`
     width: 880px;
   `}
 `;
@@ -508,13 +497,13 @@ const TabContainer = styled(Row)`
   width: 100%;
   margin-top: 70px;
   padding-bottom: 60px;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     margin-top: 40px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     margin-top: 40px;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+   ${customMedia.between("largeMobile", "tablet")`
     margin-top: 40px;
   `}
 `;
@@ -523,30 +512,30 @@ const StyledTabs = styled(Tabs)`
   .ant-tabs-tab-btn {
     font-size: 22px;
 
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 16px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 16px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       font-size: 18px;
     `}
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: #029400;
     font-weight: bold;
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       font-weight: 500;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-weight: 500;
     `}
     
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-weight: 500;
     `}
   }
@@ -564,13 +553,13 @@ const CardRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 60px;
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     gap: 40px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     gap: 20px;
   `}
-	${customMedia.between('tablet', 'desktop')`
+   ${customMedia.between("tablet", "desktop")`
     gap: 20px;
   `}
 `;
@@ -579,16 +568,16 @@ const MidTitle = styled.div`
   width: 100%;
   font-size: 20px;
   margin-bottom: 10px;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
   font-size: 14px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 16px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     font-size: 18px;
   `}
 `;
@@ -597,16 +586,16 @@ const LargeText = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 12px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     font-size: 12px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 14px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     font-size: 18px;
   `}
 `;
@@ -615,16 +604,16 @@ const Text = styled.div`
   font-size: 16px;
   margin-bottom: 15px;
 
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 10px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     font-size: 10px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 12px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     font-size: 14px;
   `}
 `;
@@ -643,21 +632,21 @@ const DeleteBtnContainer = styled.div`
   border-radius: 5px;
   padding: 25px;
   display: flex;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 10px;
     padding: 15px;
     flex-direction: column;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     font-size: 10px;
     padding: 15px;
     flex-direction: column;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 14px;
   `}
   
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     font-size: 18px;
   `}
 `;
@@ -673,21 +662,21 @@ const DeleteBtn = styled(Button)`
   border-radius: 6px;
   text-align: center;
   flex: 0.1;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 10px;
     padding: 5px 15px;
     align-self: center;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     font-size: 10px;
     padding: 5px 15px;
     align-self: center;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     width: 80px;
     font-size: 12px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     width: 120px;
     font-size: 16px;
   `}
@@ -701,32 +690,32 @@ const StyledModal = styled(Modal)`
     display: flex;
     align-items: center;
 
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       padding: 3px 7px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       padding: 5px 10px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       padding: 10px 25px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       padding: 30px 55px;
     `}
   }
   .ant-modal-body {
     text-align: center;
 
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       padding: 30px 55px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       padding: 30px 55px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       padding: 30px 55px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       padding: 30px 55px;
     `}
   }
@@ -739,16 +728,16 @@ const ModalTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     font-size: 14px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     font-size: 16px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     font-size: 18px;
   `}
-  ${customMedia.between('tablet', 'desktop')`
+  ${customMedia.between("tablet", "desktop")`
     font-size: 20px;
   `}
 `;
@@ -759,13 +748,13 @@ const ButtonRow = styled(Row)`
   justify-content: center;
   gap: 50px;
 
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     margin-top: 15px;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     margin-top: 15px;
   `}
-  ${customMedia.between('largeMobile', 'tablet')`
+  ${customMedia.between("largeMobile", "tablet")`
     margin-top: 20px;
   `}
 `;
@@ -779,16 +768,16 @@ const FilledBtn = styled(Button)`
     outline: none;
     cursor: pointer;
 
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 12px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 14px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       font-size: 16px;
     `}
   }
@@ -802,16 +791,16 @@ const UnfilledBtn = styled(Button)`
     border-radius: 6px;
     cursor: pointer;
 
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 12px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 14px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       font-size: 16px;
     `}
   }
@@ -821,13 +810,13 @@ const PaginationRow = styled(Row)`
   width: 100%;
   margin: 30px auto;
   justify-content: center;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     margin: 20px auto;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     margin: 20px auto;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+   ${customMedia.between("largeMobile", "tablet")`
     margin: 20px auto;
   `}
 `;
@@ -838,13 +827,13 @@ const SpinContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${customMedia.lessThan('mobile')`
+  ${customMedia.lessThan("mobile")`
     height: 40vh;
   `}
-  ${customMedia.between('mobile', 'largeMobile')`
+  ${customMedia.between("mobile", "largeMobile")`
     height: 40vh;
   `}
-	${customMedia.between('largeMobile', 'tablet')`
+   ${customMedia.between("largeMobile", "tablet")`
     height: 40vh;
   `}
 `;
@@ -853,16 +842,16 @@ const MemberNotFound = styled(NotFound)`
   & {
     height: 100px;
     font-size: 16px;
-    ${customMedia.lessThan('mobile')`
+    ${customMedia.lessThan("mobile")`
       font-size: 10px;
     `}
-    ${customMedia.between('mobile', 'largeMobile')`
+    ${customMedia.between("mobile", "largeMobile")`
       font-size: 10px;
     `}
-    ${customMedia.between('largeMobile', 'tablet')`
+    ${customMedia.between("largeMobile", "tablet")`
       font-size: 12px;
     `}
-    ${customMedia.between('tablet', 'desktop')`
+    ${customMedia.between("tablet", "desktop")`
       font-size: 14px;
     `}
   }

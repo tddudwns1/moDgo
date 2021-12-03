@@ -1,4 +1,3 @@
-
 import React from "react";
 import styled from "styled-components";
 import { Skeleton, Modal, Row, message } from "antd";
@@ -9,14 +8,11 @@ import Button from "../common/Button";
 import unfilledHeart from "../../images/icons/unfilled_heart.png";
 import filledHeart from "../../images/icons/filled_heart.png";
 
-
 const InfoBox = (props) => {
   return (
     <InfoBoxContainer>
       <ProfileIcon>
-
         <img src={props.userImg} alt={"User Image"} />
-
       </ProfileIcon>
       <ClubInfo>
         {/* <Title>{props.userId}</Title> */}
@@ -26,8 +22,6 @@ const InfoBox = (props) => {
         <InfoRow>
           <SubTitle>이메일</SubTitle> <Text>{props.userEmail}</Text>
         </InfoRow>
-
-
       </ClubInfo>
     </InfoBoxContainer>
   );
@@ -40,7 +34,6 @@ const ProfileIcon = styled.div`
   height: 150px;
   padding: auto;
   margin: auto;
-
   ${customMedia.lessThan("mobile")`
       width: 56px;
       height: 56px;
@@ -58,7 +51,6 @@ const ProfileIcon = styled.div`
       height: 80px;
     `}
       img {
-
     border-radius: 50%;
     width: 100%;
     height: 100%;
@@ -71,8 +63,6 @@ const InfoBoxContainer = styled.div`
   border: 1.5px solid #e5e5e5;
   border-radius: 10px;
   display: flex;
-
-
   ${customMedia.lessThan("mobile")`
       flex-direction: column;
       height: 372px;
@@ -87,7 +77,6 @@ const InfoBoxContainer = styled.div`
     ${customMedia.between("tablet", "desktop")`
       height: 293px;
     `}
-
 `;
 
 const ClubThumbnail = styled.div`
@@ -97,8 +86,6 @@ const ClubThumbnail = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 10px 0 0 10px;
-
-
     ${customMedia.lessThan("mobile")`
         border-radius: 10px 10px 0 0;
       `}
@@ -106,7 +93,6 @@ const ClubThumbnail = styled.div`
         border-radius: 10px 10px 0 0;
       `}
   }
-
   ${customMedia.lessThan("mobile")`
       width: 295px;
       height: 50%;
@@ -121,7 +107,6 @@ const ClubThumbnail = styled.div`
     ${customMedia.between("tablet", "desktop")`
       width: 440px;
     `}
-
 `;
 
 const ClubInfo = styled.div`
@@ -130,9 +115,7 @@ const ClubInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   ${customMedia.lessThan("mobile")`
-
       width: 100%;
       height: 50%;
       padding: 5px 17px;
@@ -144,7 +127,6 @@ const ClubInfo = styled.div`
     ${customMedia.between("largeMobile", "tablet")`
       padding: 10px 20px;
     `}
-
 `;
 
 const InfoRow = styled.div`
@@ -157,8 +139,6 @@ const Title = styled.div`
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
-
-
   ${customMedia.lessThan("mobile")`
       font-size: 16px;
       margin-bottom: 8px;
@@ -173,15 +153,12 @@ const Title = styled.div`
     ${customMedia.between("tablet", "desktop")`
       font-size: 24px;
     `}
-
 `;
 
 const SubTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   color: #000000;
-
-
   ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
@@ -194,14 +171,11 @@ const SubTitle = styled.div`
     ${customMedia.between("tablet", "desktop")`
       font-size: 18px;
     `}
-
 `;
 
 const Text = styled.div`
   font-size: 20px;
-
   ${customMedia.lessThan("mobile")`
-
       font-size: 14px;
     `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -213,27 +187,21 @@ const Text = styled.div`
     ${customMedia.between("tablet", "desktop")`
       font-size: 18px;
     `}
-
 `;
 
 const TagContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 15px;
-
   ${customMedia.between("mobile", "largeMobile")`
-
       margin-top: 5px;
     `}
-
 `;
 
 const Tag = styled(SmallTag)`
   & {
     font-size: 16px;
     padding: 7px 25px;
-
-
     ${customMedia.lessThan("mobile")`
         font-size: 10px;
         padding: 5px 10px;
@@ -252,7 +220,6 @@ const Tag = styled(SmallTag)`
         font-size: 16px;
         padding: 7px 20px;
       `}
-
   }
 `;
 
@@ -260,9 +227,7 @@ const BtnRow = styled.div`
   display: flex;
   gap: 30px;
   margin-top: 40px;
-
   ${customMedia.lessThan("mobile")`
-
       gap: 10px;
       margin-top: 10px;
     `}
@@ -274,7 +239,6 @@ const BtnRow = styled.div`
       gap: 20px;
       margin-top: 15px;
     `}
-
 `;
 
 const LikeIconContainer = styled.div`
@@ -285,9 +249,7 @@ const LikeIconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   ${customMedia.lessThan("mobile")`
-
       width: 40px;
       height: 40px;
     `}
@@ -300,7 +262,6 @@ const LikeIconContainer = styled.div`
       width: 40px;
       height: 40px;
     `}
-
 `;
 
 const LikeIcon = styled.div`
@@ -311,9 +272,7 @@ const LikeIcon = styled.div`
     width: 100%;
     height: 100%;
   }
-
   ${customMedia.lessThan("mobile")`
- 
       width: 24px;
       height: 22px;
     `}
@@ -329,7 +288,6 @@ const LikeIcon = styled.div`
       width: 28px;
       height: 26px;
     `}
-
 `;
 
 const ApplyBtn = styled(Button)`
@@ -340,15 +298,11 @@ const ApplyBtn = styled(Button)`
   border-radius: 5px;
   padding: 0;
   text-align: center;
-
   &:disabled {
     opacity: 60%;
     cursor: not-allowed;
   }
-
-
   ${customMedia.lessThan("mobile")`
-
       width: 200px;
       height: 40px;
       font-size: 14px;
@@ -368,7 +322,6 @@ const ApplyBtn = styled(Button)`
       height: 50px;
       font-size: 18px;
     `}
-
 `;
 
 const StyledModal = styled(Modal)`
@@ -378,14 +331,12 @@ const StyledModal = styled(Modal)`
     padding: 30px 55px;
     display: flex;
     align-items: center;
-
     ${customMedia.lessThan("mobile")`
         padding: 15px 25px;
       `}
     ${customMedia.between("mobile", "tablet")`
         padding: 25px 50px;
       `}
-
   }
   .ant-modal-body {
     text-align: center;
@@ -399,15 +350,12 @@ const ModalTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
-
   ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
   ${customMedia.between("mobile", "tablet")`
-
       font-size: 18px;
     `}
-
 `;
 
 const ButtonRow = styled(Row)`
@@ -425,14 +373,12 @@ const FilledBtn = styled(Button)`
     border-radius: 6px;
     outline: none;
     cursor: pointer;
-
     ${customMedia.lessThan("mobile")`
         font-size: 14px;
       `}
     ${customMedia.between("mobile", "tablet")`
         font-size: 18px;
       `}
-
   }
 `;
 
@@ -440,8 +386,6 @@ const SkeletonImg = styled(Skeleton.Image)`
   .ant-skeleton-image {
     width: 493px;
     height: 332px;
-
-
     ${customMedia.lessThan("mobile")`
         width: 295px;
         height: 186px;
@@ -458,6 +402,5 @@ const SkeletonImg = styled(Skeleton.Image)`
         width: 440px;
         height: 293px;
       `}
-
   }
 `;
