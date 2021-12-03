@@ -84,13 +84,10 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
-
       await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
-
         clubId: Number(clubId),
         userId: userId,
       });
-      
     } catch (err) {
       message.error("이미 좋아요한 모임입니다.");
     }
@@ -151,7 +148,6 @@ const Main = () => {
                     club={club}
                     likedClubs={likedClubs}
                     handleLikedClubs={handleLikedClubs}
-                   
                   />
                 ))
               : ""}
@@ -176,7 +172,7 @@ const { Option } = Select;
 
 const Wrapper = styled.section`
   width: 1200px;
-  margin:   auto;
+  margin: auto;
   padding-bottom: 60px;
   flex: 1;
   ${customMedia.lessThan("mobile")`
