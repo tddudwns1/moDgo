@@ -219,7 +219,7 @@ const Main = () => {
 
       }
 
-      setLoading(false);
+      //setLoading(false);
     } catch (err) {
       console.log(err);
     }
