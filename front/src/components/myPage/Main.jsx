@@ -73,7 +73,7 @@ const Main = () => {
         process.env.REACT_APP_API_URL + `/clubs/users/${userId}`
       );
 
-      if (myClubRes.data) {
+      if (myClubRes.data.clubList.length !== 0) {
         const clubId = myClubRes.data.clubList;
 
         for (let i = 0; i < clubId.length; i++) {
@@ -209,10 +209,9 @@ const Main = () => {
         setSelectedClubTitle(selectClubRes.data.title);
         setSelectedClubContents(selectClubRes.data.contents);
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
-      } else {
       }
 
-      // setLoading(false);
+      //setLoading(false);
     } catch (err) {
       console.log(err);
     }
