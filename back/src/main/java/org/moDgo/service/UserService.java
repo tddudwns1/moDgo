@@ -21,9 +21,13 @@ public class UserService {
         this.memberRepository = memberRepository;
     }
 
+    /*
+    * Login -> user select query 7 times ?!
+    * Logout -> user select query 3 times
+    * */
+
     @Transactional
     public User createUser(User user) {
-        System.out.println("user.getTotalBadScore() = " + user.getTotalBadScore());
         return userRepository.save(user);
     }
 
@@ -44,7 +48,12 @@ public class UserService {
             sumOfBad += member.getBad_manner();
             sumOfNormal += member.getNormal_manner();
         }
-        
         user.changeTotalNum(sumOfGood,sumOfBad,sumOfNormal);
+    }
+
+    @Transactional
+    public void deleteUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        userRepository.delete(user);
     }
 }
