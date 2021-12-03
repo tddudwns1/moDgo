@@ -15,13 +15,15 @@ const Member = (props) => {
         process.env.REACT_APP_API_URL + `/users/${props.myMember.userId}`
       );
       console.log(res.data);
+
       localStorage.setItem("evaluation_good", res.data.totalGoodScore);
       localStorage.setItem("evaluation_normal", res.data.totalNormalScore);
       localStorage.setItem("evaluation_bad", res.data.totalBadScore);
-      setUserEvaluation(res.data);
+      //setUserEvaluation(res.data);
       console.log(props.myMember.userId);
     } catch (err) {
       console.log(err);
+
     }
   };
   getUserEvaluation();
@@ -49,6 +51,8 @@ const Member = (props) => {
         🙁
         {evaluation_bad}
       </MemberEmail>
+
+
 
       {/* <MemberBtn
         onClick={() =>

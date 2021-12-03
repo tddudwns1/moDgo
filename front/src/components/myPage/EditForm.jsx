@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import axios from "axios";
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import {
   Form,
   Input,
@@ -9,6 +9,7 @@ import {
   DatePicker,
   message,
   Modal,
+
 } from "antd";
 import moment from "moment";
 import styled from "styled-components";
@@ -20,7 +21,8 @@ const EditForm = ({ ...props }) => {
   const [inputText, setInputText] = useState("");
   const tags = ["NETFLIX", "WATCHA", "DISNEY+", "WAVVE"];
 
-  const userId = localStorage.getItem("user_id");
+
+  const userId = localStorage.getItem('user_id');
   const ref = useRef();
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -31,17 +33,17 @@ const EditForm = ({ ...props }) => {
     const endDate = values.date[1]._d.toISOString().substring(0, 10);
 
     if (!values.requiredPerson) {
-      message.error("참여인원을 입력해주세요.");
+      message.error('참여인원을 입력해주세요.');
       return;
     }
 
     if (values.title.length > 10) {
-      message.warning("이름은 10자까지 입력 가능합니다.");
+      message.warning('이름은 10자까지 입력 가능합니다.');
       return;
     }
 
     if (values.contents.length > 40) {
-      message.warning("한 줄 소개는 40자까지 입력 가능합니다.");
+      message.warning('한 줄 소개는 40자까지 입력 가능합니다.');
       return;
     }
 
@@ -56,6 +58,7 @@ const EditForm = ({ ...props }) => {
     try {
       const res = await axios
 
+
         .put(
           process.env.REACT_APP_API_URL +
             `/clubs/users/${props.selectedClubId}`,
@@ -66,13 +69,14 @@ const EditForm = ({ ...props }) => {
             },
           }
         )
+
         .then((res) => {
           if (res.status === 200) {
             editForm.resetFields();
-            message.success("모임이 성공적으로 수정되었습니다!");
+            message.success('모임이 성공적으로 수정되었습니다!');
             props.onCancel();
           } else {
-            message.error("모임 수정에 실패했습니다.");
+            message.error('모임 수정에 실패했습니다.');
           }
         });
     } catch (err) {
@@ -87,10 +91,10 @@ const EditForm = ({ ...props }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed: ", errorInfo);
+    console.log('Failed: ', errorInfo);
   };
 
-  const disabledDate = (current) => current && current < moment().endOf("day");
+  const disabledDate = (current) => current && current < moment().endOf('day');
 
   return (
     <Wrapper>
@@ -111,7 +115,7 @@ const EditForm = ({ ...props }) => {
               }}
               label="이름"
               name="title"
-              rules={[{ required: true, message: "모임 이름을 입력하세요." }]}
+              rules={[{ required: true, message: '모임 이름을 입력하세요.' }]}
             >
               <StyledInput placeholder="모임 이름"></StyledInput>
             </Form.Item>
@@ -122,7 +126,7 @@ const EditForm = ({ ...props }) => {
               rules={[
                 {
                   required: true,
-                  message: "모임의 한 줄 소개를 입력하세요.",
+                  message: '모임의 한 줄 소개를 입력하세요.',
                 },
               ]}
             >
@@ -133,7 +137,7 @@ const EditForm = ({ ...props }) => {
               rules={[
                 {
                   required: true,
-                  message: "모임의 참여 인원을 입력하세요.",
+                  message: '모임의 참여 인원을 입력하세요.',
                 },
               ]}
             >
@@ -158,9 +162,9 @@ const EditForm = ({ ...props }) => {
               name="date"
               rules={[
                 {
-                  type: "array",
-                  required: "true",
-                  message: "모임의 진행 기간을 입력하세요.",
+                  type: 'array',
+                  required: 'true',
+                  message: '모임의 진행 기간을 입력하세요.',
                 },
               ]}
             >
@@ -188,19 +192,19 @@ const Wrapper = styled.section`
   width: 1200px;
   padding: 40px 100px;
   margin: 0 auto;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 295px;
     padding: 3px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
     padding: 5px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 610px;
     padding: 10px 20px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 880px;
     padding: 20px 50px;
   `}
@@ -210,16 +214,16 @@ const StyledForm = styled(Form)`
   .ant-form-item-label > label {
     font-size: 18px;
     font-weight: bold;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 14px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
     `}
   }
@@ -243,19 +247,19 @@ const StyledInput = styled(Input)`
   background-color: #f6f6f6;
   border: 1px solid #94989b;
   border-radius: 5px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
     height: 28px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
     height: 28px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
     height: 32px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 14px;
     height: 40px;
   `}
@@ -273,22 +277,22 @@ const StyledInputNumber = styled(InputNumber)`
   .ant-input-number-input {
     height: 100%;
   }
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
     width: 60px;
     height: 28px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
     width: 60px;
     height: 28px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
     width: 50px;
     height: 25px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 14px;
     width: 60px;
     height: 30px;
@@ -303,16 +307,16 @@ const PersonnelRow = styled.div`
 const StyledSpan = styled.span`
   align-self: center;
   margin: 0 5px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 12px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 14px;
   `}
 `;
@@ -321,16 +325,16 @@ const TitleRow = styled.div`
   font-weight: bold;
   font-size: 20px;
   margin: 30px 0;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 12px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 12px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 14px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 16px;
   `}
 `;
@@ -340,31 +344,31 @@ const StyledRangePicker = styled(RangePicker)`
   background-color: #f6f6f6;
   border: 1px solid #94989b;
   border-radius: 5px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     height: 28px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     height: 28px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     height: 32px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     height: 40px;
   `}
   .ant-picker-input > input {
     font-size: 16px;
     text-align: center;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 12px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 14px;
     `}
   }
@@ -432,16 +436,16 @@ const TagTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 7px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 10px;
   `}
-  ${customMedia.between("largeMobile", "tablet")`
+  ${customMedia.between('largeMobile', 'tablet')`
     font-size: 14px;
   `}
-  ${customMedia.between("tablet", "desktop")`
+  ${customMedia.between('tablet', 'desktop')`
     font-size: 16px;
   `};
 `;
@@ -450,13 +454,13 @@ const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     gap: 2px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     gap: 3px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     gap: 5px;
   `}
 `;
@@ -549,16 +553,16 @@ const FilledBtn = styled(Button)`
     border: none;
     border-radius: 6px;
     outline: none;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 12px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
     `}
   }
@@ -570,16 +574,16 @@ const UnfilledBtn = styled(Button)`
     background-color: #ffffff;
     border: 2px solid #029400;
     border-radius: 6px;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 12px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 16px;
     `}
   }
@@ -617,15 +621,15 @@ const NavRegister = styled.div`
     width: 100%;
     height: 100%;
   }
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 28px;
     height: 28px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 30px;
     height: 30px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 32px;
     height: 32px;
   `}
@@ -638,13 +642,13 @@ const StyledModal = styled(Modal)`
     padding: 30px 55px;
     display: flex;
     align-items: center;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       padding: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       padding: 10px 15px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       padding: 20px 35px;
     `}
   }
@@ -654,14 +658,14 @@ const StyledModal = styled(Modal)`
     justify-content: center;
     align-items: center;
     gap: 48px;
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       gap: 24px;
       padding: 15px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       gap: 26px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       gap: 32px;
     `}
   }

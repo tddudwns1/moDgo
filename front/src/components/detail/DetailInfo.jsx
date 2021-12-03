@@ -7,8 +7,11 @@ import { customMedia } from "../../GlobalStyles";
 
 const DetailInfo = ({ ...props }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const [memberId, setMemberId] = useState(0);
+
   const [memberName, setMemberName] = useState("");
+
   const [voteCount, setVoteCount] = useState(0);
   const userId = localStorage.getItem("user_id");
   const confirmedIdArr = [];
@@ -102,7 +105,9 @@ const DetailInfo = ({ ...props }) => {
               key={i}
               onClick={() => {
                 setMemberId(props.confirmedUser[i].id);
+
                 setMemberName(props.confirmedUser[i].name);
+
                 console.log(memberId);
                 console.log(i);
                 console.log(props.confirmedUser[i].id);
@@ -117,10 +122,13 @@ const DetailInfo = ({ ...props }) => {
                 // console.log("evaluation");
                 // console.log(getEvaluation);
                 // console.log(props.getEvaluation.evaluationStatus);
+
                 showModal();
+
               }}
             />
           ))}
+
           {confirmedIdArr.includes(userId) ? (
             voteCount !== 1 ? (
               <StyledModal visible={isModalVisible} onCancel={handleCancel}>
@@ -174,6 +182,7 @@ const DetailInfo = ({ ...props }) => {
                 <SubmitButton
                   onClick={() => {
                     handleCancel();
+
                   }}
                 >
                   확인

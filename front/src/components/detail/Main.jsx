@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Row, message } from "antd";
-import styled from "styled-components";
-import { customMedia } from "../../GlobalStyles";
-import InfoBox from "./InfoBox";
-import DetailInfo from "./DetailInfo";
-import Comment from "./Comment";
-import Button from "../common/Button";
-import Spin from "../common/Spin";
-import Pagination from "../common/Pagination";
-import profile from "../../images/icons/profile.png";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Row, message } from 'antd';
+import styled from 'styled-components';
+import { customMedia } from '../../GlobalStyles';
+import InfoBox from './InfoBox';
+import DetailInfo from './DetailInfo';
+import Comment from './Comment';
+import Button from '../common/Button';
+import Spin from '../common/Spin';
+import Pagination from '../common/Pagination';
+import profile from '../../images/icons/profile.png';
 
 const Main = (props) => {
   const [isEvaluationVisible, setEvaluationVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [club, setClub] = useState();
   const [comments, setComments] = useState();
-  const [postComment, setPostComment] = useState("");
-  const [updateComment, setUpdateComment] = useState("");
+  const [postComment, setPostComment] = useState('');
+  const [updateComment, setUpdateComment] = useState('');
   const [editable, setEditable] = useState();
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -25,11 +25,13 @@ const Main = (props) => {
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
+
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
   const [confirmedUser, setConfirmedUser] = useState();
   const [getEvaluation, setGetEvaluation] = useState();
   const [confirmed, setConfirmed] = useState("x");
+
   // const memberIdArr = [];
 
   useEffect(() => {
@@ -40,12 +42,12 @@ const Main = (props) => {
         );
 
         setClub(res.data);
-        console.log("setclub(res.data)");
+        console.log('setclub(res.data)');
         console.log(res.data);
 
         if (userId) {
           const likedClubRes = await axios.get(
-            process.env.REACT_APP_API_URL + "/likedClubs/ids",
+            process.env.REACT_APP_API_URL + '/likedClubs/ids',
             {
               params: {
                 userId: userId,
@@ -56,39 +58,49 @@ const Main = (props) => {
           setLikedClubs(likedClubRes.data.likedClubIdList);
 
           const applyRes = await axios.get(
-            process.env.REACT_APP_API_URL + "/members/ids",
+            process.env.REACT_APP_API_URL + '/members/ids',
             {
               params: { userId: userId },
             }
           );
           setApply(applyRes.data.joiningClubIdList);
 
-          console.log("joiningClubIdList");
+          console.log('joiningClubIdList');
           console.log(applyRes.data.joiningClubIdList);
 
           const confirmedUserRes = await axios.get(
+
             process.env.REACT_APP_API_URL + "/members",
+
             {
               params: {
                 userId: userId,
                 clubId: clubId,
+
                 approvalStatus: "CONFIRMED",
+
                 page: page,
               },
             }
           );
+
           console.log("confirmedUserRes: ");
+
           console.log(confirmedUserRes.data);
 
           setConfirmedUser(confirmedUserRes.data.memberList);
 
+
           console.log("confirmedUserRes.data.memberList: ");
+
           console.log(confirmedUserRes.data.memberList);
 
           const memberId = confirmedUserRes.data.memberList;
 
           for (let i = 0; i < memberId.length; i++) {
+
             if (memberId[i]["userId"] == userId) setConfirmed("o");
+
 
             // memberIdArr.push(memberId[i]['userId']);
             // if(memberIdArr[i] == userId)
@@ -129,20 +141,24 @@ const Main = (props) => {
 
     try {
       const res = await axios.post(
+
         process.env.REACT_APP_API_URL + "/members/evaluation",
         JSON.stringify(data),
         {
           headers: {
             "Content-Type": `application/json`,
+
           },
         }
       );
       console.log(res);
 
       if (res.status === 200) {
+
         message.success("평가가 완료되었습니다.");
       } else {
         message.error("평가가 실패했습니다.");
+
       }
     } catch (err) {
       console.log(err);
@@ -178,14 +194,14 @@ const Main = (props) => {
 
     try {
       const res = await axios.post(
-        process.env.REACT_APP_API_URL + "/comments",
+        process.env.REACT_APP_API_URL + '/comments',
         data
       );
       if (res.status === 200) {
-        message.success("댓글이 등록되었습니다.");
+        message.success('댓글이 등록되었습니다.');
         console.log(res.data);
       } else {
-        message.error("댓글 등록에 실패했습니다.");
+        message.error('댓글 등록에 실패했습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -206,9 +222,9 @@ const Main = (props) => {
         data
       );
       if (res.status === 200) {
-        message.success("댓글이 수정되었습니다.");
+        message.success('댓글이 수정되었습니다.');
       } else {
-        message.error("댓글 수정에 실패했습니다.");
+        message.error('댓글 수정에 실패했습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -224,9 +240,9 @@ const Main = (props) => {
       );
 
       if (res.status === 200) {
-        message.success("댓글이 삭제되었습니다.");
+        message.success('댓글이 삭제되었습니다.');
       } else {
-        message.error("댓글 삭제에 실패했습니다.");
+        message.error('댓글 삭제에 실패했습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -259,7 +275,7 @@ const Main = (props) => {
     };
 
     try {
-      await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", data);
+      await axios.post(process.env.REACT_APP_API_URL + '/likedClubs', data);
     } catch (err) {
       console.log(err);
     }
@@ -267,7 +283,7 @@ const Main = (props) => {
 
   const handleLikeDelete = async (clubId) => {
     try {
-      await axios.delete(process.env.REACT_APP_API_URL + "/likedClubs", {
+      await axios.delete(process.env.REACT_APP_API_URL + '/likedClubs', {
         params: { userId: userId, clubId: Number(clubId) },
       });
     } catch (err) {
@@ -276,19 +292,19 @@ const Main = (props) => {
   };
 
   const onReset = () => {
-    setPostComment("");
+    setPostComment('');
   };
 
   const handlePostApply = async (id) => {
     try {
       const data = { userId: userId, clubId: Number(id) };
       const res = await axios.post(
-        process.env.REACT_APP_API_URL + "/members",
+        process.env.REACT_APP_API_URL + '/members',
         data
       );
 
       if (res.status === 400) {
-        message.error("이미 참여신청한 모임입니다.");
+        message.error('이미 참여신청한 모임입니다.');
       }
       setApply([...apply, id]);
     } catch (err) {
@@ -300,17 +316,17 @@ const Main = (props) => {
   const handleDeleteApply = async (clubId) => {
     try {
       const res = await axios.delete(
-        process.env.REACT_APP_API_URL + "/members",
+        process.env.REACT_APP_API_URL + '/members',
         {
           params: {
             userId: userId,
             clubId: Number(clubId),
-            delete: "",
+            delete: '',
           },
         }
       );
       if (res.status === 400) {
-        message.error("이미 참여취소한 모임입니다.");
+        message.error('이미 참여취소한 모임입니다.');
       }
 
       const index = apply.indexOf(clubId);
@@ -356,7 +372,9 @@ const Main = (props) => {
           </TitleRow>
 
           {(() => {
+
             if (confirmed == "o") {
+
               return (
                 <>
                   <CmtContainer>
@@ -381,7 +399,9 @@ const Main = (props) => {
                             handlePostComment();
                             onReset();
                           } else {
+
                             message.warning("로그인이 필요한 기능입니다.");
+
                           }
                         }}
                       >
@@ -402,7 +422,9 @@ const Main = (props) => {
                               handleDeleteComment={handleDeleteComment}
                             />
                           ))
+
                         : ""}
+
                     </ListRow>
                   </CmtContainer>
                 </>
@@ -433,19 +455,19 @@ const Wrapper = styled.section`
   margin: 60px auto;
   flex: 1;
   padding-bottom: 60px;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 295px;
     margin: 40px auto;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 363px;
     margin: 40px auto;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 610px;
     margin: 40px auto;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 880px;
   `}
 `;
@@ -462,16 +484,16 @@ const Title = styled.div`
   font-size: 24px;
   margin-top: 50px;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 16px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 16px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     font-size: 18px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     font-size: 20px;
   `}
 `;
@@ -488,16 +510,16 @@ const InputBox = styled.div`
   padding: 10px;
   display: flex;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 295px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 321px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 528px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 724px;
   `}
 `;
@@ -511,19 +533,19 @@ const ProfileIcon = styled.div`
     height: 100%;
   }
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     width: 28px;
     height: 28px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     width: 28px;
     height: 28px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     width: 32px;
     height: 32px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     width: 40px;
     height: 40px;
   `}
@@ -535,26 +557,26 @@ const StyledInput = styled.input`
   font-size: 20px;
   flex: 2;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     font-size: 14px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     font-size: 14px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     font-size: 14px;
   `}
-	${customMedia.between("tablet", "desktop")`
+	${customMedia.between('tablet', 'desktop')`
     font-size: 16px;
   `}
 `;
 
 const CmtPost = styled(Button)`
   flex: 0.2;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     flex: 0.3;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     flex: 0.3;
   `}
   
@@ -565,16 +587,16 @@ const CmtPost = styled(Button)`
     padding: 0;
     border-radius: 5px;
 
-    ${customMedia.lessThan("mobile")`
+    ${customMedia.lessThan('mobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("mobile", "largeMobile")`
+    ${customMedia.between('mobile', 'largeMobile')`
       font-size: 10px;
     `}
-    ${customMedia.between("largeMobile", "tablet")`
+    ${customMedia.between('largeMobile', 'tablet')`
       font-size: 12px;
     `}
-    ${customMedia.between("tablet", "desktop")`
+    ${customMedia.between('tablet', 'desktop')`
       font-size: 14px;
     `}
   }
@@ -593,13 +615,13 @@ const PaginationRow = styled(Row)`
   width: 100%;
   margin-top: 48px;
   justify-content: center;
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     margin-top: 24px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     margin-top: 24px;
   `}
-	${customMedia.between("mobile", "tablet")`
+	${customMedia.between('mobile', 'tablet')`
     margin-top: 24px;
   `}
 `;
@@ -611,13 +633,13 @@ const SpinContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  ${customMedia.lessThan("mobile")`
+  ${customMedia.lessThan('mobile')`
     margin-top: 45px;
   `}
-  ${customMedia.between("mobile", "largeMobile")`
+  ${customMedia.between('mobile', 'largeMobile')`
     margin-top: 45px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+	${customMedia.between('largeMobile', 'tablet')`
     margin-top: 45px;
   `}
 `;

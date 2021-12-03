@@ -84,10 +84,13 @@ const Main = () => {
 
   const handleLikePost = async (clubId) => {
     try {
+
       await axios.post(process.env.REACT_APP_API_URL + "/likedClubs", {
+
         clubId: Number(clubId),
         userId: userId,
       });
+      
     } catch (err) {
       message.error("이미 좋아요한 모임입니다.");
     }
@@ -114,7 +117,9 @@ const Main = () => {
           {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
           </MainTitle> */}
+
           {/* <SearchBar keyword={keyword} setKeyword={setKeyword} /> */}
+
           <TagFilter
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
@@ -127,8 +132,8 @@ const Main = () => {
               }}
             >
               모집중
-            </CheckboxFilter>
-            <SortFilter
+            </CheckboxFilter> */}
+            {/* <SortFilter
               showSearch
               placeholder="정렬필터"
               onChange={(value) => setSortBy(value)}
@@ -146,6 +151,7 @@ const Main = () => {
                     club={club}
                     likedClubs={likedClubs}
                     handleLikedClubs={handleLikedClubs}
+                   
                   />
                 ))
               : ""}
@@ -170,7 +176,7 @@ const { Option } = Select;
 
 const Wrapper = styled.section`
   width: 1200px;
-  margin: 90px auto;
+  margin:   auto;
   padding-bottom: 60px;
   flex: 1;
   ${customMedia.lessThan("mobile")`
