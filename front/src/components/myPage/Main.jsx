@@ -37,6 +37,8 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
+  const history = useHistory();
+  const [visibility, setVisibility] = useState(false);
   const [selectedClubId, setSelectedClubId] = useState(0);
   const [selectedClubTitle, setSelectedClubTitle] = useState("");
   const [selectedClubContents, setSelectedClubContents] = useState("");
@@ -48,8 +50,8 @@ const Main = () => {
   // const [selectedClubEndDate, setSelectedClubEndDate] = useState();
   const [userName, setMyName] = useState("");
   const [userEmail, setMyEmail] = useState("");
-
   const clubIdArr = [];
+  const [Approval, setAppropval] = useState(0);
 
   useEffect(() => {
     fetchDataFirst();
@@ -118,6 +120,7 @@ const Main = () => {
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
         setSelectedClubStartDate(selectClubRes.data.startDate);
         setSelectedClubEndDate(selectClubRes.data.endDate);
+
         setSelectedClubId(selectClubRes.data.id);
 
         setMyClubs(myClubRes.data.clubList);
@@ -206,9 +209,10 @@ const Main = () => {
         setSelectedClubTitle(selectClubRes.data.title);
         setSelectedClubContents(selectClubRes.data.contents);
         setSelectedClubRequiredPerson(selectClubRes.data.requiredPerson);
+      } else {
       }
 
-      // setLoading(false);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -258,6 +262,9 @@ const Main = () => {
     }
   };
 
+  console.log("Approval");
+  console.log(Approval);
+
   const handleMemberApproval = async (memberId) => {
     try {
       const res = axios.put(process.env.REACT_APP_API_URL + "/members", {
@@ -267,6 +274,10 @@ const Main = () => {
       if (res.status === 200) {
         message.success("모임 참여가 승인되었습니다.");
       }
+      console.log("변경");
+
+      setAppropval(1);
+      console.log(Approval);
     } catch (err) {
       console.log(err);
     } finally {
@@ -292,7 +303,7 @@ const Main = () => {
       fetchData();
     }
   };
-  // console.log("title : " + selectedClubTitle);
+  console.log("title : " + selectedClubTitle);
   return (
     <Wrapper>
       {loading ? (
@@ -379,7 +390,6 @@ const Main = () => {
                       />
                     ))}
                   </CardRow>
-
                   <Box>
                     <MidTitle>참여자 관리</MidTitle>
                     <Text>승인 대기자</Text>
@@ -392,9 +402,6 @@ const Main = () => {
                                 myPendingMember={member}
                                 handleMemberReject={handleMemberReject}
                                 handleMemberApproval={handleMemberApproval}
-                                // getUserEvaluation={getUserEvaluation}
-                                // setUserEvaluation={setUserEvaluation}
-                                // userEvaluation={userEvaluation}
                               />
                             </Row>
                           ))}
@@ -420,12 +427,7 @@ const Main = () => {
                         <Row gutter={[0, 16]}>
                           {myMembers.map((member) => (
                             <Row key={member.id}>
-                              <Member
-                                myMember={member}
-                                // getUserEvaluation={getUserEvaluation}
-                                // setUserEvaluation={setUserEvaluation}
-                                // userEvaluation={userEvaluation}
-                              />
+                              <Member myMember={member} />
                             </Row>
                           ))}
                         </Row>
@@ -483,10 +485,10 @@ const Wrapper = styled.div`
   ${customMedia.between("mobile", "largeMobile")`
     width: 363px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+   ${customMedia.between("largeMobile", "tablet")`
     width: 610px;
   `}
-	${customMedia.between("tablet", "desktop")`
+   ${customMedia.between("tablet", "desktop")`
     width: 880px;
   `}
 `;
@@ -501,7 +503,7 @@ const TabContainer = styled(Row)`
   ${customMedia.between("mobile", "largeMobile")`
     margin-top: 40px;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+   ${customMedia.between("largeMobile", "tablet")`
     margin-top: 40px;
   `}
 `;
@@ -557,7 +559,7 @@ const CardRow = styled.div`
   ${customMedia.between("largeMobile", "tablet")`
     gap: 20px;
   `}
-	${customMedia.between("tablet", "desktop")`
+   ${customMedia.between("tablet", "desktop")`
     gap: 20px;
   `}
 `;
@@ -814,7 +816,7 @@ const PaginationRow = styled(Row)`
   ${customMedia.between("mobile", "largeMobile")`
     margin: 20px auto;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+   ${customMedia.between("largeMobile", "tablet")`
     margin: 20px auto;
   `}
 `;
@@ -831,7 +833,7 @@ const SpinContainer = styled.div`
   ${customMedia.between("mobile", "largeMobile")`
     height: 40vh;
   `}
-	${customMedia.between("largeMobile", "tablet")`
+   ${customMedia.between("largeMobile", "tablet")`
     height: 40vh;
   `}
 `;
