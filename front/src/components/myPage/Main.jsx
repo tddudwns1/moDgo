@@ -150,7 +150,7 @@ const Main = () => {
       setMyJoinedClubs(joinedClubRes.data.joiningClubList);
       setMyJoinedClubsTotal(joinedClubRes.data.totalCount);
 
-      setLoading(false);
+      //setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -212,7 +212,7 @@ const Main = () => {
       } else {
       }
 
-      // setLoading(false);
+       setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -377,7 +377,7 @@ const Main = () => {
             </TabPane>
 
             <TabPane tab="운영중인 모임" key="3">
-              {myClubs.length ? (
+              {myClubs.length !==0 ? (
                 <TabContainer gutter={[0, 100]}>
                   <CardRow>
                     {myClubs.map((club) => (
