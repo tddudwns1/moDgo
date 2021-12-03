@@ -25,14 +25,13 @@ const Main = () => {
         process.env.REACT_APP_API_URL + "/clubs",
         {
           params: {
-            sortBy: "createdAt",
             tags: "",
             clubStatus: "",
-            keyword: "",
-            page: 1,
+            pageable: "",
           },
         }
       );
+      console.log(createdAtRes.data.clubList);
 
       setSortByCreatedAtClubs(createdAtRes.data.clubList);
       if (userId) {
