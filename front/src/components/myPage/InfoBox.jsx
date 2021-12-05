@@ -63,7 +63,6 @@ const InfoBoxContainer = styled.div`
   border: 1.5px solid #e5e5e5;
   border-radius: 10px;
   display: flex;
-
   ${customMedia.lessThan("mobile")`
       flex-direction: column;
       height: 372px;
@@ -87,7 +86,6 @@ const ClubThumbnail = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 10px 0 0 10px;
-
     ${customMedia.lessThan("mobile")`
         border-radius: 10px 10px 0 0;
       `}
@@ -95,7 +93,6 @@ const ClubThumbnail = styled.div`
         border-radius: 10px 10px 0 0;
       `}
   }
-
   ${customMedia.lessThan("mobile")`
       width: 295px;
       height: 50%;
@@ -119,7 +116,6 @@ const ClubInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   ${customMedia.lessThan("mobile")`
-
       width: 100%;
       height: 50%;
       padding: 5px 17px;
@@ -143,7 +139,6 @@ const Title = styled.div`
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
-
   ${customMedia.lessThan("mobile")`
       font-size: 16px;
       margin-bottom: 8px;
@@ -164,7 +159,6 @@ const SubTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   color: #000000;
-
   ${customMedia.lessThan("mobile")`
       font-size: 14px;
     `}
@@ -182,7 +176,6 @@ const SubTitle = styled.div`
 const Text = styled.div`
   font-size: 20px;
   ${customMedia.lessThan("mobile")`
-
       font-size: 14px;
     `}
   ${customMedia.between("mobile", "largeMobile")`
@@ -201,7 +194,6 @@ const TagContainer = styled.div`
   gap: 10px;
   margin-top: 15px;
   ${customMedia.between("mobile", "largeMobile")`
-
       margin-top: 5px;
     `}
 `;
@@ -210,7 +202,6 @@ const Tag = styled(SmallTag)`
   & {
     font-size: 16px;
     padding: 7px 25px;
-
     ${customMedia.lessThan("mobile")`
         font-size: 10px;
         padding: 5px 10px;
@@ -237,7 +228,6 @@ const BtnRow = styled.div`
   gap: 30px;
   margin-top: 40px;
   ${customMedia.lessThan("mobile")`
-
       gap: 10px;
       margin-top: 10px;
     `}
@@ -260,7 +250,6 @@ const LikeIconContainer = styled.div`
   justify-content: center;
   align-items: center;
   ${customMedia.lessThan("mobile")`
-  >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
       width: 40px;
       height: 40px;
     `}
@@ -284,7 +273,6 @@ const LikeIcon = styled.div`
     height: 100%;
   }
   ${customMedia.lessThan("mobile")`
-  >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
       width: 24px;
       height: 22px;
     `}
@@ -310,14 +298,11 @@ const ApplyBtn = styled(Button)`
   border-radius: 5px;
   padding: 0;
   text-align: center;
-
   &:disabled {
     opacity: 60%;
     cursor: not-allowed;
   }
-
   ${customMedia.lessThan("mobile")`
-
       width: 200px;
       height: 40px;
       font-size: 14px;
@@ -369,7 +354,6 @@ const ModalTitle = styled.div`
       font-size: 14px;
     `}
   ${customMedia.between("mobile", "tablet")`
-  >>>>>>> 8681664341ffce947f8cfce9b786a27422db5900
       font-size: 18px;
     `}
 `;
@@ -402,7 +386,6 @@ const SkeletonImg = styled(Skeleton.Image)`
   .ant-skeleton-image {
     width: 493px;
     height: 332px;
-
     ${customMedia.lessThan("mobile")`
         width: 295px;
         height: 186px;

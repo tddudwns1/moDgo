@@ -9,10 +9,12 @@ const TagFilter = (props) => {
     "WATCHA",
     "DISNEY+",
     "WAVVE",
+
     // '30일 이하',
     // '50일 이하',
     // '100일 이하',
     // '100일 이상',
+
   ];
   const handleSelectTags = (e) => {
     let tagName = e.target.innerText;

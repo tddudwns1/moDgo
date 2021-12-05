@@ -10,7 +10,7 @@ const SearchBar = (props) => {
 
   return (
     <SearchBarContainer>
-      <StyledSearchBar
+      {/* <StyledSearchBar
         // allowClear
         enterButton
         size="large"
@@ -19,7 +19,7 @@ const SearchBar = (props) => {
         onPressEnter={(e) => {
           onSearch(e.target.value);
         }}
-      />
+      /> */}
     </SearchBarContainer>
   );
 };

@@ -114,7 +114,9 @@ const Main = () => {
           {/* <MainTitle onClick={() => document.location.reload()}>
             모임 찾기
           </MainTitle> */}
+
           {/* <SearchBar keyword={keyword} setKeyword={setKeyword} /> */}
+
           <TagFilter
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
@@ -127,8 +129,8 @@ const Main = () => {
               }}
             >
               모집중
-            </CheckboxFilter>
-            <SortFilter
+            </CheckboxFilter> */}
+            {/* <SortFilter
               showSearch
               placeholder="정렬필터"
               onChange={(value) => setSortBy(value)}
@@ -170,7 +172,7 @@ const { Option } = Select;
 
 const Wrapper = styled.section`
   width: 1200px;
-  margin: 90px auto;
+  margin: auto;
   padding-bottom: 60px;
   flex: 1;
   ${customMedia.lessThan("mobile")`

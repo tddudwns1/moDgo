@@ -25,11 +25,13 @@ const Main = (props) => {
   const [apply, setApply] = useState();
   const [loading, setLoading] = useState(true);
   const clubId = Number(props.match.params.id);
+
   const userId = localStorage.getItem("user_id");
   const userImg = localStorage.getItem("user_image");
   const [confirmedUser, setConfirmedUser] = useState();
   const [getEvaluation, setGetEvaluation] = useState();
   const [confirmed, setConfirmed] = useState("x");
+
   // const memberIdArr = [];
 
   useEffect(() => {
@@ -77,9 +79,9 @@ const Main = (props) => {
               },
             }
           );
+
           console.log("confirmedUserRes: ");
           console.log(confirmedUserRes.data);
-
           setConfirmedUser(confirmedUserRes.data.memberList);
 
           console.log("confirmedUserRes.data.memberList: ");
@@ -89,10 +91,8 @@ const Main = (props) => {
 
           for (let i = 0; i < memberId.length; i++) {
             if (memberId[i]["userId"] == userId) setConfirmed("o");
-
             // memberIdArr.push(memberId[i]['userId']);
             // if(memberIdArr[i] == userId)
-
             // console.log('memberIdArr ' + i + ' : ' + memberIdArr[i]);
           }
         }
@@ -124,6 +124,7 @@ const Main = (props) => {
       evaluationKind: evaluation,
     };
 
+    handleGetEvaluation(memberId);
     console.log(JSON.stringify(data));
 
     try {
