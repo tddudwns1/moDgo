@@ -1,15 +1,20 @@
 spring:
+#  h2:
+#    console:
+#      enabled: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://modgo-db.cmiz6wq8hwjk.us-east-2.rds.amazonaws.com:3306/modgo
-    username: admin
-    password: modigo12
+    url: jdbc:mysql://modgo.mysql.database.azure.com:3306/modgo
+    username: brido
+    password: ckdtjq12!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    //database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
     hibernate:
-      ddl-auto: update #create #none #update #validate
+      ddl-auto: create #create #none #update #validate
     properties:
       hibernate:
         show_sql: true
